@@ -35,7 +35,7 @@ Run with:
 npx eslint .
 ```
 
-## Using with an existing project
+## Usage in an existing project
 
 - We advice to remove any `husky` hooks that uses libraries such as `pretty-quick` from your `package.json`
 - Subsequently remove any use of `pretty-quick` if possible.
