@@ -1,0 +1,40 @@
+{
+  "name": "eslint-config-exp",
+  "version": "0.0.1",
+  "description": "ESLint config",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BonnierNews/eslint-config-exp"
+  },
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "config",
+    "expressen",
+    "bonniernews",
+    "javascript",
+    "styleguide"
+  ],
+  "contributors": [],
+  "devDependencies": {
+    "eslint": "^7.14.0"
+  },
+  "peerDependencies": {
+    "eslint": "^7.14.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "eslint-plugin-no-only-tests": "^2.6.0",
+    "eslint-plugin-chai-friendly": "^0.7.2"
+  },
+  "files": [
+    "index.js",
+    "test.js",
+    "README",
+    "LICENSE"
+  ]
+}
