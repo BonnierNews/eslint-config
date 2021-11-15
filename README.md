@@ -48,6 +48,8 @@ npx eslint .
   - _Definition for rule 'no-nonoctal-decimal-escape' was not found_
   - _Definition for rule 'no-unsafe-optional-chaining' was not found_
 - If you still have issues; try updating `npm` (if you use _nvm_ `nvm install-latest-npm`) & `prettier` as-well
+- Remove any 'eslint-disable-line no-unused-expressions' directives added because of chai assertions, they are not
+  needed anymore (`eslint-plugin-chai-friendly` is used in test).
 
 Once you complete the steps above run the following:
 
