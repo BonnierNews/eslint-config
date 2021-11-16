@@ -64,10 +64,10 @@ npx eslint . --fix
 
 If you want to use _Prettier_, run it before eslint. ESLint should be the final judge, i.e. run:
 
-``sh
+```sh
 npx prettier --save .
 npx eslint . --fix
-``
+```
 
 This will format the entire code base according to the rules of _Prettier_ and the config.
 
