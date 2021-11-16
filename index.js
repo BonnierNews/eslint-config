@@ -202,7 +202,8 @@ const rules = {
   "require-await": "error", // make it explicit
   "object-shorthand": [ "error", "properties" ], // make it short
   "object-curly-spacing": [ "error", "always" ], // consistency
-  "array-bracket-spacing": [ "error", "always" ] // consistency with above
+  "array-bracket-spacing": [ "error", "always" ], // consistency with above
+  "new-cap": "error" // consistency with test rules
 };
 
 module.exports = {
