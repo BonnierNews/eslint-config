@@ -2,7 +2,8 @@
 
 [![Test application](https://github.com/BonnierNews/eslint-config-exp/actions/workflows/run-tests.yml/badge.svg?branch=master)](https://github.com/BonnierNews/eslint-config-exp/actions/workflows/run-tests.yml)
 
-Basic [ESLint](https://eslint.org/) rules used by [Expressen](https://www.expressen.se).
+Basic [ESLint](https://eslint.org/) rules used by [Expressen](https://www.expressen.se). The test-config (`eslint-config-exp/test`) is adapted to
+testing using `mocha`, `mocha-cakes-2` and `chai`.
 
 ## Usage
 
@@ -48,6 +49,10 @@ npx eslint .
   - _Definition for rule 'no-nonoctal-decimal-escape' was not found_
   - _Definition for rule 'no-unsafe-optional-chaining' was not found_
 - If you still have issues; try updating `npm` (if you use _nvm_ `nvm install-latest-npm`) & `prettier` as-well
+- Remove any 'eslint-disable-line no-unused-expressions' directives added because of chai assertions, they are not
+  needed anymore (`eslint-plugin-chai-friendly` is used in test).
+- Remove any globals and special rules related to `mocha-cakes-2` in your `test/.eslintrc.json`, they already exist
+  in `eslint-config-exp/test`.
 
 Once you complete the steps above run the following:
 
