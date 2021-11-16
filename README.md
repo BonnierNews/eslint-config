@@ -71,6 +71,9 @@ npx eslint . --fix
 
 This will format the entire code base according to the rules of _Prettier_ and the config.
 
+## Changelog
+Can be found [here](CHANGELOG.md).
+
 ## License
 
 Released under the [MIT license](https://tldrlegal.com/license/mit-license).
