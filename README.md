@@ -60,7 +60,7 @@ Once you complete the steps above run the following:
 npx eslint . --fix
 ```
 
-## Usage with prettier
+## Usage with Prettier
 
 If you want to use _Prettier_, run it before eslint. ESLint should be the final judge, i.e. run:
 
@@ -70,6 +70,10 @@ npx eslint . --fix
 ```
 
 This will format the entire code base according to the rules of _Prettier_ and the config.
+
+## Enable format on save
+
+- [VS Code](EDITORS.md#visual-studio-code)
 
 ## Changelog
 Can be found [here](CHANGELOG.md).
