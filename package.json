@@ -34,7 +34,9 @@
   "files": [
     "index.js",
     "test.js",
-    "README",
+    "README.md",
+    "CHANGELOG.md",
+    "EDITORS.md",
     "LICENSE"
   ]
 }
