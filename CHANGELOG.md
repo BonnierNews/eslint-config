@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+# 0.0.4
+
+Remove some ignorePatterns that shouldn't be ignored.
+
 # 0.0.3
 
 No changes. Fixes bad publish.
