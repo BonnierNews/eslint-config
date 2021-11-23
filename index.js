@@ -210,11 +210,6 @@ module.exports = {
   ignorePatterns: [
     "tmp/",
     "public/",
-    "coverage/",
-    "app/",
-    "assets/",
-    "js/",
-    "vendor/**",
     "submodule/**",
     "logs/",
     "docs/"
