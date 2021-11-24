@@ -203,7 +203,8 @@ const rules = {
   "object-shorthand": [ "error", "properties" ], // make it short
   "object-curly-spacing": [ "error", "always" ], // consistency
   "array-bracket-spacing": [ "error", "always" ], // consistency with above
-  "new-cap": "error" // consistency with test rules
+  "new-cap": "error", // consistency with test rules
+  "switch-colon-spacing": "error"
 };
 
 module.exports = {
