@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+# 0.0.5
+
+Add the switch-colon-spacing rule.
+
 # 0.0.4
 
 Remove some ignorePatterns that shouldn't be ignored.
