@@ -11,7 +11,7 @@ const mochaCakes2Globals = {
   should: "readonly",
   expect: "readonly",
   afterEachScenario: "readonly",
-  beforeEachScenario: "readonly"
+  beforeEachScenario: "readonly",
 };
 
 const mochaCakes2Rules = { "new-cap": [
@@ -27,9 +27,9 @@ const mochaCakes2Rules = { "new-cap": [
       "But",
       "I",
       "System",
-      "Describe"
-    ]
-  }
+      "Describe",
+    ],
+  },
 ] };
 
 const { env, rules, parserOptions } = require(".");
@@ -46,15 +46,15 @@ module.exports = {
     ...mochaCakes2Rules,
     // chai friendly
     "no-unused-expressions": 0,
-    "chai-friendly/no-unused-expressions": 2
+    "chai-friendly/no-unused-expressions": 2,
   },
   plugins: [
     "no-only-tests",
-    "chai-friendly"
+    "chai-friendly",
   ],
   globals: { ...mochaCakes2Globals },
   env: {
     ...env,
-    mocha: true
-  }
+    mocha: true,
+  },
 };
