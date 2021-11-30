@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+# 0.0.6
+
+Add the `comma-dangle` rule with `always-multiline`.
+
 # 0.0.5
 
 Add the switch-colon-spacing rule.
