@@ -74,6 +74,10 @@ const starterAppRules = {
       allowSingleLine: false
     }
   ],
+  "comma-dangle": [
+    "error",
+    "always-multiline"
+  ],
   "comma-spacing": "error",
   curly: [
     "error",
