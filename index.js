@@ -61,7 +61,7 @@ const eslintRecommendedRules = {
   "no-with": "error",
   "require-yield": "error",
   "use-isnan": "error",
-  "valid-typeof": "error"
+  "valid-typeof": "error",
 };
 
 const starterAppRules = {
@@ -71,19 +71,23 @@ const starterAppRules = {
     "error",
     "1tbs",
     {
-      allowSingleLine: false
-    }
+      allowSingleLine: false,
+    },
+  ],
+  "comma-dangle": [
+    "error",
+    "always-multiline",
   ],
   "comma-spacing": "error",
   curly: [
     "error",
-    "multi-line"
+    "multi-line",
   ],
   "dot-notation": [
     "error",
     {
-      allowKeywords: true
-    }
+      allowKeywords: true,
+    },
   ],
   "eol-last": "error",
   eqeqeq: "error",
@@ -91,8 +95,8 @@ const starterAppRules = {
     "error",
     {
       beforeColon: false,
-      afterColon: true
-    }
+      afterColon: true,
+    },
   ],
   "handle-callback-err": "error",
   "keyword-spacing": "error",
@@ -106,7 +110,7 @@ const starterAppRules = {
   "no-extra-bind": "error",
   "no-extra-parens": [
     "error",
-    "functions"
+    "functions",
   ],
   "no-implied-eval": "error",
   "no-iterator": "error",
@@ -136,50 +140,50 @@ const starterAppRules = {
   "no-unused-expressions": "error",
   "no-use-before-define": [
     "error",
-    "nofunc"
+    "nofunc",
   ],
   "no-var": "error",
   "prefer-arrow-callback": "error",
   "prefer-const": [
     "error",
     {
-      destructuring: "all"
-    }
+      destructuring: "all",
+    },
   ],
   quotes: [
     "error",
     "double",
     {
-      avoidEscape: true
-    }
+      avoidEscape: true,
+    },
   ],
   semi: [
     "error",
-    "always"
+    "always",
   ],
   "semi-spacing": [
     "error",
     {
       before: false,
-      after: true
-    }
+      after: true,
+    },
   ],
   "space-infix-ops": "error",
   "space-unary-ops": [
     "error",
     {
       words: true,
-      nonwords: false
-    }
+      nonwords: false,
+    },
   ],
   strict: [
     "error",
-    "global"
+    "global",
   ],
   yoda: [
     "error",
-    "never"
-  ]
+    "never",
+  ],
 };
 
 const rules = {
@@ -204,7 +208,7 @@ const rules = {
   "object-curly-spacing": [ "error", "always" ], // consistency
   "array-bracket-spacing": [ "error", "always" ], // consistency with above
   "new-cap": "error", // consistency with test rules
-  "switch-colon-spacing": "error"
+  "switch-colon-spacing": "error",
 };
 
 module.exports = {
@@ -213,14 +217,14 @@ module.exports = {
     "public/",
     "submodule/**",
     "logs/",
-    "docs/"
+    "docs/",
   ],
   parserOptions: {
-    ecmaVersion: 2021
+    ecmaVersion: 2021,
   },
   env: {
     node: true,
-    es6: true
+    es6: true,
   },
-  rules
+  rules,
 };
