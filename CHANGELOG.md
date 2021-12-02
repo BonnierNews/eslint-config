@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+# 0.0.7
+
+`function` is now exempt from the `comma-dangle` rule.
+
 # 0.0.6
 
 Add the `comma-dangle` rule with `always-multiline`.
