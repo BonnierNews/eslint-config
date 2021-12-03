@@ -64,6 +64,12 @@ const eslintRecommendedRules = {
   "valid-typeof": "error",
 };
 
+const nodeRecommendedRules = {
+  "node/handle-callback-err": "error",
+  "node/no-path-concat": "error",
+  "node/no-process-exit": "error",
+};
+
 const starterAppRules = {
   "arrow-parens": "error",
   "arrow-spacing": "error",
@@ -104,7 +110,6 @@ const starterAppRules = {
       afterColon: true,
     },
   ],
-  "handle-callback-err": "error",
   "keyword-spacing": "error",
   "new-parens": "error",
   "no-alert": "error",
@@ -132,8 +137,6 @@ const starterAppRules = {
   "no-new-object": "error",
   "no-new-wrappers": "error",
   "no-octal-escape": "error",
-  "no-path-concat": "error",
-  "no-process-exit": "error",
   "no-proto": "error",
   "no-return-assign": "error",
   "no-script-url": "error",
@@ -194,6 +197,7 @@ const starterAppRules = {
 
 const rules = {
   ...eslintRecommendedRules,
+  ...nodeRecommendedRules,
   ...starterAppRules,
   // good stuff..
   "no-multiple-empty-lines": [ "error", { max: 1, maxEOF: 0, maxBOF: 0 } ],
@@ -232,5 +236,6 @@ module.exports = {
     node: true,
     es6: true,
   },
+  plugins: [ "eslint-plugin-node" ],
   rules,
 };
