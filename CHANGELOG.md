@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+# 0.0.8
+
+`eslint-plugin-node` is now included in the package and has migrated the following rules:
+- `node/handle-callback-err`
+- `node/no-path-concat`
+- `node/no-process-exit`
+
+Behaviour remains unchanged.
+
 # 0.0.7
 
 `function` is now exempt from the `comma-dangle` rule.
