@@ -26,10 +26,14 @@
   "peerDependencies": {
     "eslint": "^7.14.0"
   },
+  "engines": {
+    "node": ">=14"
+  },
   "license": "MIT",
   "dependencies": {
+    "eslint-plugin-chai-friendly": "^0.7.2",
     "eslint-plugin-no-only-tests": "^2.6.0",
-    "eslint-plugin-chai-friendly": "^0.7.2"
+    "eslint-plugin-node": "^11.1.0"
   },
   "files": [
     "index.js",
