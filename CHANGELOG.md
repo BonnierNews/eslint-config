@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+# 0.0.9
+
+Updated `eslint` peer dependency to v8. 
+
 # 0.0.8
 
 `eslint-plugin-node` is now included in the package and has migrated the following rules:
