@@ -14,23 +14,25 @@ const mochaCakes2Globals = {
   beforeEachScenario: "readonly",
 };
 
-const mochaCakes2Rules = { "new-cap": [
-  2,
-  {
-    capIsNewExceptions: [
-      "Feature",
-      "Scenario",
-      "Given",
-      "When",
-      "Then",
-      "And",
-      "But",
-      "I",
-      "System",
-      "Describe",
-    ],
-  },
-] };
+const mochaCakes2Rules = {
+  "new-cap": [
+    2,
+    {
+      capIsNewExceptions: [
+        "Feature",
+        "Scenario",
+        "Given",
+        "When",
+        "Then",
+        "And",
+        "But",
+        "I",
+        "System",
+        "Describe",
+      ],
+    },
+  ],
+};
 
 const { env, rules, parserOptions } = require(".");
 

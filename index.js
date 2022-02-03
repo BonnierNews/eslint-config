@@ -76,9 +76,7 @@ const starterAppRules = {
   "brace-style": [
     "error",
     "1tbs",
-    {
-      allowSingleLine: false,
-    },
+    { allowSingleLine: false },
   ],
   "comma-dangle": [
     "error",
@@ -97,9 +95,7 @@ const starterAppRules = {
   ],
   "dot-notation": [
     "error",
-    {
-      allowKeywords: true,
-    },
+    { allowKeywords: true },
   ],
   "eol-last": "error",
   eqeqeq: "error",
@@ -155,16 +151,12 @@ const starterAppRules = {
   "prefer-arrow-callback": "error",
   "prefer-const": [
     "error",
-    {
-      destructuring: "all",
-    },
+    { destructuring: "all" },
   ],
   quotes: [
     "error",
     "double",
-    {
-      avoidEscape: true,
-    },
+    { avoidEscape: true },
   ],
   semi: [
     "error",
@@ -200,7 +192,11 @@ const rules = {
   ...nodeRecommendedRules,
   ...starterAppRules,
   // good stuff..
-  "no-multiple-empty-lines": [ "error", { max: 1, maxEOF: 0, maxBOF: 0 } ],
+  "no-multiple-empty-lines": [ "error", {
+    max: 1,
+    maxEOF: 0,
+    maxBOF: 0,
+  } ],
   camelcase: [ "error", { properties: "never" } ],
   "quote-props": [ "error", "as-needed" ],
   "spaced-comment": "error",
@@ -219,6 +215,9 @@ const rules = {
   "array-bracket-spacing": [ "error", "always" ], // consistency with above
   "new-cap": "error", // consistency with test rules
   "switch-colon-spacing": "error",
+  // object declarations, either all props on the same line or newline per property
+  "object-curly-newline": [ "error", { multiline: true } ],
+  "object-property-newline": [ "error", { allowAllPropertiesOnSameLine: true } ],
 };
 
 module.exports = {
@@ -229,9 +228,7 @@ module.exports = {
     "logs/",
     "docs/",
   ],
-  parserOptions: {
-    ecmaVersion: 2021,
-  },
+  parserOptions: { ecmaVersion: 2021 },
   env: {
     node: true,
     es6: true,
