@@ -76,6 +76,7 @@ This will format the entire code base according to the rules of _Prettier_ and t
 - [Visual Studio Code](EDITORS.md#visual-studio-code)
 
 ## Changelog
+
 Can be found [here](CHANGELOG.md).
 
 ## License
