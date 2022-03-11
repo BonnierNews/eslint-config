@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+Consistent spacing for functions and code blocks.
+
 ## 0.1.0
 
 New rules to format objects: either all properties on the same line OR use multiline.

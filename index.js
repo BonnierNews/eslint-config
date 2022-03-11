@@ -169,6 +169,12 @@ const starterAppRules = {
       after: true,
     },
   ],
+  "space-before-blocks": "error",
+  "space-before-function-paren": [ "error", {
+    anonymous: "always",
+    named: "never",
+    asyncArrow: "always",
+  } ],
   "space-infix-ops": "error",
   "space-unary-ops": [
     "error",
@@ -177,6 +183,7 @@ const starterAppRules = {
       nonwords: false,
     },
   ],
+  "space-in-parens": [ "error", "never" ],
   strict: [
     "error",
     "global",
