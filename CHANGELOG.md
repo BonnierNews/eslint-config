@@ -4,7 +4,7 @@
 
 - Added support for ES6 module linting, extending from `eslint-config-exp/modules`.
 - To allow the test config to extend both CommonJS and ES6 modules, its explicit inheritance from the base config
-  has been removed, to instead rely on the users defined base config. This will also allow for simpler overries
+  has been removed, to instead rely on the users defined base config. This will also allow for simpler overrides
   in a project using these configurations, since they will be correctly inherited into tests.
 
 ## 0.1.1
