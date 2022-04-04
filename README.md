@@ -13,12 +13,21 @@ Install `eslint` and `eslint-config-exp`:
 npm install --save-dev eslint eslint-config-exp
 ```
 
-Add the following to your `.eslintrc.json`-file:
+For CommonJS modules, add the following to your `.eslintrc.json`-file:
 
 ```json
 {
   "root": true,
-  "extends": ["eslint-config-exp"]
+  "extends": [ "eslint-config-exp" ]
+}
+```
+
+If you are using ES6 modules, instead add this to the `.eslintrc.json`-file:
+
+```json
+{
+  "root": true,
+  "extends": [ "eslint-config-exp/modules" ]
 }
 ```
 
@@ -26,9 +35,12 @@ Add the following to your `test/.eslintrc.json`-file:
 
 ```json
 {
-  "extends": ["eslint-config-exp/test"]
+  "extends": [ "eslint-config-exp/test" ]
 }
 ```
+
+The test config only contain test related configuration. It is assumed that the project has a root configuration
+defined (as described above) in a parent folder relative to the test configuration.
 
 Run with:
 

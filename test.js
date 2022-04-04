@@ -34,12 +34,8 @@ const mochaCakes2Rules = {
   ],
 };
 
-const { env, rules, parserOptions } = require(".");
-
 module.exports = {
-  parserOptions,
   rules: {
-    ...rules,
     // no only in tests
     "no-only-tests/no-only-tests": [
       "error",
@@ -55,8 +51,5 @@ module.exports = {
     "chai-friendly",
   ],
   globals: { ...mochaCakes2Globals },
-  env: {
-    ...env,
-    mocha: true,
-  },
+  env: { mocha: true },
 };

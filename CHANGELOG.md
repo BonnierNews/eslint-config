@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0
+
+- Added support for ES6 module linting, extending from `eslint-config-exp/modules`.
+- To allow the test config to extend both CommonJS and ES6 modules, its explicit inheritance from the base config
+  has been removed, to instead rely on the users defined base config. This will also allow for simpler overries
+  in a project using these configurations, since they will be correctly inherited into tests.
+
 ## 0.1.1
 
 Consistent spacing for functions and code blocks.
@@ -10,7 +17,7 @@ New rules to format objects: either all properties on the same line OR use multi
 
 ## 0.0.9
 
-Updated `eslint` peer dependency to v8. 
+Updated `eslint` peer dependency to v8.
 
 ## 0.0.8
 
