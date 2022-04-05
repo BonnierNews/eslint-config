@@ -194,6 +194,10 @@ const starterAppRules = {
   ],
 };
 
+function getSourceType() {
+  return require(`${process.cwd()}/package.json`).type;
+}
+
 const rules = {
   ...eslintRecommendedRules,
   ...nodeRecommendedRules,
@@ -235,7 +239,10 @@ module.exports = {
     "logs/",
     "docs/",
   ],
-  parserOptions: { ecmaVersion: 2021 },
+  parserOptions: {
+    ecmaVersion: 2021,
+    sourceType: getSourceType(),
+  },
   env: {
     node: true,
     es6: true,
