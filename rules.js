@@ -194,39 +194,6 @@ const starterAppRules = {
   ],
 };
 
-const baseRules = {
-  ...eslintRecommendedRules,
-  ...nodeRecommendedRules,
-  ...starterAppRules,
-  // good stuff..
-  "no-multiple-empty-lines": [ "error", {
-    max: 1,
-    maxEOF: 0,
-    maxBOF: 0,
-  } ],
-  camelcase: [ "error", { properties: "never" } ],
-  "quote-props": [ "error", "as-needed" ],
-  "spaced-comment": "error",
-  indent: [ "error", 2, { SwitchCase: 1 } ],
-  "no-whitespace-before-property": "error",
-  "no-console": "error", // was warn in node-starterapp
-  "prefer-template": "error", // was warn in node-starterapp
-  "no-useless-concat": "error",
-  "template-curly-spacing": [ "error", "never" ], // make prefer-template --fix nice
-  "linebreak-style": [ "error", "unix" ], // use unix style eol
-  "eol-last": [ "error", "always" ], // always eol at the end of a file
-  "no-nested-ternary": "error", // unreadable code
-  "require-await": "error", // make it explicit
-  "object-shorthand": [ "error", "properties" ], // make it short
-  "object-curly-spacing": [ "error", "always" ], // consistency
-  "array-bracket-spacing": [ "error", "always" ], // consistency with above
-  "new-cap": "error", // consistency with test rules
-  "switch-colon-spacing": "error",
-  // object declarations, either all props on the same line or newline per property
-  "object-curly-newline": [ "error", { multiline: true } ],
-  "object-property-newline": [ "error", { allowAllPropertiesOnSameLine: true } ],
-};
-
 const importRules = {
   "no-duplicate-imports": "error",
   "import/no-unresolved": "error",
@@ -252,7 +219,38 @@ const importRules = {
   "import/newline-after-import": "error",
 };
 
-module.exports = {
-  baseRules,
-  importRules,
+module.exports = function getRules(isModuleProject) {
+  return {
+    ...eslintRecommendedRules,
+    ...nodeRecommendedRules,
+    ...starterAppRules,
+    ...(isModuleProject ? importRules : {}),
+    // good stuff..
+    "no-multiple-empty-lines": [ "error", {
+      max: 1,
+      maxEOF: 0,
+      maxBOF: 0,
+    } ],
+    camelcase: [ "error", { properties: "never" } ],
+    "quote-props": [ "error", "as-needed" ],
+    "spaced-comment": "error",
+    indent: [ "error", 2, { SwitchCase: 1 } ],
+    "no-whitespace-before-property": "error",
+    "no-console": "error", // was warn in node-starterapp
+    "prefer-template": "error", // was warn in node-starterapp
+    "no-useless-concat": "error",
+    "template-curly-spacing": [ "error", "never" ], // make prefer-template --fix nice
+    "linebreak-style": [ "error", "unix" ], // use unix style eol
+    "eol-last": [ "error", "always" ], // always eol at the end of a file
+    "no-nested-ternary": "error", // unreadable code
+    "require-await": "error", // make it explicit
+    "object-shorthand": [ "error", "properties" ], // make it short
+    "object-curly-spacing": [ "error", "always" ], // consistency
+    "array-bracket-spacing": [ "error", "always" ], // consistency with above
+    "new-cap": "error", // consistency with test rules
+    "switch-colon-spacing": "error",
+    // object declarations, either all props on the same line or newline per property
+    "object-curly-newline": [ "error", { multiline: true } ],
+    "object-property-newline": [ "error", { allowAllPropertiesOnSameLine: true } ],
+  };
 };

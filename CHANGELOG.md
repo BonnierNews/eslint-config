@@ -1,11 +1,18 @@
 # Changelog
 
-## 0.2.0
+## 1.0.0
 
-- Added support for ES6 module linting, extending from `eslint-config-exp/modules`.
-- To allow the test config to extend both CommonJS and ES6 modules, its explicit inheritance from the base config
-  has been removed, to instead rely on the users defined base config. This will also allow for simpler overrides
-  in a project using these configurations, since they will be correctly inherited into tests.
+- Added support for ES6 module linting, which is activated if `"type": "module"` in your `package.json`
+- For Node versions 16 and above, the ES2022 environment will be activated
+- The test configuration has been changed, and should from now on be activated from the main `.eslintrc.json`-file,
+  see [README](./README.md#usage) for more information.
+
+### Migration Checklist
+
+If you are not using the test configuration, you don't need to do anything.
+
+- Remove your old `test/.eslintrc.json`-file
+- Instead add `"exp/test"` to your root configuration's `extend` property
 
 ## 0.1.1
 
