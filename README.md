@@ -2,7 +2,10 @@
 
 [![Test application](https://github.com/BonnierNews/eslint-config-exp/actions/workflows/run-tests.yml/badge.svg?branch=master)](https://github.com/BonnierNews/eslint-config-exp/actions/workflows/run-tests.yml)
 
-Basic [ESLint](https://eslint.org/) rules used by [Expressen](https://www.expressen.se).
+Basic [ESLint](https://eslint.org/) rules used by [Expressen](https://www.expressen.se). The configuration works both with CommonJS and ES6 modules,
+and the appropriate setup will be used by looking at the projects `package.json` [type property](https://nodejs.org/api/packages.html#type).
+
+For Node versions that support it (version 16 and above), the `es2022` environment will also be activated. Otherwise `es2021` will be used.
 
 ## Usage
 
@@ -22,9 +25,6 @@ To activate the config, you need to add the following to your `.eslintrc.json`-f
   "extends": [ "exp" ]
 }
 ```
-
-The configuration will look at the [type property](https://nodejs.org/api/packages.html#type) in your `package.json` to determine
-whether ES6 module rules should be applied or not. For Node versions that support it, the `es2022` environment will also be activated.
 
 ### Test configuration
 
