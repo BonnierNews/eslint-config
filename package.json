@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-exp",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "ESLint config",
   "main": "index.js",
   "scripts": {
@@ -38,6 +38,7 @@
   },
   "files": [
     "index.js",
+    "all.js",
     "test.js",
     "rules.js",
     "README.md",

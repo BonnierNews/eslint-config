@@ -12,7 +12,9 @@ Install `eslint` and `eslint-config-exp`:
 npm install --save-dev eslint eslint-config-exp
 ```
 
-Then you need to add the following to your `.eslintrc.json`-file:
+### Base configuration
+
+To activate the config, you need to add the following to your `.eslintrc.json`-file:
 
 ```json
 {
@@ -24,17 +26,22 @@ Then you need to add the following to your `.eslintrc.json`-file:
 The configuration will look at the [type property](https://nodejs.org/api/packages.html#type) in your `package.json` to determine
 whether ES6 module rules should be applied or not. For Node versions that support it, the `es2022` environment will also be activated.
 
+### Test configuration
+
 You can also choose to use the test config, which is adapted to testing using `mocha`, `mocha-cakes-2` and `chai`. To also enable this,
-add it to your config `extends` like:
+either add a separate test configuration file extending from `"exp/test"`, or use the `"exp/all"` in your root configuration to activate
+everything together:
 
 ```json
 {
   "root": true,
-  "extends": [ "exp", "exp/test" ]
+  "extends": [ "exp/all" ]
 }
 ```
 
 This will activate the test configuration for all files inside directories named `test` or `tests`.
+
+### Running eslint
 
 Run with:
 
@@ -58,7 +65,7 @@ npx eslint .
 - Remove any 'eslint-disable-line no-unused-expressions' directives added because of chai assertions, they are not
   needed anymore (`eslint-plugin-chai-friendly` is used in test).
 - Remove any globals and special rules related to `mocha-cakes-2` in your test configuration, they already exist
-  in `eslint-config-exp/test`.
+  in the `eslint-config-exp/test` and `eslint-config-exp/all` configs.
 
 Once you complete the steps above run the following:
 

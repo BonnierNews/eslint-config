@@ -35,23 +35,18 @@ const mochaCakes2Rules = {
 };
 
 module.exports = {
+  env: { mocha: true },
+  globals: { ...mochaCakes2Globals },
   plugins: [ "no-only-tests", "chai-friendly" ],
-  overrides: [
-    {
-      files: [ "**/test?(s)/**/*" ],
-      env: { mocha: true },
-      globals: { ...mochaCakes2Globals },
-      rules: {
-        ...mochaCakes2Rules,
-        // no only in tests
-        "no-only-tests/no-only-tests": [
-          "error",
-          { block: [ "Feature", "Scenario", "it", "Describe" ] },
-        ],
-        // chai friendly
-        "no-unused-expressions": 0,
-        "chai-friendly/no-unused-expressions": 2,
-      },
-    },
-  ],
+  rules: {
+    ...mochaCakes2Rules,
+    // no only in tests
+    "no-only-tests/no-only-tests": [
+      "error",
+      { block: [ "Feature", "Scenario", "it", "Describe" ] },
+    ],
+    // chai friendly
+    "no-unused-expressions": 0,
+    "chai-friendly/no-unused-expressions": 2,
+  },
 };
