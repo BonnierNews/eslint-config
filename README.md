@@ -2,8 +2,10 @@
 
 [![Test application](https://github.com/BonnierNews/eslint-config-exp/actions/workflows/run-tests.yml/badge.svg?branch=master)](https://github.com/BonnierNews/eslint-config-exp/actions/workflows/run-tests.yml)
 
-Basic [ESLint](https://eslint.org/) rules used by [Expressen](https://www.expressen.se). The test-config (`eslint-config-exp/test`) is adapted to
-testing using `mocha`, `mocha-cakes-2` and `chai`.
+Basic [ESLint](https://eslint.org/) rules used by [Expressen](https://www.expressen.se). The configuration works both with CommonJS and ES6 modules,
+and the appropriate setup will be used by looking at the projects `package.json` [type property](https://nodejs.org/api/packages.html#type).
+
+For Node versions that support it (version 16 and above), the `es2022` environment will also be activated. Otherwise `es2021` will be used.
 
 ## Usage
 
@@ -13,22 +15,33 @@ Install `eslint` and `eslint-config-exp`:
 npm install --save-dev eslint eslint-config-exp
 ```
 
-Add the following to your `.eslintrc.json`-file:
+### Base configuration
+
+To activate the config, you need to add the following to your `.eslintrc.json`-file:
 
 ```json
 {
   "root": true,
-  "extends": ["eslint-config-exp"]
+  "extends": [ "exp" ]
 }
 ```
 
-Add the following to your `test/.eslintrc.json`-file:
+### Test configuration
+
+You can also choose to use the test config, which is adapted to testing using `mocha`, `mocha-cakes-2` and `chai`. To also enable this,
+either add a separate test configuration file extending from `"exp/test"`, or use the `"exp/all"` in your root configuration to activate
+everything together:
 
 ```json
 {
-  "extends": ["eslint-config-exp/test"]
+  "root": true,
+  "extends": [ "exp/all" ]
 }
 ```
+
+This will activate the test configuration for all files inside directories named `test` or `tests`.
+
+### Running eslint
 
 Run with:
 
@@ -51,8 +64,8 @@ npx eslint .
 - If you still have issues; try updating `npm` (if you use _nvm_ `nvm install-latest-npm`) & `prettier` as-well
 - Remove any 'eslint-disable-line no-unused-expressions' directives added because of chai assertions, they are not
   needed anymore (`eslint-plugin-chai-friendly` is used in test).
-- Remove any globals and special rules related to `mocha-cakes-2` in your `test/.eslintrc.json`, they already exist
-  in `eslint-config-exp/test`.
+- Remove any globals and special rules related to `mocha-cakes-2` in your test configuration, they already exist
+  in the `eslint-config-exp/test` and `eslint-config-exp/all` configs.
 
 Once you complete the steps above run the following:
 

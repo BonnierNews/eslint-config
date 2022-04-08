@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0
+
+- Added support for ES6 module linting, which is activated if `"type": "module"` in your `package.json`
+- For Node versions 16 and above, the ES2022 environment will be activated
+- A new configuration `exp/all` has been added, which adds the test configuration directly in the main `.eslintrc.json`
+
 ## 0.1.1
 
 Consistent spacing for functions and code blocks.
@@ -10,7 +16,7 @@ New rules to format objects: either all properties on the same line OR use multi
 
 ## 0.0.9
 
-Updated `eslint` peer dependency to v8. 
+Updated `eslint` peer dependency to v8.
 
 ## 0.0.8
 

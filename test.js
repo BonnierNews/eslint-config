@@ -34,29 +34,19 @@ const mochaCakes2Rules = {
   ],
 };
 
-const { env, rules, parserOptions } = require(".");
-
 module.exports = {
-  parserOptions,
+  env: { mocha: true },
+  globals: { ...mochaCakes2Globals },
+  plugins: [ "no-only-tests", "chai-friendly" ],
   rules: {
-    ...rules,
+    ...mochaCakes2Rules,
     // no only in tests
     "no-only-tests/no-only-tests": [
       "error",
       { block: [ "Feature", "Scenario", "it", "Describe" ] },
     ],
-    ...mochaCakes2Rules,
     // chai friendly
     "no-unused-expressions": 0,
     "chai-friendly/no-unused-expressions": 2,
-  },
-  plugins: [
-    "no-only-tests",
-    "chai-friendly",
-  ],
-  globals: { ...mochaCakes2Globals },
-  env: {
-    ...env,
-    mocha: true,
   },
 };

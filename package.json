@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-exp",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "ESLint config",
   "main": "index.js",
   "scripts": {
@@ -32,12 +32,15 @@
   "license": "MIT",
   "dependencies": {
     "eslint-plugin-chai-friendly": "^0.7.2",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-no-only-tests": "^2.6.0",
     "eslint-plugin-node": "^11.1.0"
   },
   "files": [
     "index.js",
+    "all.js",
     "test.js",
+    "rules.js",
     "README.md",
     "CHANGELOG.md",
     "EDITORS.md",
