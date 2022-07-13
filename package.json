@@ -21,7 +21,7 @@
   ],
   "contributors": [],
   "devDependencies": {
-    "eslint": "^8.3.0"
+    "eslint": "^8.19.0"
   },
   "peerDependencies": {
     "eslint": ">=8.3.0"
@@ -32,9 +32,9 @@
   "license": "MIT",
   "dependencies": {
     "eslint-plugin-chai-friendly": "^0.7.2",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-no-only-tests": "^2.6.0",
-    "eslint-plugin-node": "^11.1.0"
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-no-only-tests": "^2.6.0"
   },
   "files": [
     "index.js",

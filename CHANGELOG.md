@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+- Replace `eslint-plugin-node` with `eslint-plugin-n` as the former is no longer maintained.
+
 ## 0.2.0
 
 - Added support for ES6 module linting, which is activated if `"type": "module"` in your `package.json`

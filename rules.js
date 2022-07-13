@@ -65,9 +65,9 @@ const eslintRecommendedRules = {
 };
 
 const nodeRecommendedRules = {
-  "node/handle-callback-err": "error",
-  "node/no-path-concat": "error",
-  "node/no-process-exit": "error",
+  "n/handle-callback-err": "error",
+  "n/no-path-concat": "error",
+  "n/no-process-exit": "error",
 };
 
 const starterAppRules = {
