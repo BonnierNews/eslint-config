@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+
+Added missing afterEachFeature & beforeEachFeature globals for `mocha-cakes-2`.
+
 ## 0.2.0
 
 - Added support for ES6 module linting, which is activated if `"type": "module"` in your `package.json`

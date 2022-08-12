@@ -12,6 +12,8 @@ const mochaCakes2Globals = {
   expect: "readonly",
   afterEachScenario: "readonly",
   beforeEachScenario: "readonly",
+  afterEachFeature: "readonly",
+  beforeEachFeature: "readonly",
 };
 
 const mochaCakes2Rules = {
