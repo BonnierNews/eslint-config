@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+
+- Replace `eslint-plugin-node` with `eslint-plugin-n` as the former is no longer maintained.
+
 ## 0.3.0
 
 Added missing afterEachFeature & beforeEachFeature globals for `mocha-cakes-2`.
