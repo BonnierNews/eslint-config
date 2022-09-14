@@ -68,6 +68,9 @@ const nodeRecommendedRules = {
   "n/handle-callback-err": "error",
   "n/no-path-concat": "error",
   "n/no-process-exit": "error",
+  "n/no-deprecated-api": "error",
+  "n/prefer-global/url-search-params": "error",
+  "n/prefer-global/url": "error",
 };
 
 const starterAppRules = {

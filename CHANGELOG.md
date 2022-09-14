@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0
+
+Add deprecated rules for node.
+
 ## 0.4.0
 
 - Replace `eslint-plugin-node` with `eslint-plugin-n` as the former is no longer maintained.
