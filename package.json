@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-exp",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "ESLint config",
   "main": "index.js",
   "scripts": {
@@ -34,12 +34,14 @@
     "eslint-plugin-chai-friendly": "^0.7.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.4",
-    "eslint-plugin-no-only-tests": "^2.6.0"
+    "eslint-plugin-no-only-tests": "^2.6.0",
+    "eslint-plugin-react": "^7.32.1"
   },
   "files": [
     "index.js",
     "all.js",
     "test.js",
+    "react.js",
     "rules.js",
     "README.md",
     "CHANGELOG.md",
