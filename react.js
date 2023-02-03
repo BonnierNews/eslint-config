@@ -2,11 +2,36 @@
 
 const baseConfig = require(".");
 
+const eslintReactRecommendedRules = {
+  "react/display-name": 2,
+  "react/jsx-key": 2,
+  "react/jsx-no-comment-textnodes": 2,
+  "react/jsx-no-duplicate-props": 2,
+  "react/jsx-no-target-blank": 2,
+  "react/jsx-no-undef": 2,
+  "react/jsx-uses-react": 2,
+  "react/jsx-uses-vars": 2,
+  "react/no-children-prop": 2,
+  "react/no-danger-with-children": 2,
+  "react/no-deprecated": 2,
+  "react/no-direct-mutation-state": 2,
+  "react/no-find-dom-node": 2,
+  "react/no-is-mounted": 2,
+  "react/no-render-return-value": 2,
+  "react/no-string-refs": 2,
+  "react/no-unescaped-entities": 2,
+  "react/no-unknown-property": 2,
+  "react/no-unsafe": 0,
+  "react/prop-types": 2,
+  "react/react-in-jsx-scope": 2,
+  "react/require-render-return": 2,
+};
+
 module.exports = {
-  extends: [ "plugin:react/recommended" ],
   ...baseConfig,
   rules: {
     ...baseConfig.rules,
+    ...eslintReactRecommendedRules,
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 2,
     "react/jsx-first-prop-new-line": [ 2, "multiline" ],
@@ -19,6 +44,10 @@ module.exports = {
     "react/jsx-indent": [ 2, 2 ],
     "react/jsx-tag-spacing": [ 2, { beforeSelfClosing: "always" } ],
   },
+  plugins: [
+    ...baseConfig.plugins,
+    "react",
+  ],
   parserOptions: {
     ...baseConfig.parserOptions,
     jsx: true,
