@@ -47,7 +47,7 @@ module.exports = {
   ],
   parserOptions: {
     ...baseConfig.parserOptions,
-    jsx: true,
+    ecmaFeatures: { jsx: true },
   },
   overrides: [
     { files: [ "*.jsx" ] },
