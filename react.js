@@ -37,7 +37,7 @@ module.exports = {
     "react/jsx-closing-bracket-location": [ 2, "tag-aligned" ],
     "react/destructuring-assignment": [ 2, "always" ],
     "react/prefer-stateless-function": [ 2, { ignorePureComponents: false } ],
-    "react/function-component-definition": [ 1, { namedComponents: "arrow-function" } ],
+    "react/function-component-definition": [ 2, { namedComponents: "function-declaration", unnamedComponents: "arrow-function" } ],
     "react/jsx-indent": [ 2, 2 ],
     "react/jsx-tag-spacing": [ 2, { beforeSelfClosing: "always" } ],
   },
