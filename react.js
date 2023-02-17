@@ -28,28 +28,25 @@ const eslintReactRecommendedRules = {
 
 module.exports = {
   ...baseConfig,
-  rules: {
-    ...baseConfig.rules,
-    ...eslintReactRecommendedRules,
-    "react/prop-types": 0,
-    "react/jsx-first-prop-new-line": [ 2, "multiline" ],
-    "react/jsx-max-props-per-line": [ 2, { maximum: { single: 3, multi: 1 } } ],
-    "react/jsx-closing-bracket-location": [ 2, "tag-aligned" ],
-    "react/destructuring-assignment": [ 2, "always" ],
-    "react/prefer-stateless-function": [ 2, { ignorePureComponents: false } ],
-    "react/function-component-definition": [ 2, { namedComponents: "function-declaration", unnamedComponents: "arrow-function" } ],
-    "react/jsx-indent": [ 2, 2 ],
-    "react/jsx-tag-spacing": [ 2, { beforeSelfClosing: "always" } ],
-  },
-  plugins: [
-    ...baseConfig.plugins,
-    "react",
-  ],
-  parserOptions: {
-    ...baseConfig.parserOptions,
-    ecmaFeatures: { jsx: true },
-  },
   overrides: [
-    { files: [ "*.jsx" ] },
+    {
+      plugins: [
+        "react",
+      ],
+      parserOptions: { ecmaFeatures: { jsx: true } },
+      files: [ "*.jsx" ],
+      rules: {
+        ...eslintReactRecommendedRules,
+        "react/prop-types": 0,
+        "react/jsx-first-prop-new-line": [ 2, "multiline" ],
+        "react/jsx-max-props-per-line": [ 2, { maximum: { single: 3, multi: 1 } } ],
+        "react/jsx-closing-bracket-location": [ 2, "tag-aligned" ],
+        "react/destructuring-assignment": [ 2, "always" ],
+        "react/prefer-stateless-function": [ 2, { ignorePureComponents: false } ],
+        "react/function-component-definition": [ 2, { namedComponents: "function-declaration", unnamedComponents: "arrow-function" } ],
+        "react/jsx-indent": [ 2, 2 ],
+        "react/jsx-tag-spacing": [ 2, { beforeSelfClosing: "always" } ],
+      },
+    },
   ],
 };
