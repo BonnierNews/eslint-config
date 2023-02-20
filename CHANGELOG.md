@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.0
+
+- Added support for react using `exp/react`.
+
 ## 0.5.0
 
 Add deprecated rules for node.

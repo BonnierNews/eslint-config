@@ -237,7 +237,27 @@ module.exports = function getRules(isModuleProject) {
     camelcase: [ "error", { properties: "never" } ],
     "quote-props": [ "error", "as-needed" ],
     "spaced-comment": "error",
-    indent: [ "error", 2, { SwitchCase: 1 } ],
+    indent: [ "error", 2, {
+      SwitchCase: 1,
+      // list derived from https://raw.githubusercontent.com/benjamn/ast-types/master/src/def/jsx.ts
+      ignoredNodes: [
+        "JSXAttribute",
+        "JSXClosingElement",
+        "JSXElement",
+        "JSXEmptyExpression",
+        "JSXExpressionContainer",
+        "JSXFragment",
+        "JSXIdentifier",
+        "JSXMemberExpression",
+        "JSXNamespacedName",
+        "JSXOpeningElement",
+        "JSXOpeningFragment",
+        "JSXSpreadAttribute",
+        "JSXSpreadChild",
+        "JSXText",
+      ],
+      ignoreComments: false,
+    } ],
     "no-whitespace-before-property": "error",
     "no-console": "error", // was warn in node-starterapp
     "prefer-template": "error", // was warn in node-starterapp
