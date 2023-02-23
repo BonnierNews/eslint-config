@@ -46,6 +46,7 @@ module.exports = {
         "react/function-component-definition": [ 2, { namedComponents: "function-declaration", unnamedComponents: "arrow-function" } ],
         "react/jsx-indent": [ 2, 2 ],
         "react/jsx-tag-spacing": [ 2, { beforeSelfClosing: "always" } ],
+        "react/jsx-indent-props": [ 2, 2 ],
       },
     },
   ],
