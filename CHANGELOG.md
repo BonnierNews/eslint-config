@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.1
+
+- Added `"react/jsx-indent-props": [2, 2]` as a rule for react to make indenting jsx props look nice.
+
 ## 0.6.0
 
 - Added support for react using `exp/react`.
