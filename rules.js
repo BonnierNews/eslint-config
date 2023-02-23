@@ -68,7 +68,7 @@ const nodeRecommendedRules = {
   "n/handle-callback-err": "error",
   "n/no-path-concat": "error",
   "n/no-process-exit": "error",
-  "n/no-deprecated-api": "error",
+  "n/no-deprecated-api": [ 2, { ignoreModuleItems: [ "url.parse", "url.resolve" ] } ], // until the performance regression for new URL has been resolved in lts
   "n/prefer-global/url-search-params": "error",
   "n/prefer-global/url": "error",
 };

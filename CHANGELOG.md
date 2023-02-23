@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.2
+
+- Allow deprecated url.resolve and url.parse since new URL has unacceptable performance regressions, see <https://github.com/nodejs/node/issues/30334>.
+
 ## 0.6.1
 
 - Added `"react/jsx-indent-props": [2, 2]` as a rule for react to make indenting jsx props look nice.
