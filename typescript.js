@@ -92,7 +92,7 @@ module.exports = {
     {
       parser: "@typescript-eslint/parser",
       parserOptions: { sourceType: "module" },
-      settings: { "import/resolver": { node: { extensions: [ ".ts" ] } } },
+      settings: { "import/resolver": { node: { extensions: [ ".ts", ".js" ] } } },
       plugins: [
         "@typescript-eslint",
       ],
