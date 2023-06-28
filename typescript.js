@@ -48,10 +48,6 @@ const disallowNonEcmaScriptCompatibleSyntax = {
       message: "Decorators aren't allowed.",
     },
     {
-      selector: "TSModuleDeclaration[kind=namespace]",
-      message: "Don't use namespace, use ESM modules instead.",
-    },
-    {
       selector: "TSEnumDeclaration",
       message: "Don't use enums since it is not a type-level extension of JavaScript. Use Objects instead.",
     },
