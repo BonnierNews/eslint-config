@@ -4,7 +4,7 @@
   "description": "ESLint config",
   "main": "index.js",
   "scripts": {
-    "test": "eslint ."
+    "test": "mocha && eslint ."
   },
   "repository": {
     "type": "git",
@@ -21,10 +21,15 @@
   ],
   "contributors": [],
   "devDependencies": {
-    "eslint": "^8.19.0"
+    "chai": "^4.3.7",
+    "eslint": "^8.19.0",
+    "mocha": "^10.2.0",
+    "mocha-cakes-2": "^3.3.0",
+    "typescript": "^5.1.0"
   },
   "peerDependencies": {
-    "eslint": ">=8.3.0"
+    "eslint": ">=8.3.0",
+    "typescript": ">=5.1.0"
   },
   "engines": {
     "node": ">=14"

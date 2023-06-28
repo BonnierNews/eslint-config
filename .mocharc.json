@@ -1,0 +1,8 @@
+{
+  "timeout": 10000,
+  "reporter": "spec",
+  "recursive": true,
+  "ui": "mocha-cakes-2",
+  "require": ["./test/helpers/setup.js"],
+  "exit": true
+}
