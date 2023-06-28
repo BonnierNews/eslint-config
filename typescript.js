@@ -62,18 +62,24 @@ const disallowNonEcmaScriptCompatibleSyntax = {
   ],
 };
 
+const extraRules = { "no-undef": "off" };
+
 module.exports = {
   ...baseConfig,
   overrides: [
     {
       parser: "@typescript-eslint/parser",
       parserOptions: { sourceType: "module" },
-      settings: { "import/resolver": { node: { extensions: [ ".ts", ".js" ] } } },
+      settings: { "import/resolver": { node: { extensions: [ ".ts" ] } } },
       plugins: [
         "@typescript-eslint",
       ],
       files: [ "*.ts" ],
-      rules: { ...typescriptEslintRecommended, ...disallowNonEcmaScriptCompatibleSyntax },
+      rules: {
+        ...typescriptEslintRecommended,
+        ...disallowNonEcmaScriptCompatibleSyntax,
+        ...extraRules,
+      },
     },
   ],
 };
