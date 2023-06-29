@@ -9,6 +9,7 @@ Feature("linting ts files", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
         useEslintrc: false,
+        ignore: false,
       });
     });
 
@@ -32,6 +33,7 @@ Feature("linting ts files", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
         useEslintrc: false,
+        ignore: false,
       });
     });
 
@@ -62,6 +64,7 @@ Feature("linting ts files", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
         useEslintrc: false,
+        ignore: false,
       });
     });
 
@@ -92,6 +95,7 @@ Feature("linting ts files", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
         useEslintrc: false,
+        ignore: false,
       });
     });
 
@@ -122,6 +126,7 @@ Feature("linting ts files", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
         useEslintrc: false,
+        ignore: false,
       });
     });
 
@@ -152,6 +157,7 @@ Feature("linting ts files", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
         useEslintrc: false,
+        ignore: false,
       });
     });
 

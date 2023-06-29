@@ -9,6 +9,7 @@ Feature("linting js files", () => {
       eslint = new ESLint({
         overrideConfigFile: "index.js",
         useEslintrc: false,
+        ignore: false,
       });
     });
 
