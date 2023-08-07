@@ -36,7 +36,7 @@ const disallowNonEcmaScriptCompatibleSyntax = {
   "no-restricted-syntax": [
     "error",
     {
-      selector: "ClassDeclaration[abstract]",
+      selector: "ClassDeclaration[abstract=true]",
       message: "Abstract classes aren't allowed.",
     },
     {
@@ -44,7 +44,7 @@ const disallowNonEcmaScriptCompatibleSyntax = {
       message: "Private keyword isn't allowed, use native # instead.",
     },
     {
-      selector: "MethodDefinition[decorators]",
+      selector: "MethodDefinition[decorators.length > 0]",
       message: "Decorators aren't allowed.",
     },
     {
