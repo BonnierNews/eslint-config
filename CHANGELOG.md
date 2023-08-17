@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0
+
+- TypeScript rules.
+- Bumped major version of `eslint-plugin-n` to 16.
+- Bumped major version of `eslint-plugin-no-only-tests` to 3.
+- Bumped required node version to 16.
+- Added TypeScript as an optional peer dependency.
+
 ## 0.6.2
 
 - Allow deprecated url.resolve and url.parse since new URL has unacceptable performance regressions, see <https://github.com/nodejs/node/issues/30334>.

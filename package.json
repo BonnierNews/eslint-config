@@ -1,10 +1,10 @@
 {
   "name": "eslint-config-exp",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "description": "ESLint config",
   "main": "index.js",
   "scripts": {
-    "test": "eslint ."
+    "test": "mocha && eslint ."
   },
   "repository": {
     "type": "git",
@@ -21,21 +21,33 @@
   ],
   "contributors": [],
   "devDependencies": {
-    "eslint": "^8.19.0"
+    "chai": "^4.3.7",
+    "eslint": "^8.19.0",
+    "mocha": "^10.2.0",
+    "mocha-cakes-2": "^3.3.0",
+    "typescript": "^5.1.0"
   },
   "peerDependencies": {
-    "eslint": ">=8.3.0"
+    "eslint": ">=8.3.0",
+    "typescript": ">=5.1.0"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "license": "MIT",
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
     "eslint-plugin-chai-friendly": "^0.7.2",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.2.4",
-    "eslint-plugin-no-only-tests": "^2.6.0",
-    "eslint-plugin-react": "^7.32.1"
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-no-only-tests": "^3.1.0",
+    "eslint-plugin-react": "^7.32.2"
   },
   "files": [
     "index.js",
@@ -43,6 +55,7 @@
     "test.js",
     "react.js",
     "rules.js",
+    "typescript.js",
     "README.md",
     "CHANGELOG.md",
     "EDITORS.md",

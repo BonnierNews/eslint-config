@@ -206,7 +206,14 @@ const importRules = {
     groups: [ [ "builtin", "external" ] ],
     "newlines-between": "always",
   } ],
-  "import/extensions": [ "error", "ignorePackages" ],
+  "import/extensions": [
+    "error",
+    "ignorePackages",
+    {
+      ts: "never", // since we do not add .ts to imports...
+      tsx: "never",
+    },
+  ],
   "import/default": "error",
   "import/no-dynamic-require": "error",
   "import/no-self-import": "error",
