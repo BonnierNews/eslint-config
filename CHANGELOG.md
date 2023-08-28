@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.0
+
+- tsx support by using `exp/typescript-react`
+- removed warning for explicit anys
+
 ## 0.7.0
 
 - TypeScript rules.
