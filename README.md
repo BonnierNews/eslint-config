@@ -52,6 +52,19 @@ To activate the config, you need to add the following to your `.eslintrc.json`-f
 
 This will enable the typescript plugin for `*.ts`-files.
 
+### React with TypeScript configuration
+
+To activate the config, you need to add the following to your `.eslintrc.json`-file:
+
+```json
+{
+  "root": true,
+  "extends": [ "exp/typescript-react" ]
+}
+```
+
+This will enable the typescript and react plugin for `*.tsx`-files.
+
 ### Test configuration
 
 You can also choose to use the test config, which is adapted to testing using `mocha`, `mocha-cakes-2` and `chai`. To also enable this,
