@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.1
+
+- fixed broken release
+
 ## 0.8.0
 
 - tsx support by using `exp/typescript-react`

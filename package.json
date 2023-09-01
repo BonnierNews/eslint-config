@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-exp",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "ESLint config",
   "main": "index.js",
   "scripts": {
@@ -50,11 +50,14 @@
     "eslint-plugin-react": "^7.32.2"
   },
   "files": [
-    "index.js",
     "all.js",
-    "test.js",
+    "index.js",
+    "react-rules.js",
     "react.js",
     "rules.js",
+    "test.js",
+    "typescript-react.js",
+    "typescript-rules.js",
     "typescript.js",
     "README.md",
     "CHANGELOG.md",
