@@ -1,6 +1,6 @@
 {
-  "name": "eslint-config-exp",
-  "version": "0.8.3",
+  "name": "@bonniernews/eslint-config",
+  "version": "1.0.0",
   "description": "ESLint config",
   "main": "index.js",
   "scripts": {
@@ -8,13 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/BonnierNews/eslint-config-exp"
+    "url": "https://github.com/BonnierNews/eslint-config"
   },
   "keywords": [
     "eslint",
     "eslintconfig",
     "config",
-    "expressen",
     "bonniernews",
     "javascript",
     "styleguide"

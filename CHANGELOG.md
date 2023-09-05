@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0
+
+- Renamed to @bonniernews/eslint-config
+
 ## 0.8.3
 
 - fixed typescript-react rules to actually check .ts files
