@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.2
+
+- bump typescript deps
+
 ## 0.8.1
 
 - fixed broken release
