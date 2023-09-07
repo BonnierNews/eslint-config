@@ -3,6 +3,7 @@
 const baseConfig = require(".");
 const typescriptRules = require("./typescript-rules");
 const reactRules = require("./react-rules");
+const settings = { "import/resolver": { node: { extensions: [ ".ts", ".js", ".tsx", ".jsx" ] } } };
 
 module.exports = {
   ...baseConfig,
@@ -10,11 +11,11 @@ module.exports = {
     {
       parser: "@typescript-eslint/parser",
       parserOptions: { sourceType: "module", ecmaFeatures: { jsx: true } },
-      settings: { "import/resolver": { node: { extensions: [ ".ts", ".js" ] } } },
       plugins: [
         "react",
         "@typescript-eslint",
       ],
+      settings,
       files: [ "*.tsx" ],
       rules: {
         ...typescriptRules,
@@ -22,9 +23,20 @@ module.exports = {
       },
     },
     {
+      parser: "@typescript-eslint/parser",
+      parserOptions: { sourceType: "module" },
+      settings,
+      plugins: [
+        "@typescript-eslint",
+      ],
+      files: [ "*.ts" ],
+      rules: typescriptRules,
+    },
+    {
       plugins: [
         "react",
       ],
+      settings,
       parserOptions: { ecmaFeatures: { jsx: true } },
       files: [ "*.jsx" ],
       rules: reactRules,

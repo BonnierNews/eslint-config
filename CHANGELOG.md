@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.3
+
+- fixed typescript-react rules to actually check .ts files
+- disabled import/named for typescript
+
 ## 0.8.2
 
 - bump typescript deps

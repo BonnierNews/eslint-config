@@ -80,8 +80,11 @@ const eslitRecommendedTs = {
   "valid-typeof": "off", // ts(2367)
 };
 
+const importRules = { "import/named": "off" };
+
 module.exports = {
   ...typescriptEslintRecommended,
   ...disallowNonEcmaScriptCompatibleSyntax,
   ...eslitRecommendedTs,
+  ...importRules,
 };
