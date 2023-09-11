@@ -1,18 +1,18 @@
-# eslint-config-exp
+# @bonniernews/eslint-config
 
-[![Test application](https://github.com/BonnierNews/eslint-config-exp/actions/workflows/run-tests.yml/badge.svg?branch=master)](https://github.com/BonnierNews/eslint-config-exp/actions/workflows/run-tests.yml)
+[![Test application](https://github.com/BonnierNews/eslint-config/actions/workflows/run-tests.yml/badge.svg?branch=master)](https://github.com/BonnierNews/eslint-config/actions/workflows/run-tests.yml)
 
-Basic [ESLint](https://eslint.org/) rules used by [Expressen](https://www.expressen.se). The configuration works both with CommonJS and ES6 modules,
+Basic [ESLint](https://eslint.org/) rules used by [Bonnier News](https://www.bonniernews.se). The configuration works both with CommonJS and ES6 modules,
 and the appropriate setup will be used by looking at the projects `package.json` [type property](https://nodejs.org/api/packages.html#type).
 
 For Node versions that support it (version 16 and above), the `es2022` environment will also be activated. Otherwise `es2021` will be used.
 
 ## Usage
 
-Install `eslint` and `eslint-config-exp`:
+Install `eslint` and `@bonniernews/eslint-config`:
 
 ```bash
-npm install --save-dev eslint eslint-config-exp
+npm install --save-dev eslint @bonniernews/eslint-config
 ```
 
 ### Base configuration
@@ -22,7 +22,7 @@ To activate the config, you need to add the following to your `.eslintrc.json`-f
 ```json
 {
   "root": true,
-  "extends": [ "exp" ]
+  "extends": [ "@bonniernews" ]
 }
 ```
 
@@ -33,7 +33,7 @@ To activate the config, you need to add the following to your `.eslintrc.json`-f
 ```json
 {
   "root": true,
-  "extends": [ "exp/react" ]
+  "extends": [ "@bonniernews/eslint-config/react" ]
 }
 ```
 
@@ -46,7 +46,7 @@ To activate the config, you need to add the following to your `.eslintrc.json`-f
 ```json
 {
   "root": true,
-  "extends": [ "exp/typescript" ]
+  "extends": [ "@bonniernews/eslint-config/typescript" ]
 }
 ```
 
@@ -59,7 +59,7 @@ To activate the config, you need to add the following to your `.eslintrc.json`-f
 ```json
 {
   "root": true,
-  "extends": [ "exp/typescript-react" ]
+  "extends": [ "@bonniernews/eslint-config/typescript-react" ]
 }
 ```
 
@@ -68,13 +68,13 @@ This will enable the typescript and react plugin for `*.tsx`-files.
 ### Test configuration
 
 You can also choose to use the test config, which is adapted to testing using `mocha`, `mocha-cakes-2` and `chai`. To also enable this,
-either add a separate test configuration file extending from `"exp/test"`, or use the `"exp/all"` in your root configuration to activate
-everything together:
+either add a separate test configuration file extending from `"@bonniernews/eslint-config/test"`, or use the `"@bonniernews/eslint-config/all"`
+in your root configuration to activate everything together:
 
 ```json
 {
   "root": true,
-  "extends": [ "exp/all" ]
+  "extends": [ "@bonniernews/eslint-config/all" ]
 }
 ```
 
@@ -104,7 +104,7 @@ npx eslint .
 - Remove any 'eslint-disable-line no-unused-expressions' directives added because of chai assertions, they are not
   needed anymore (`eslint-plugin-chai-friendly` is used in test).
 - Remove any globals and special rules related to `mocha-cakes-2` in your test configuration, they already exist
-  in the `eslint-config-exp/test` and `eslint-config-exp/all` configs.
+  in the `@bonniernews/eslint-config/test` and `@bonniernews/eslint-config/all` configs.
 
 Once you complete the steps above run the following:
 
