@@ -33,7 +33,7 @@ To activate the config, you need to add the following to your `.eslintrc.json`-f
 ```json
 {
   "root": true,
-  "extends": [ "@bonniernews/react" ]
+  "extends": [ "@bonniernews/eslint-config/react" ]
 }
 ```
 
@@ -46,7 +46,7 @@ To activate the config, you need to add the following to your `.eslintrc.json`-f
 ```json
 {
   "root": true,
-  "extends": [ "@bonniernews/typescript" ]
+  "extends": [ "@bonniernews/eslint-config/typescript" ]
 }
 ```
 
@@ -59,7 +59,7 @@ To activate the config, you need to add the following to your `.eslintrc.json`-f
 ```json
 {
   "root": true,
-  "extends": [ "@bonniernews/typescript-react" ]
+  "extends": [ "@bonniernews/eslint-config/typescript-react" ]
 }
 ```
 
@@ -68,13 +68,13 @@ This will enable the typescript and react plugin for `*.tsx`-files.
 ### Test configuration
 
 You can also choose to use the test config, which is adapted to testing using `mocha`, `mocha-cakes-2` and `chai`. To also enable this,
-either add a separate test configuration file extending from `"@bonniernews/test"`, or use the `"@bonniernews/all"` in your root configuration to activate
-everything together:
+either add a separate test configuration file extending from `"@bonniernews/eslint-config/test"`, or use the `"@bonniernews/eslint-config/all"`
+in your root configuration to activate everything together:
 
 ```json
 {
   "root": true,
-  "extends": [ "@bonniernews/all" ]
+  "extends": [ "@bonniernews/eslint-config/all" ]
 }
 ```
 
@@ -104,7 +104,7 @@ npx eslint .
 - Remove any 'eslint-disable-line no-unused-expressions' directives added because of chai assertions, they are not
   needed anymore (`eslint-plugin-chai-friendly` is used in test).
 - Remove any globals and special rules related to `mocha-cakes-2` in your test configuration, they already exist
-  in the `@bonniernews/test` and `@bonniernews/all` configs.
+  in the `@bonniernews/eslint-config/test` and `@bonniernews/eslint-config/all` configs.
 
 Once you complete the steps above run the following:
 
