@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1
+
+- Loosen react/jsx-max-props-per-line to allow as many props the developer wants on
+  a single line but enforce 1 prop per line if using multiple lines.
+
 ## 1.0.0
 
 - Renamed to @bonniernews/eslint-config
