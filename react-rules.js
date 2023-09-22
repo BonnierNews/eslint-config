@@ -28,7 +28,7 @@ module.exports = {
   ...eslintReactRecommendedRules,
   "react/prop-types": 0,
   "react/jsx-first-prop-new-line": [ 2, "multiline" ],
-  "react/jsx-max-props-per-line": [ 2, { maximum: { single: 3, multi: 1 } } ],
+  "react/jsx-max-props-per-line": [ 2, { when: "multiline", maximum: 1 } ],
   "react/jsx-closing-bracket-location": [ 2, "tag-aligned" ],
   "react/destructuring-assignment": [ 2, "always" ],
   "react/prefer-stateless-function": [ 2, { ignorePureComponents: false } ],
