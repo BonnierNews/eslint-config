@@ -1,0 +1,4 @@
+{
+  "name": "eslint-plugin-class-extends",
+  "main": "lib/index.js"
+}

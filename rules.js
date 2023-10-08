@@ -197,16 +197,6 @@ const starterAppRules = {
   ],
 };
 
-const disallowExtendsSyntax = {
-  "no-restricted-syntax": [
-    "error",
-    {
-      selector: "ClassDeclaration[superClass]",
-      message: "Extending other classes via inheritance isn't allowed. Use composition instead.",
-    },
-  ],
-};
-
 const importRules = {
   "no-duplicate-imports": "error",
   "import/no-unresolved": "error",
@@ -244,9 +234,9 @@ module.exports = function getRules(isModuleProject) {
     ...eslintRecommendedRules,
     ...nodeRecommendedRules,
     ...starterAppRules,
-    ...disallowExtendsSyntax,
     ...(isModuleProject ? importRules : {}),
     // good stuff..
+    "class-extends/disallow-class-extends": "error",
     "no-multiple-empty-lines": [ "error", {
       max: 1,
       maxEOF: 0,
