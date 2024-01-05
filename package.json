@@ -43,7 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
     "eslint-plugin-chai-friendly": "^0.7.2",
-    "eslint-plugin-class-extends": "file:plugins/class-extends",
+    "eslint-plugin-typescript-rules": "git+ssh://git@github.com/BonnierNews/eslint-plugin-typescript-rules.git",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-no-only-tests": "^3.1.0",

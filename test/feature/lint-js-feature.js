@@ -51,7 +51,7 @@ Feature("linting js files", () => {
     });
 
     And("one error should be because it extends a class", () => {
-      const error = results[0].messages.find(({ ruleId }) => ruleId === "class-extends/disallow-class-extends");
+      const error = results[0].messages.find(({ ruleId }) => ruleId === "typescript-rules/disallow-class-extends");
       expect(error).to.not.be.undefined;
       expect(error.message).to.have.string("Extending");
     });

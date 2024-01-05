@@ -60,6 +60,6 @@ module.exports = {
   ...typescriptEslintRecommended,
   ...eslitRecommendedTs,
   ...importRules,
-  "class-extends/disallow-abstract-class": "error",
-  "class-extends/disallow-non-es-compatible": "error",
+  "typescript-rules/disallow-abstract-class": "error",
+  "typescript-rules/disallow-non-es-compatible": "error",
 };
