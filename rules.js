@@ -260,7 +260,10 @@ module.exports = function getRules(isModuleProject) {
     "require-await": "error", // make it explicit
     "object-shorthand": ["error", "properties"], // make it short
     "object-curly-spacing": ["error", "always"], // consistency
-    "react/jsx-curly-spacing": ["error", "always"], // consistency
+    "react/jsx-curly-spacing": [
+      "warn",
+      { when: "never", children: { when: "always" } },
+    ],
     "array-bracket-spacing": ["error", "always"], // consistency with above
     "new-cap": "error", // consistency with test rules
     "switch-colon-spacing": "error",
