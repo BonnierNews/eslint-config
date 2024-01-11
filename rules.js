@@ -236,7 +236,7 @@ module.exports = function getRules(isModuleProject) {
     ...starterAppRules,
     ...(isModuleProject ? importRules : {}),
     // good stuff..
-    "typescript-rules/disallow-class-extends": "error",
+    "@bonniernews/typescript-rules/disallow-class-extends": "error",
     "no-multiple-empty-lines": [ "error", {
       max: 1,
       maxEOF: 0,

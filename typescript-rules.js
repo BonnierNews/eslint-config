@@ -60,6 +60,6 @@ module.exports = {
   ...typescriptEslintRecommended,
   ...eslitRecommendedTs,
   ...importRules,
-  "typescript-rules/disallow-abstract-class": "error",
-  "typescript-rules/disallow-non-es-compatible": "error",
+  "@bonniernews/typescript-rules/disallow-abstract-class": "error",
+  "@bonniernews/typescript-rules/disallow-non-es-compatible": "error",
 };

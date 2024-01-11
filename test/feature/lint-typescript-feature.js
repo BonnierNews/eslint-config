@@ -51,7 +51,7 @@ Feature("linting ts files", () => {
     });
 
     And("one error should be because it has enum", () => {
-      const error = results[0].messages.find(({ ruleId }) => ruleId === "typescript-rules/disallow-non-es-compatible");
+      const error = results[0].messages.find(({ ruleId }) => ruleId === "@bonniernews/typescript-rules/disallow-non-es-compatible");
       expect(error).to.not.be.undefined;
       expect(error.message).to.have.string("enum");
     });
@@ -83,7 +83,7 @@ Feature("linting ts files", () => {
 
     And("one error should be because it has an abstract class", () => {
       const error = results[0].messages[0];
-      expect(error.ruleId).to.equal("typescript-rules/disallow-abstract-class");
+      expect(error.ruleId).to.equal("@bonniernews/typescript-rules/disallow-abstract-class");
       expect(error.message).to.have.string("Abstract classes");
     });
 
@@ -113,7 +113,7 @@ Feature("linting ts files", () => {
     });
 
     And("one error should be because it has a private property", () => {
-      const error = results[0].messages.find(({ ruleId }) => ruleId === "typescript-rules/disallow-non-es-compatible");
+      const error = results[0].messages.find(({ ruleId }) => ruleId === "@bonniernews/typescript-rules/disallow-non-es-compatible");
       expect(error).to.not.be.undefined;
       expect(error.message).to.have.string("Private");
     });
@@ -144,7 +144,7 @@ Feature("linting ts files", () => {
     });
 
     And("one error should be because it extends a class", () => {
-      const error = results[0].messages.find(({ ruleId }) => ruleId === "typescript-rules/disallow-class-extends");
+      const error = results[0].messages.find(({ ruleId }) => ruleId === "@bonniernews/typescript-rules/disallow-class-extends");
       expect(error).to.not.be.undefined;
       expect(error.message).to.have.string("Extending");
     });
@@ -175,7 +175,7 @@ Feature("linting ts files", () => {
     });
 
     And("one error should be because it extends a class", () => {
-      const error = results[0].messages.find(({ ruleId }) => ruleId === "typescript-rules/disallow-non-es-compatible");
+      const error = results[0].messages.find(({ ruleId }) => ruleId === "@bonniernews/typescript-rules/disallow-non-es-compatible");
       expect(error).to.not.be.undefined;
       expect(error.message).to.have.string("Decorators");
     });
