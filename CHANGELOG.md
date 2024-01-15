@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Bumped `eslint-plugin-react`, `eslint-plugin-import` and `eslint-plugin-n`.
+
+## 1.0.2
+
+- Run tests on all supported node versions
+- Bump `@typescript-eslint/eslint-plugin` and `@typescript-eslint/parser`.
+- Use typescript 5.3 for tests
+
 ## 1.0.1
 
 - Loosen react/jsx-max-props-per-line to allow as many props the developer wants on

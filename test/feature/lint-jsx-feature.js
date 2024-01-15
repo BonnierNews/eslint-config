@@ -7,7 +7,19 @@ Feature("linting jsx files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "index.js",
+        overrideConfigFile: "react.js",
+        overrideConfig: {
+          parserOptions: {
+            ecmaVersion: 2022,
+            sourceType: "module",
+          },
+          settings: {
+            react: {
+              pragma: "Preact",
+              version: "16.0",
+            },
+          },
+        },
         useEslintrc: false,
         ignore: false,
       });
@@ -15,8 +27,7 @@ Feature("linting jsx files", () => {
 
     let results;
     When("we lint a folder", async () => {
-      results = await eslint.lintFiles(["test/data/jsx/*.jsx"]);
-      console.log("🚀 ~ When ~ results:", JSON.stringify(results, null, 2));
+      results = await eslint.lintFiles([ "test/data/jsx/*.jsx" ]);
     });
 
     Then("we should have linted the correct number of files", () => {
@@ -24,7 +35,7 @@ Feature("linting jsx files", () => {
     });
 
     And("one file should have no messages", () => {
-      expect(results[0].messages.length).to.eql(0);
+      expect(results[0].messages.length).to.eql(0, JSON.stringify(results[0].messages, null, 2));
     });
   });
 });
