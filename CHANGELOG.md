@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Bumped `eslint-plugin-react`, `eslint-plugin-import` and `eslint-plugin-n`.
+
 ## 1.0.2
 
 - Run tests on all supported node versions
