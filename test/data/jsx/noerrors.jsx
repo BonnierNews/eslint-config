@@ -1,5 +1,6 @@
-function Item() {
-  const data = ["a", "b", "c"];
+import * as Preact from "preact";
+
+export function Item() {
   return (
     <div>
       <h1>Data</h1>
@@ -8,11 +9,11 @@ function Item() {
   );
 }
 
-function SubItem(props) {
+function SubItem({ input }) {
   return (
     <div>
-      <h2>{props.input.name}</h2>
-      <h3>{props.input.role}</h3>
+      <h2>{ input.name }</h2>
+      <h3>{ input.role }</h3>
     </div>
   );
 }

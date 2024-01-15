@@ -31,7 +31,7 @@ Feature("linting jsx files", () => {
     });
 
     Then("we should have linted the correct number of files", () => {
-      expect(results.length).to.eql(1);
+      expect(results.length).to.eql(2);
     });
 
     And("one file should have no messages", () => {
