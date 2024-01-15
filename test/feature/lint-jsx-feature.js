@@ -82,7 +82,7 @@ Feature("linting jsx files", () => {
       expect(errors.length).to.eql(3);
     });
 
-    And("two errors should be 'There should be no space before'", () => {
+    And("one error should be 'There should be no space before'", () => {
       const errors = result.messages.filter(({ message }) => message.includes("There should be no space before"));
       expect(errors.length).to.eql(1);
     });
