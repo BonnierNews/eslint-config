@@ -68,10 +68,7 @@ const nodeRecommendedRules = {
   "n/handle-callback-err": "error",
   "n/no-path-concat": "error",
   "n/no-process-exit": "error",
-  "n/no-deprecated-api": [
-    2,
-    { ignoreModuleItems: ["url.parse", "url.resolve"] },
-  ], // until the performance regression for new URL has been resolved in lts
+  "n/no-deprecated-api": [ 2, { ignoreModuleItems: [ "url.parse", "url.resolve" ] } ], // until the performance regression for new URL has been resolved in lts
   "n/prefer-global/url-search-params": "error",
   "n/prefer-global/url": "error",
 };
@@ -79,7 +76,11 @@ const nodeRecommendedRules = {
 const starterAppRules = {
   "arrow-parens": "error",
   "arrow-spacing": "error",
-  "brace-style": ["error", "1tbs", { allowSingleLine: false }],
+  "brace-style": [
+    "error",
+    "1tbs",
+    { allowSingleLine: false },
+  ],
   "comma-dangle": [
     "error",
     {
@@ -91,8 +92,14 @@ const starterAppRules = {
     },
   ],
   "comma-spacing": "error",
-  curly: ["error", "multi-line"],
-  "dot-notation": ["error", { allowKeywords: true }],
+  curly: [
+    "error",
+    "multi-line",
+  ],
+  "dot-notation": [
+    "error",
+    { allowKeywords: true },
+  ],
   "eol-last": "error",
   eqeqeq: "error",
   "key-spacing": [
@@ -111,7 +118,10 @@ const starterAppRules = {
   "no-eval": "error",
   "no-extend-native": "error",
   "no-extra-bind": "error",
-  "no-extra-parens": ["error", "functions"],
+  "no-extra-parens": [
+    "error",
+    "functions",
+  ],
   "no-implied-eval": "error",
   "no-iterator": "error",
   "no-label-var": "error",
@@ -136,12 +146,25 @@ const starterAppRules = {
   "no-undef-init": "error",
   "no-underscore-dangle": "off",
   "no-unused-expressions": "error",
-  "no-use-before-define": ["error", "nofunc"],
+  "no-use-before-define": [
+    "error",
+    "nofunc",
+  ],
   "no-var": "error",
   "prefer-arrow-callback": "error",
-  "prefer-const": ["error", { destructuring: "all" }],
-  quotes: ["error", "double", { avoidEscape: true }],
-  semi: ["error", "always"],
+  "prefer-const": [
+    "error",
+    { destructuring: "all" },
+  ],
+  quotes: [
+    "error",
+    "double",
+    { avoidEscape: true },
+  ],
+  semi: [
+    "error",
+    "always",
+  ],
   "semi-spacing": [
     "error",
     {
@@ -150,14 +173,11 @@ const starterAppRules = {
     },
   ],
   "space-before-blocks": "error",
-  "space-before-function-paren": [
-    "error",
-    {
-      anonymous: "always",
-      named: "never",
-      asyncArrow: "always",
-    },
-  ],
+  "space-before-function-paren": [ "error", {
+    anonymous: "always",
+    named: "never",
+    asyncArrow: "always",
+  } ],
   "space-infix-ops": "error",
   "space-unary-ops": [
     "error",
@@ -166,9 +186,15 @@ const starterAppRules = {
       nonwords: false,
     },
   ],
-  "space-in-parens": ["error", "never"],
-  strict: ["error", "global"],
-  yoda: ["error", "never"],
+  "space-in-parens": [ "error", "never" ],
+  strict: [
+    "error",
+    "global",
+  ],
+  yoda: [
+    "error",
+    "never",
+  ],
 };
 
 const importRules = {
@@ -176,13 +202,10 @@ const importRules = {
   "import/no-unresolved": "error",
   "import/named": "error",
   "import/namespace": "error",
-  "import/order": [
-    "error",
-    {
-      groups: [["builtin", "external"]],
-      "newlines-between": "always",
-    },
-  ],
+  "import/order": [ "error", {
+    groups: [ [ "builtin", "external" ] ],
+    "newlines-between": "always",
+  } ],
   "import/extensions": [
     "error",
     "ignorePackages",
@@ -194,7 +217,7 @@ const importRules = {
   "import/default": "error",
   "import/no-dynamic-require": "error",
   "import/no-self-import": "error",
-  "import/no-cycle": ["error", { maxDepth: 2, ignoreExternal: true }],
+  "import/no-cycle": [ "error", { maxDepth: 2, ignoreExternal: true } ],
   "import/no-useless-path-segments": "error",
   "import/export": "error",
   "import/no-named-as-default": "error",
@@ -213,53 +236,46 @@ module.exports = function getRules(isModuleProject) {
     ...starterAppRules,
     ...(isModuleProject ? importRules : {}),
     // good stuff..
-    "no-multiple-empty-lines": [
-      "error",
-      {
-        max: 1,
-        maxEOF: 0,
-        maxBOF: 0,
-      },
-    ],
-    camelcase: ["error", { properties: "never" }],
-    "quote-props": ["error", "as-needed"],
+    "no-multiple-empty-lines": [ "error", {
+      max: 1,
+      maxEOF: 0,
+      maxBOF: 0,
+    } ],
+    camelcase: [ "error", { properties: "never" } ],
+    "quote-props": [ "error", "as-needed" ],
     "spaced-comment": "error",
-    indent: [
-      "error",
-      2,
-      {
-        SwitchCase: 1,
-        // list derived from https://raw.githubusercontent.com/benjamn/ast-types/master/src/def/jsx.ts
-        ignoredNodes: [
-          "JSXAttribute",
-          "JSXClosingElement",
-          "JSXElement",
-          "JSXEmptyExpression",
-          "JSXExpressionContainer",
-          "JSXFragment",
-          "JSXIdentifier",
-          "JSXMemberExpression",
-          "JSXNamespacedName",
-          "JSXOpeningElement",
-          "JSXOpeningFragment",
-          "JSXSpreadAttribute",
-          "JSXSpreadChild",
-          "JSXText",
-        ],
-        ignoreComments: false,
-      },
-    ],
+    indent: [ "error", 2, {
+      SwitchCase: 1,
+      // list derived from https://raw.githubusercontent.com/benjamn/ast-types/master/src/def/jsx.ts
+      ignoredNodes: [
+        "JSXAttribute",
+        "JSXClosingElement",
+        "JSXElement",
+        "JSXEmptyExpression",
+        "JSXExpressionContainer",
+        "JSXFragment",
+        "JSXIdentifier",
+        "JSXMemberExpression",
+        "JSXNamespacedName",
+        "JSXOpeningElement",
+        "JSXOpeningFragment",
+        "JSXSpreadAttribute",
+        "JSXSpreadChild",
+        "JSXText",
+      ],
+      ignoreComments: false,
+    } ],
     "no-whitespace-before-property": "error",
     "no-console": "error", // was warn in node-starterapp
     "prefer-template": "error", // was warn in node-starterapp
     "no-useless-concat": "error",
-    "template-curly-spacing": ["error", "never"], // make prefer-template --fix nice
-    "linebreak-style": ["error", "unix"], // use unix style eol
-    "eol-last": ["error", "always"], // always eol at the end of a file
+    "template-curly-spacing": [ "error", "never" ], // make prefer-template --fix nice
+    "linebreak-style": [ "error", "unix" ], // use unix style eol
+    "eol-last": [ "error", "always" ], // always eol at the end of a file
     "no-nested-ternary": "error", // unreadable code
     "require-await": "error", // make it explicit
-    "object-shorthand": ["error", "properties"], // make it short
-    "object-curly-spacing": ["error", "always"], // consistency
+    "object-shorthand": [ "error", "properties" ], // make it short
+    "object-curly-spacing": [ "error", "always" ], // consistency
     "react/jsx-curly-spacing": [
       "error",
       {
@@ -269,14 +285,11 @@ module.exports = function getRules(isModuleProject) {
         },
       },
     ],
-    "array-bracket-spacing": ["error", "always"], // consistency with above
+    "array-bracket-spacing": [ "error", "always" ], // consistency with above
     "new-cap": "error", // consistency with test rules
     "switch-colon-spacing": "error",
     // object declarations, either all props on the same line or newline per property
-    "object-curly-newline": ["error", { multiline: true }],
-    "object-property-newline": [
-      "error",
-      { allowAllPropertiesOnSameLine: true },
-    ],
+    "object-curly-newline": [ "error", { multiline: true } ],
+    "object-property-newline": [ "error", { allowAllPropertiesOnSameLine: true } ],
   };
 };
