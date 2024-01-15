@@ -34,7 +34,7 @@ Feature("linting jsx files", () => {
       expect(results.length).to.eql(2);
     });
 
-    And("the files should have no messages", () => {
+    And("the lint result should have no messages", () => {
       expect(results[0].messages.length).to.eql(0, JSON.stringify(results[0].messages, null, 2));
       expect(results[1].messages.length).to.eql(0, JSON.stringify(results[0].messages, null, 2));
     });
@@ -68,7 +68,7 @@ Feature("linting jsx files", () => {
       result = results[0];
     });
 
-    Then("the file should have eight messages", () => {
+    Then("the lint result should have eight messages", () => {
       expect(result.messages.length).to.eql(8, JSON.stringify(result.messages, null, 2));
     });
 
