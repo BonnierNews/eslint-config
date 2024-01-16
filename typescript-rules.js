@@ -30,32 +30,6 @@ const typescriptEslintRecommended = {
   "@typescript-eslint/triple-slash-reference": "error",
 };
 
-const disallowNonEcmaScriptCompatibleSyntax = {
-  "no-restricted-syntax": [
-    "error",
-    {
-      selector: "ClassDeclaration[abstract=true]",
-      message: "Abstract classes aren't allowed.",
-    },
-    {
-      selector: "PropertyDefinition[accessibility=private]",
-      message: "Private keyword isn't allowed, use native # instead.",
-    },
-    {
-      selector: "MethodDefinition[decorators.length > 0]",
-      message: "Decorators aren't allowed.",
-    },
-    {
-      selector: "TSEnumDeclaration",
-      message: "Don't use enums since it is not a type-level extension of JavaScript. Use Objects instead.",
-    },
-    {
-      selector: "ClassDeclaration[superClass]",
-      message: "Extending other classes via inheritance isn't allowed. Use composition instead.",
-    },
-  ],
-};
-
 const eslitRecommendedTs = {
   "constructor-super": "off", // ts(2335) & ts(2377)
   "getter-return": "off", // ts(2378)
@@ -84,7 +58,8 @@ const importRules = { "import/named": "off" };
 
 module.exports = {
   ...typescriptEslintRecommended,
-  ...disallowNonEcmaScriptCompatibleSyntax,
   ...eslitRecommendedTs,
   ...importRules,
+  "@bonniernews/typescript-rules/disallow-abstract-class": "error",
+  "@bonniernews/typescript-rules/disallow-non-es-compatible": "error",
 };

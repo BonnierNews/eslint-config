@@ -19,7 +19,7 @@ const moduleConfig = {
     node: true,
     ...(hasES2022Support ? { es2022: true } : { es6: true }),
   },
-  plugins: [ "eslint-plugin-n", "import" ],
+  plugins: [ "eslint-plugin-n", "import", "@bonniernews/typescript-rules" ],
 };
 
 const commonjsConfig = {
@@ -28,7 +28,7 @@ const commonjsConfig = {
     node: true,
     es6: true,
   },
-  plugins: [ "eslint-plugin-n" ],
+  plugins: [ "eslint-plugin-n", "@bonniernews/typescript-rules" ],
 };
 
 module.exports = {
