@@ -36,4 +36,5 @@ module.exports = {
   "react/jsx-indent": [ 2, 2 ],
   "react/jsx-tag-spacing": [ 2, { beforeSelfClosing: "always" } ],
   "react/jsx-indent-props": [ 2, 2 ],
+  "react/jsx-curly-spacing": [ "error", { when: "never", children: { when: "always" } } ],
 };
