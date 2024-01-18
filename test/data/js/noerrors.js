@@ -1,5 +1,7 @@
 "use strict";
 
+import chai from "chai";
+
 function add(a, b) {
   return a + b;
 }

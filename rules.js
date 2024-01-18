@@ -205,6 +205,7 @@ const importRules = {
   "import/order": [ "error", {
     groups: [ [ "builtin", "external" ] ],
     "newlines-between": "always",
+    alphabetize: { order: "asc", caseInsensitive: true },
   } ],
   "import/extensions": [
     "error",
