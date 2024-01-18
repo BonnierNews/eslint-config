@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add rule `react/jsx-curly-spacing` to align jsx curly with js curly.
 - Bumped `eslint-plugin-react`, `eslint-plugin-import` and `eslint-plugin-n`.
 
 ## 1.0.2
