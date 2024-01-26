@@ -4,6 +4,9 @@
 
 - Add rule `react/jsx-curly-spacing` to align jsx curly with js curly.
 - Bumped `eslint-plugin-react`, `eslint-plugin-import` and `eslint-plugin-n`.
+- Moved TypeScript restricted syntax to a seperate package `@bonniernews/typescript-rules`.
+- Uses `@bonniernews/typescript-rules` for TypeScript.
+- Added `@bonniernews/typescript-rules/disallow-class-extends` also for non-typescript.
 
 ## 1.0.2
 
