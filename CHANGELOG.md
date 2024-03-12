@@ -1,5 +1,9 @@
 # Changelog
 
+## UNRELEASED
+
+- Include lowercase `describe` and `context` blocks in `no-only-tests/no-only-tests`.
+
 ## 1.1.0
 
 - Add rule `react/jsx-curly-spacing` to align jsx curly with js curly.
