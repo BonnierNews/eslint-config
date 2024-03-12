@@ -45,7 +45,7 @@ module.exports = {
     // no only in tests
     "no-only-tests/no-only-tests": [
       "error",
-      { block: [ "Feature", "Scenario", "it", "Describe", "describe" ] },
+      { block: [ "Feature", "Scenario", "it", "Describe", "describe", "context" ] },
     ],
     // chai friendly
     "no-unused-expressions": 0,
