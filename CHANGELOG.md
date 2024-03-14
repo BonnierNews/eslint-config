@@ -1,6 +1,6 @@
 # Changelog
 
-## UNRELEASED
+## 1.1.1
 
 - Include lowercase `describe` and `context` blocks in `no-only-tests/no-only-tests`.
 
