@@ -24,7 +24,7 @@
     "eslint": "^8.53.0",
     "mocha": "^10.2.0",
     "mocha-cakes-2": "^3.3.0",
-    "typescript": "^5.3.0"
+    "typescript": "^5.4.3"
   },
   "peerDependencies": {
     "eslint": ">=8.3.0",
