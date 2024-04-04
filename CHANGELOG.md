@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.2
+## 1.2.0
 
 - Bumped `typescript` to 5.4.3 and `@typescript-eslint` to 7.4.0.
 
