@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+- Bumped `typescript` to 5.4.3 and `@typescript-eslint` to 7.4.0.
+
 ## 1.1.1
 
 - Include lowercase `describe` and `context` blocks in `no-only-tests/no-only-tests`.
