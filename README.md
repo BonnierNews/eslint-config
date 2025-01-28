@@ -15,70 +15,40 @@ Install `eslint` and `@bonniernews/eslint-config`:
 npm install --save-dev eslint @bonniernews/eslint-config
 ```
 
-### Base configuration
+## Migrating from 1.X to 2.X
 
-To activate the config, you need to add the following to your `.eslintrc.json`-file:
+2.X introduces eslint 9 which has a different configuration format. It is recommended to read the [eslint migration guide](https://eslint.org/docs/latest/use/configure/migration-guide).
 
-```json
-{
-  "root": true,
-  "extends": [ "@bonniernews" ]
-}
+A major change from eslint 8 is that only one `eslint.config.js` file will be used, placing a specific configuration file in a folder will not behave in the same
+way as in 8 where it would inherit the configuration from files from the root folder, and the new recommendation is to just have one `eslint.config.js` at the root
+of the repository.
+
+As well as changing the configuration format to adapt to eslint 9, @bonniernews/eslint-config has removed some of the previous configuration options `all`, `test`, `react`
+and `typescript-react` have all been removed. Now there are only two, the base (js only) and `typescript` which is the base with added support for `ts` and `tsx`.
+
+### JavaScript configuration
+
+This config includes support for `js`, `jsx` and tests written using `mocha-cakes-2` and `chai`.
+
+To activate the config, you need to add the following to your `eslint.config.js`-file:
+
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config");
 ```
-
-### React configuration
-
-To activate the config, you need to add the following to your `.eslintrc.json`-file:
-
-```json
-{
-  "root": true,
-  "extends": [ "@bonniernews/eslint-config/react" ]
-}
-```
-
-This will enable the react plugin for `*.jsx`-files.
 
 ### TypeScript configuration
 
-To activate the config, you need to add the following to your `.eslintrc.json`-file:
-
-```json
-{
-  "root": true,
-  "extends": [ "@bonniernews/eslint-config/typescript" ]
-}
-```
-
-This will enable the typescript plugin for `*.ts`-files.
-
-### React with TypeScript configuration
+This config includes support for `js`, `jsx`, `ts`, `tsx` and and tests written using `mocha-cakes-2` and `chai`.
 
 To activate the config, you need to add the following to your `.eslintrc.json`-file:
 
-```json
-{
-  "root": true,
-  "extends": [ "@bonniernews/eslint-config/typescript-react" ]
-}
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/typescript");
 ```
-
-This will enable the typescript and react plugin for `*.tsx`-files.
-
-### Test configuration
-
-You can also choose to use the test config, which is adapted to testing using `mocha`, `mocha-cakes-2` and `chai`. To also enable this,
-either add a separate test configuration file extending from `"@bonniernews/eslint-config/test"`, or use the `"@bonniernews/eslint-config/all"`
-in your root configuration to activate everything together:
-
-```json
-{
-  "root": true,
-  "extends": [ "@bonniernews/eslint-config/all" ]
-}
-```
-
-This will activate the test configuration for all files inside directories named `test` or `tests`.
 
 ### Running eslint
 

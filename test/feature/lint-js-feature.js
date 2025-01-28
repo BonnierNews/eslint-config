@@ -8,7 +8,6 @@ Feature("linting js files", () => {
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
         overrideConfigFile: "index.js",
-        useEslintrc: false,
         ignore: false,
       });
     });
@@ -23,7 +22,7 @@ Feature("linting js files", () => {
     });
 
     And("one file should have no messages", () => {
-      expect(results[0].messages.length).to.eql(0);
+      expect(results[0].messages.length).to.eql(0, JSON.stringify(results[0].messages));
     });
   });
 
@@ -32,7 +31,6 @@ Feature("linting js files", () => {
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
         overrideConfigFile: "index.js",
-        useEslintrc: false,
         ignore: false,
       });
     });
@@ -47,7 +45,7 @@ Feature("linting js files", () => {
     });
 
     And("one file should have errors", () => {
-      expect(results[0].messages.length).to.be.eql(1);
+      expect(results[0].messages.length).to.be.eql(1, JSON.stringify(results[0].messages));
     });
 
     And("one error should be because it extends a class", () => {

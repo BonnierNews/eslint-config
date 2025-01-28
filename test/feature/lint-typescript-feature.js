@@ -8,7 +8,6 @@ Feature("linting ts files", () => {
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
-        useEslintrc: false,
         ignore: false,
       });
     });
@@ -32,7 +31,6 @@ Feature("linting ts files", () => {
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
-        useEslintrc: false,
         ignore: false,
       });
     });
@@ -47,7 +45,7 @@ Feature("linting ts files", () => {
     });
 
     And("one file should have errors", () => {
-      expect(results[0].messages.length).to.be.gt(1);
+      expect(results[0].messages.length).to.eql(1);
     });
 
     And("one error should be because it has enum", () => {
@@ -63,7 +61,6 @@ Feature("linting ts files", () => {
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
-        useEslintrc: false,
         ignore: false,
       });
     });
@@ -94,7 +91,6 @@ Feature("linting ts files", () => {
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
-        useEslintrc: false,
         ignore: false,
       });
     });
@@ -125,7 +121,6 @@ Feature("linting ts files", () => {
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
-        useEslintrc: false,
         ignore: false,
       });
     });
@@ -156,7 +151,6 @@ Feature("linting ts files", () => {
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
         overrideConfigFile: "typescript.js",
-        useEslintrc: false,
         ignore: false,
       });
     });

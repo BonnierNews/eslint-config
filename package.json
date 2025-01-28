@@ -1,6 +1,6 @@
 {
   "name": "@bonniernews/eslint-config",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "ESLint config",
   "main": "index.js",
   "scripts": {
@@ -21,14 +21,14 @@
   "contributors": [],
   "devDependencies": {
     "chai": "^4.3.10",
-    "eslint": "^8.53.0",
-    "mocha": "^10.2.0",
+    "eslint": "^9.19.0",
+    "mocha": "^11.1.0",
     "mocha-cakes-2": "^3.3.0",
-    "typescript": "^5.4.3"
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
-    "eslint": ">=8.3.0",
-    "typescript": ">=5.1.0"
+    "eslint": ">=9.19.0",
+    "typescript": ">=5.7.3"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -36,27 +36,26 @@
     }
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "license": "MIT",
   "dependencies": {
     "@bonniernews/eslint-plugin-typescript-rules": "^0.9.0",
-    "@typescript-eslint/eslint-plugin": "^7.4.0",
-    "@typescript-eslint/parser": "^7.4.0",
-    "eslint-plugin-chai-friendly": "^0.7.2",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-n": "^16.3.1",
-    "eslint-plugin-no-only-tests": "^3.1.0",
-    "eslint-plugin-react": "^7.33.2"
+    "@stylistic/eslint-plugin": "^3.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
+    "@typescript-eslint/parser": "^8.22.0",
+    "eslint-plugin-chai-friendly": "^1.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.15.1",
+    "eslint-plugin-no-only-tests": "^3.3.0",
+    "eslint-plugin-react": "^7.37.4"
   },
   "files": [
-    "all.js",
     "index.js",
+    "base-config.js",
     "react-rules.js",
-    "react.js",
     "rules.js",
     "test.js",
-    "typescript-react.js",
     "typescript-rules.js",
     "typescript.js",
     "README.md",

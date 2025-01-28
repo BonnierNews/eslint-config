@@ -1,5 +1,8 @@
 "use strict";
 
+const noOnlyTests = require("eslint-plugin-no-only-tests");
+const chaiFriendly = require("eslint-plugin-chai-friendly");
+
 const mochaCakes2Globals = {
   And: "readonly",
   But: "readonly",
@@ -37,9 +40,11 @@ const mochaCakes2Rules = {
 };
 
 module.exports = {
-  env: { mocha: true },
-  globals: { ...mochaCakes2Globals },
-  plugins: [ "no-only-tests", "chai-friendly" ],
+  languageOptions: { globals: { ...mochaCakes2Globals } },
+  plugins: {
+    "no-only-tests": noOnlyTests,
+    "chai-friendly": chaiFriendly,
+  },
   rules: {
     ...mochaCakes2Rules,
     // no only in tests

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0
+
+- Breaking change: switch to eslint 8 to eslint 9 and adapt to the new flat file config format.
+- Breaking change: removed `all`, `react`, `test` and `typescript-react` configs. Replaced with the default config (js) and
+  just one for typescript `typescript` which includes react and test rules.
+
 ## 1.2.0
 
 - Bumped `typescript` to 5.4.3 and `@typescript-eslint` to 7.4.0.

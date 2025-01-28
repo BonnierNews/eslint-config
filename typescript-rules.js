@@ -3,7 +3,7 @@
 const typescriptEslintRecommended = {
   "@typescript-eslint/adjacent-overload-signatures": "error",
   "@typescript-eslint/ban-ts-comment": "error",
-  "@typescript-eslint/ban-types": "error",
+  "@typescript-eslint/no-restricted-types": "error",
   "no-array-constructor": "off",
   "@typescript-eslint/no-array-constructor": "error",
   "no-empty-function": "off",
@@ -11,8 +11,7 @@ const typescriptEslintRecommended = {
   "@typescript-eslint/no-empty-interface": "error",
   "@typescript-eslint/no-explicit-any": "off",
   "@typescript-eslint/no-extra-non-null-assertion": "error",
-  "no-extra-semi": "off",
-  "@typescript-eslint/no-extra-semi": "error",
+  "@stylistic/no-extra-semi": "error",
   "@typescript-eslint/no-inferrable-types": "error",
   "no-loss-of-precision": "off",
   "@typescript-eslint/no-loss-of-precision": "error",
@@ -62,4 +61,5 @@ module.exports = {
   ...importRules,
   "@bonniernews/typescript-rules/disallow-abstract-class": "error",
   "@bonniernews/typescript-rules/disallow-non-es-compatible": "error",
+  "@bonniernews/typescript-rules/disallow-class-extends": "error",
 };
