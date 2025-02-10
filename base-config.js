@@ -47,6 +47,7 @@ const baseConfig = {
     "submodule/**",
     "logs/",
     "docs/",
+    "**/.terraform/**",
   ],
   ...(isModuleProject ? moduleConfig : commonjsConfig),
   rules: getRules(isModuleProject),
