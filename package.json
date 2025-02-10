@@ -66,5 +66,13 @@
     "CHANGELOG.md",
     "EDITORS.md",
     "LICENSE"
-  ]
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./js": "./js.js",
+    "./ts": "./ts.js",
+    "./jsx": "./jsx.jsx",
+    "./tsx": "./tsx.tsx",
+    "./test": "./test.js"
+  }
 }
