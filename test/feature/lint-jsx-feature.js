@@ -7,7 +7,7 @@ Feature("linting jsx files", () => {
     let eslint;
     Given("we have an eslint instance with the react config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "index.js",
+        overrideConfigFile: "jsx.js",
         overrideConfig: {
           languageOptions: {
             ecmaVersion: 2022,
@@ -43,7 +43,7 @@ Feature("linting jsx files", () => {
     let eslint;
     Given("we have an eslint instance with the react config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "index.js",
+        overrideConfigFile: "jsx.js",
         overrideConfig: {
           languageOptions: {
             ecmaVersion: 2022,
@@ -79,7 +79,7 @@ Feature("linting jsx files", () => {
     let eslint;
     Given("we have an eslint instance with the react config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "index.js",
+        overrideConfigFile: "jsx.js",
         overrideConfig: {
           languageOptions: {
             ecmaVersion: 2022,
@@ -115,7 +115,7 @@ Feature("linting jsx files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "index.js",
+        overrideConfigFile: "jsx.js",
         overrideConfig: {
           languageOptions: {
             ecmaVersion: 2022,

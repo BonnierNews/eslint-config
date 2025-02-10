@@ -7,7 +7,7 @@ Feature("linting js files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "index.js",
+        overrideConfigFile: "js.js",
         ignore: false,
       });
     });
@@ -30,7 +30,7 @@ Feature("linting js files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "index.js",
+        overrideConfigFile: "js.js",
         ignore: false,
       });
     });

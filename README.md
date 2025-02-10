@@ -23,12 +23,18 @@ A major change from eslint 8 is that only one `eslint.config.js` file will be us
 way as in 8 where it would inherit the configuration from files from the root folder, and the new recommendation is to just have one `eslint.config.js` at the root
 of the repository.
 
-As well as changing the configuration format to adapt to eslint 9, @bonniernews/eslint-config has removed some of the previous configuration options `all`, `test`, `react`
-and `typescript-react` have all been removed. Now there are only two, the base (js only) and `typescript` which is the base with added support for `ts` and `tsx`.
+The different rule sets have changed name and behaviour:
 
-### JavaScript configuration
+* `@bonniernews/eslint-config` will import configs and apply them to the respective targets
+* `@bonniernews/eslint-config/js` config for js files
+* `@bonniernews/eslint-config/ts` config for ts files
+* `@bonniernews/eslint-config/jsx` config for jsx files
+* `@bonniernews/eslint-config/tsx` config for tsx files
+* `@bonniernews/eslint-config/test` config for test files using mocha-cakes-2 and chai
 
-This config includes support for `js`, `jsx` and tests written using `mocha-cakes-2` and `chai`.
+### Configuring all rules
+
+Configures all rules, js, ts, tsx, jsx and test rules.
 
 To activate the config, you need to add the following to your `eslint.config.js`-file:
 
@@ -38,16 +44,56 @@ To activate the config, you need to add the following to your `eslint.config.js`
 module.exports = require("@bonniernews/eslint-config");
 ```
 
-### TypeScript configuration
+### JavaScript configuration
 
-This config includes support for `js`, `jsx`, `ts`, `tsx` and and tests written using `mocha-cakes-2` and `chai`.
-
-To activate the config, you need to add the following to your `.eslintrc.json`-file:
+To activate the config, you need to add the following to your `eslint.config.js`-file:
 
 ```javascript
 "use strict";
 
-module.exports = require("@bonniernews/eslint-config/typescript");
+module.exports = require("@bonniernews/eslint-config/js");
+```
+
+### TypeScript configuration
+
+To activate the config, you need to add the following to your `eslint.config.js`-file:
+
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/ts");
+```
+
+### React configuration
+
+To activate the config, you need to add the following to your `eslint.config.js`-file:
+
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/jsx");
+```
+
+### Test configuration
+
+Adds useful plugins and globals for testing with mocha-cakes-2 + chai.
+
+To activate the config, you need to add the following to your `eslint.config.js`-file:
+
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/test");
+```
+
+### Typed react configuration
+
+To activate the config, you need to add the following to your `eslint.config.js`-file:
+
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/tsx");
 ```
 
 ### Running eslint

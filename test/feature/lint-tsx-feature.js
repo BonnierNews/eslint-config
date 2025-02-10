@@ -7,7 +7,7 @@ Feature("linting tsx files", () => {
     let eslint;
     Given("we have an eslint instance with the react config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "typescript.js",
+        overrideConfigFile: "tsx.js",
         overrideConfig: {
           settings: {
             react: {

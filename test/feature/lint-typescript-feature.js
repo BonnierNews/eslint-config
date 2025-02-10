@@ -7,7 +7,7 @@ Feature("linting ts files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "typescript.js",
+        overrideConfigFile: "ts.js",
         ignore: false,
       });
     });
@@ -30,7 +30,7 @@ Feature("linting ts files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "typescript.js",
+        overrideConfigFile: "ts.js",
         ignore: false,
       });
     });
@@ -60,7 +60,7 @@ Feature("linting ts files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "typescript.js",
+        overrideConfigFile: "ts.js",
         ignore: false,
       });
     });
@@ -90,7 +90,7 @@ Feature("linting ts files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "typescript.js",
+        overrideConfigFile: "ts.js",
         ignore: false,
       });
     });
@@ -120,7 +120,7 @@ Feature("linting ts files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "typescript.js",
+        overrideConfigFile: "ts.js",
         ignore: false,
       });
     });
@@ -150,7 +150,7 @@ Feature("linting ts files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "typescript.js",
+        overrideConfigFile: "ts.js",
         ignore: false,
       });
     });
