@@ -7,6 +7,26 @@ and the appropriate setup will be used by looking at the projects `package.json`
 
 For Node versions that support it (version 16 and above), the `es2022` environment will also be activated. Otherwise `es2021` will be used.
 
+## Table of contents
+
+- [@bonniernews/eslint-config](#bonniernewseslint-config)
+  - [Table of contents](#table-of-contents)
+  - [Usage](#usage)
+    - [Configuring all rules](#configuring-all-rules)
+    - [JavaScript configuration](#javascript-configuration)
+    - [TypeScript configuration](#typescript-configuration)
+    - [React configuration](#react-configuration)
+    - [Test configuration](#test-configuration)
+    - [Typed react configuration](#typed-react-configuration)
+  - [Migrating from 1.X to 2.X](#migrating-from-1x-to-2x)
+  - [Running eslint](#running-eslint)
+  - [Usage in an existing project](#usage-in-an-existing-project)
+  - [Usage with Prettier](#usage-with-prettier)
+  - [Enable format on save](#enable-format-on-save)
+  - [Changelog](#changelog)
+  - [Publishing a new version](#publishing-a-new-version)
+  - [License](#license)
+
 ## Usage
 
 Install `eslint` and `@bonniernews/eslint-config`:
@@ -14,23 +34,6 @@ Install `eslint` and `@bonniernews/eslint-config`:
 ```bash
 npm install --save-dev eslint @bonniernews/eslint-config
 ```
-
-## Migrating from 1.X to 2.X
-
-2.X introduces eslint 9 which has a different configuration format. It is recommended to read the [eslint migration guide](https://eslint.org/docs/latest/use/configure/migration-guide).
-
-A major change from eslint 8 is that only one `eslint.config.js` file will be used, placing a specific configuration file in a folder will not behave in the same
-way as in 8 where it would inherit the configuration from files from the root folder, and the new recommendation is to just have one `eslint.config.js` at the root
-of the repository.
-
-The different rule sets have changed name and behaviour:
-
-* `@bonniernews/eslint-config` will import configs and apply them to the respective targets
-* `@bonniernews/eslint-config/js` config for js files
-* `@bonniernews/eslint-config/ts` config for ts files
-* `@bonniernews/eslint-config/jsx` config for jsx files
-* `@bonniernews/eslint-config/tsx` config for tsx files
-* `@bonniernews/eslint-config/test` config for test files using mocha-cakes-2 and chai
 
 ### Configuring all rules
 
@@ -96,7 +99,24 @@ To activate the config, you need to add the following to your `eslint.config.js`
 module.exports = require("@bonniernews/eslint-config/tsx");
 ```
 
-### Running eslint
+## Migrating from 1.X to 2.X
+
+2.X introduces eslint 9 which has a different configuration format. It is recommended to read the [eslint migration guide](https://eslint.org/docs/latest/use/configure/migration-guide).
+
+A major change from eslint 8 is that only one `eslint.config.js` file will be used, placing a specific configuration file in a folder will not behave in the same
+way as in 8 where it would inherit the configuration from files from the root folder, and the new recommendation is to just have one `eslint.config.js` at the root
+of the repository.
+
+The different rule sets have changed name and behaviour:
+
+* `@bonniernews/eslint-config` will import configs and apply them to the respective targets
+* `@bonniernews/eslint-config/js` config for js files
+* `@bonniernews/eslint-config/ts` config for ts files
+* `@bonniernews/eslint-config/jsx` config for jsx files
+* `@bonniernews/eslint-config/tsx` config for tsx files
+* `@bonniernews/eslint-config/test` config for test files using mocha-cakes-2 and chai
+
+## Running eslint
 
 Run with:
 
@@ -146,6 +166,15 @@ This will format the entire code base according to the rules of _Prettier_ and t
 ## Changelog
 
 Can be found [here](CHANGELOG.md).
+
+## Publishing a new version
+
+1. Prepare the new version
+2. Fill out the CHANGELOG
+3. Ensure that package-lock, et al are up-to-date
+4. Commit
+5. Tag
+6. Publish, when publishing ensure that you have a token in ~/.npmrc with auth for npm.pkg.github.com  as we publish both to our own registry and to the npm registry
 
 ## License
 

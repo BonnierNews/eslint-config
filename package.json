@@ -4,7 +4,9 @@
   "description": "ESLint config",
   "main": "index.js",
   "scripts": {
-    "test": "mocha && eslint ."
+    "test": "mocha && eslint .",
+    "postpublish": "npm run publish-npm",
+    "publish-npm": "npm publish --access public --ignore-scripts --@bonniernews:registry='https://npm.pkg.github.com'"
   },
   "repository": {
     "type": "git",
