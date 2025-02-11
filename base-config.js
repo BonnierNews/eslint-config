@@ -41,14 +41,6 @@ const commonjsConfig = {
 };
 
 const baseConfig = {
-  ignores: [
-    "tmp/",
-    "public/",
-    "submodule/**",
-    "logs/",
-    "docs/",
-    "**/.terraform/**",
-  ],
   ...(isModuleProject ? moduleConfig : commonjsConfig),
   rules: getRules(isModuleProject),
 };

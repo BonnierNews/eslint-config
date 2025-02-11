@@ -12,4 +12,14 @@ module.exports = [
   tsConfig,
   tsxConfig,
   testConfig,
+  {
+    ignores: [
+      "tmp/",
+      "public/",
+      "submodule/**",
+      "logs/",
+      "docs/",
+      "**/.terraform/",
+    ],
+  },
 ];
