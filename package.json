@@ -58,8 +58,8 @@
     "react-rules.js",
     "js.js",
     "ts.js",
-    "jsx.jsx",
-    "tsx.tsx",
+    "jsx.js",
+    "tsx.js",
     "rules.js",
     "test.js",
     "typescript-rules.js",
@@ -73,8 +73,8 @@
     ".": "./index.js",
     "./js": "./js.js",
     "./ts": "./ts.js",
-    "./jsx": "./jsx.jsx",
-    "./tsx": "./tsx.tsx",
+    "./jsx": "./jsx.js",
+    "./tsx": "./tsx.js",
     "./test": "./test.js"
   }
 }
