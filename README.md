@@ -18,6 +18,7 @@ For Node versions that support it (version 16 and above), the `es2022` environme
     - [React configuration](#react-configuration)
     - [Test configuration](#test-configuration)
     - [Typed react configuration](#typed-react-configuration)
+    - [Global ignores](#global-ignores)
   - [Migrating from 1.X to 2.X](#migrating-from-1x-to-2x)
   - [Running eslint](#running-eslint)
   - [Usage in an existing project](#usage-in-an-existing-project)
@@ -99,6 +100,21 @@ To activate the config, you need to add the following to your `eslint.config.js`
 module.exports = require("@bonniernews/eslint-config/tsx");
 ```
 
+### Global ignores
+
+To activate this config (in addition to other config(s), using it alone makes no sense), add the following:
+
+```javascript
+"use strict";
+
+const ignores = require("@bonniernews/eslint-config/ignores");
+
+module.exports = [
+  ...allYourGoodConfigs,
+  ignores
+];
+```
+
 ## Migrating from 1.X to 2.X
 
 2.X introduces eslint 9 which has a different configuration format. It is recommended to read the [eslint migration guide](https://eslint.org/docs/latest/use/configure/migration-guide).
@@ -106,6 +122,9 @@ module.exports = require("@bonniernews/eslint-config/tsx");
 A major change from eslint 8 is that only one `eslint.config.js` file will be used, placing a specific configuration file in a folder will not behave in the same
 way as in 8 where it would inherit the configuration from files from the root folder, and the new recommendation is to just have one `eslint.config.js` at the root
 of the repository.
+
+One major change from eslint 8 is that in order for ignores to be global they need to be added in a single config at the root level. If you just use the `@bonniernews/eslint-config`
+you will have it included, but if you construct your own set of rules you need to add it manually to your config file, otherwise eslint will run on files in terraform directories and such.
 
 The different rule sets have changed name and behaviour:
 
@@ -115,6 +134,7 @@ The different rule sets have changed name and behaviour:
 * `@bonniernews/eslint-config/jsx` config for jsx files
 * `@bonniernews/eslint-config/tsx` config for tsx files
 * `@bonniernews/eslint-config/test` config for test files using mocha-cakes-2 and chai
+* `@bonniernews/eslint-config/ignores` global ignores
 
 ## Running eslint
 

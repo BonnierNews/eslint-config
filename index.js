@@ -5,6 +5,7 @@ const jsxConfig = require("./jsx");
 const tsConfig = require("./ts");
 const tsxConfig = require("./tsx");
 const testConfig = require("./test");
+const ignoresConfig = require("./ignores");
 
 module.exports = [
   baseConfig,
@@ -12,14 +13,5 @@ module.exports = [
   tsConfig,
   tsxConfig,
   testConfig,
-  {
-    ignores: [
-      "tmp/",
-      "public/",
-      "submodule/**",
-      "logs/",
-      "docs/",
-      "**/.terraform/",
-    ],
-  },
+  ignoresConfig,
 ];

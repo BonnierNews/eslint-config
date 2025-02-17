@@ -62,6 +62,7 @@
     "jsx.js",
     "tsx.js",
     "rules.js",
+    "ignores.js",
     "test.js",
     "typescript-rules.js",
     "typescript.js",
@@ -76,6 +77,7 @@
     "./ts": "./ts.js",
     "./jsx": "./jsx.js",
     "./tsx": "./tsx.js",
-    "./test": "./test.js"
+    "./test": "./test.js",
+    "./ignores": "./ignores.js"
   }
 }
