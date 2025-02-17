@@ -3,6 +3,7 @@
 const noOnlyTests = require("eslint-plugin-no-only-tests");
 const chaiFriendly = require("eslint-plugin-chai-friendly");
 const baseConfig = require("./base-config");
+const globals = require("globals");
 
 const mochaCakes2Globals = {
   And: "readonly",
@@ -12,14 +13,12 @@ const mochaCakes2Globals = {
   Scenario: "readonly",
   Then: "readonly",
   When: "readonly",
-  should: "readonly",
-  expect: "readonly",
   afterEachScenario: "readonly",
   beforeEachScenario: "readonly",
   afterEachFeature: "readonly",
   beforeEachFeature: "readonly",
-  it: "readonly",
-  describe: "readonly",
+  ...globals.mocha,
+  ...globals.chai,
 };
 
 const mochaCakes2Rules = {
