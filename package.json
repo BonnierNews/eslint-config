@@ -61,6 +61,7 @@
     "ts.js",
     "jsx.js",
     "tsx.js",
+    "globals.js",
     "rules.js",
     "ignores.js",
     "test.js",
@@ -78,6 +79,7 @@
     "./jsx": "./jsx.js",
     "./tsx": "./tsx.js",
     "./test": "./test.js",
-    "./ignores": "./ignores.js"
+    "./ignores": "./ignores.js",
+    "./globals": "./globals.js"
   }
 }

@@ -3,7 +3,7 @@
 const path = require("path");
 const fs = require("fs");
 const getRules = require("./rules");
-const globals = require("globals");
+const globals = require("./globals");
 
 const eslintPluginN = require("eslint-plugin-n");
 const eslintPluginImport = require("eslint-plugin-import");

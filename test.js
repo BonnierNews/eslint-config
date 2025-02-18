@@ -3,7 +3,7 @@
 const noOnlyTests = require("eslint-plugin-no-only-tests");
 const chaiFriendly = require("eslint-plugin-chai-friendly");
 const baseConfig = require("./base-config");
-const globals = require("globals");
+const globals = require("./globals");
 
 const mochaCakes2Globals = {
   And: "readonly",
