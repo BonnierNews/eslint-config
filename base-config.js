@@ -9,10 +9,22 @@ const eslintPluginN = require("eslint-plugin-n");
 const eslintPluginImport = require("eslint-plugin-import");
 const eslintPluginTypescriptRules = require("@bonniernews/eslint-plugin-typescript-rules");
 
-// This will take care of potential symlinks
-const appDir = fs.realpathSync(process.cwd());
+function findPackageJson(startDir) {
+  let dir = path.resolve(startDir || process.cwd());
 
-const isModuleProject = require(path.resolve(appDir, "package.json")).type === "module";
+  do {
+    const pkgfile = path.join(dir, "package.json");
+
+    if (!fs.existsSync(pkgfile)) {
+      dir = path.join(dir, "..");
+      continue;
+    }
+    return pkgfile;
+  } while (dir !== path.resolve(dir, "..") && !fs.existsSync(path.resolve(dir, ".git")));
+  return null;
+}
+
+const isModuleProject = require(findPackageJson(fs.realpathSync(process.cwd()))).type === "module";
 const hasES2022Support = parseInt(process.versions.node.split(".").shift(), 10) >= 16;
 
 const moduleConfig = {
