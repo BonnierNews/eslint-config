@@ -19,6 +19,7 @@ For Node versions that support it (version 16 and above), the `es2022` environme
     - [Test configuration](#test-configuration)
     - [Typed react configuration](#typed-react-configuration)
     - [Global ignores](#global-ignores)
+    - [Globals](#globals)
   - [Migrating from 1.X to 2.X](#migrating-from-1x-to-2x)
   - [Running eslint](#running-eslint)
   - [Usage in an existing project](#usage-in-an-existing-project)
@@ -112,6 +113,21 @@ const ignores = require("@bonniernews/eslint-config/ignores");
 module.exports = [
   ...allYourGoodConfigs,
   ignores
+];
+```
+
+### Globals
+
+Globals for browsers, etc. that may be needed.
+
+```javascript
+"use strict";
+
+const globals = require("@bonniernews/eslint-config/globals");
+
+module.exports = [
+  ...allYourGoodConfigs,
+  { files: "assets/scripts", languageOptions: { globals: globals.browser } }
 ];
 ```
 
