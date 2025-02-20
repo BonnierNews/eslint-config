@@ -127,7 +127,7 @@ const globals = require("@bonniernews/eslint-config/globals");
 
 module.exports = [
   ...allYourGoodConfigs,
-  { files: "assets/scripts", languageOptions: { globals: globals.browser } }
+  { files: [ "assets/scripts" ], languageOptions: { globals: globals.browser } }
 ];
 ```
 
