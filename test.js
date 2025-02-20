@@ -44,7 +44,7 @@ const mochaCakes2Rules = {
 module.exports = {
   ...baseConfig,
   languageOptions: { globals: { ...mochaCakes2Globals } },
-  files: [ "**/test/**/*.js" ],
+  files: [ "**/test/**/*.js", "**/test/**/*.ts" ],
   plugins: {
     ...baseConfig.plugins,
     "no-only-tests": noOnlyTests,
