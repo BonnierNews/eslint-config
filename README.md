@@ -210,7 +210,7 @@ Can be found [here](CHANGELOG.md).
 3. Ensure that package-lock, et al are up-to-date
 4. Commit
 5. Tag
-6. Publish, when publishing ensure that you have a token in ~/.npmrc with auth for npm.pkg.github.com  as we publish both to our own registry and to the npm registry
+6. Publish, when publishing ensure that you have a token in ~/.npmrc with auth for npm.pkg.github.com as we publish both to our own registry and to the npm registry
 
 ## License
 
