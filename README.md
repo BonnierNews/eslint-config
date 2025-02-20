@@ -206,7 +206,7 @@ Can be found [here](CHANGELOG.md).
 ## Publishing a new version
 
 1. Prepare the new version
-2. Fill out the CHANGELOG
+2. Fill out the [CHANGELOG](CHANGELOG.md)
 3. Ensure that package-lock, et al are up-to-date
 4. Commit
 5. Tag
