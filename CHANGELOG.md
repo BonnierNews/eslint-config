@@ -5,8 +5,8 @@
 - Breaking change: switch from eslint 8 to eslint 9 and adapt to the new flat file config format.
 - Breaking change: removed `all`, `test` and `typescript-react` configs. Just importing the index config
   will enable all configs. For just the specific configs import `@bonniernews/eslint-config/js`,
-  `@bonniernews/eslint-config/ts`, `@bonniernews/eslint-config/jsx`, `@bonniernews/eslint-config/test`
-  or `@bonniernews/eslint-config/tsx`.
+  `@bonniernews/eslint-config/ts`, `@bonniernews/eslint-config/jsx`, `@bonniernews/eslint-config/test-js`,
+  `@bonniernews/eslint-config/test-ts`, or `@bonniernews/eslint-config/tsx`.
 
 ## 1.2.0
 

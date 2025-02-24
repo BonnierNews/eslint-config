@@ -4,7 +4,8 @@ const baseConfig = require("./base-config");
 const jsxConfig = require("./jsx");
 const tsConfig = require("./ts");
 const tsxConfig = require("./tsx");
-const testConfig = require("./test");
+const testJsConfig = require("./test-js");
+const testTsConfig = require("./test-ts");
 const ignoresConfig = require("./ignores");
 
 module.exports = [
@@ -12,6 +13,7 @@ module.exports = [
   jsxConfig,
   tsConfig,
   tsxConfig,
-  testConfig,
+  testJsConfig,
+  testTsConfig,
   ignoresConfig,
 ];

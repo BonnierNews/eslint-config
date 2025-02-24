@@ -83,12 +83,20 @@ module.exports = require("@bonniernews/eslint-config/jsx");
 
 Adds useful plugins and globals for testing with mocha-cakes-2 + chai.
 
-To activate the config, you need to add the following to your `eslint.config.js`-file:
+To activate the config, you need to add the following to your `eslint.config.js`-file (for js):
 
 ```javascript
 "use strict";
 
-module.exports = require("@bonniernews/eslint-config/test");
+module.exports = require("@bonniernews/eslint-config/test-js");
+```
+
+or the following (for ts):
+
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/test-ts");
 ```
 
 ### Typed react configuration

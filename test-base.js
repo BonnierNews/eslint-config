@@ -2,7 +2,6 @@
 
 const noOnlyTests = require("eslint-plugin-no-only-tests");
 const chaiFriendly = require("eslint-plugin-chai-friendly");
-const baseConfig = require("./base-config");
 const globals = require("./globals");
 
 const mochaCakes2Globals = {
@@ -42,16 +41,13 @@ const mochaCakes2Rules = {
 };
 
 module.exports = {
-  ...baseConfig,
   languageOptions: { globals: { ...mochaCakes2Globals } },
   files: [ "**/test/**/*.js", "**/test/**/*.ts" ],
   plugins: {
-    ...baseConfig.plugins,
     "no-only-tests": noOnlyTests,
     "chai-friendly": chaiFriendly,
   },
   rules: {
-    ...baseConfig.rules,
     ...mochaCakes2Rules,
     // no only in tests
     "no-only-tests/no-only-tests": [

@@ -64,7 +64,9 @@
     "globals.js",
     "rules.js",
     "ignores.js",
-    "test.js",
+    "test-base.js",
+    "test-js.js",
+    "test-ts.js",
     "typescript-rules.js",
     "typescript.js",
     "README.md",
@@ -78,7 +80,8 @@
     "./ts": "./ts.js",
     "./jsx": "./jsx.js",
     "./tsx": "./tsx.js",
-    "./test": "./test.js",
+    "./test-js": "./test-js.js",
+    "./test-ts": "./test-ts.js",
     "./ignores": "./ignores.js",
     "./globals": "./globals.js"
   }
