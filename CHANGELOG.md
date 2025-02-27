@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.0
+
+- Breaking change: switch from eslint 8 to eslint 9 and adapt to the new flat file config format.
+- Breaking change: removed `all`, `test` and `typescript-react` configs. Just importing the index config
+  will enable all configs. For just the specific configs import `@bonniernews/eslint-config/js`,
+  `@bonniernews/eslint-config/ts`, `@bonniernews/eslint-config/jsx`, `@bonniernews/eslint-config/test-js`,
+  `@bonniernews/eslint-config/test-ts`, or `@bonniernews/eslint-config/tsx`. When creating your own set of
+  rules different globals (as an example `globals.browser`) is available from `@bonniernews/eslint-config/globals`.
+
 ## 1.2.0
 
 - Bumped `typescript` to 5.4.3 and `@typescript-eslint` to 7.4.0.

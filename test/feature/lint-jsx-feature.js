@@ -5,13 +5,14 @@ const { ESLint } = require("eslint");
 Feature("linting jsx files", () => {
   Scenario("jsx file passing lint rules", () => {
     let eslint;
-    Given("we have an eslint instance with the base config", () => {
+    Given("we have an eslint instance with the react config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "react.js",
+        overrideConfigFile: "jsx.js",
         overrideConfig: {
-          parserOptions: {
+          languageOptions: {
             ecmaVersion: 2022,
             sourceType: "module",
+            parserOptions: { ecmaFeatures: { jsx: true } },
           },
           settings: {
             react: {
@@ -20,23 +21,93 @@ Feature("linting jsx files", () => {
             },
           },
         },
-        useEslintrc: false,
         ignore: false,
       });
     });
 
     let results;
-    When("we lint two valid jsx files", async () => {
-      results = await eslint.lintFiles([ "test/data/jsx/noerrors.jsx", "test/data/jsx/preact-module.jsx" ]);
+    When("we lint a valid jsx file", async () => {
+      results = await eslint.lintFiles([ "test/data/jsx/noerrors.jsx" ]);
     });
 
     Then("we should have linted the correct number of files", () => {
-      expect(results.length).to.eql(2);
+      expect(results.length).to.eql(1);
     });
 
     And("the lint result should have no messages", () => {
       expect(results[0].messages.length).to.eql(0, JSON.stringify(results[0].messages, null, 2));
-      expect(results[1].messages.length).to.eql(0, JSON.stringify(results[0].messages, null, 2));
+    });
+  });
+
+  Scenario("jsx file passing lint rules", () => {
+    let eslint;
+    Given("we have an eslint instance with the react config", () => {
+      eslint = new ESLint({
+        overrideConfigFile: "jsx.js",
+        overrideConfig: {
+          languageOptions: {
+            ecmaVersion: 2022,
+            sourceType: "module",
+            parserOptions: { ecmaFeatures: { jsx: true } },
+          },
+          settings: {
+            react: {
+              pragma: "Preact",
+              version: "16.0",
+            },
+          },
+        },
+        ignore: false,
+      });
+    });
+
+    let results;
+    When("we lint a valid jsx file", async () => {
+      results = await eslint.lintFiles([ "test/data/jsx/noerrors.jsx" ]);
+    });
+
+    Then("we should have linted the correct number of files", () => {
+      expect(results.length).to.eql(1);
+    });
+
+    And("the lint result should have no messages", () => {
+      expect(results[0].messages.length).to.eql(0, JSON.stringify(results[0].messages, null, 2));
+    });
+  });
+
+  Scenario("jsx file with preact module passing lint rules", () => {
+    let eslint;
+    Given("we have an eslint instance with the react config", () => {
+      eslint = new ESLint({
+        overrideConfigFile: "jsx.js",
+        overrideConfig: {
+          languageOptions: {
+            ecmaVersion: 2022,
+            sourceType: "module",
+            parserOptions: { ecmaFeatures: { jsx: true } },
+          },
+          settings: {
+            react: {
+              pragma: "Preact",
+              version: "16.0",
+            },
+          },
+        },
+        ignore: false,
+      });
+    });
+
+    let results;
+    When("we lint a valid jsx file with a preact module", async () => {
+      results = await eslint.lintFiles([ "test/data/jsx/preact-module.jsx" ]);
+    });
+
+    Then("we should have linted the correct number of files", () => {
+      expect(results.length).to.eql(1);
+    });
+
+    And("the lint result should have no messages", () => {
+      expect(results[0].messages.length).to.eql(0, JSON.stringify(results[0].messages, null, 2));
     });
   });
 
@@ -44,11 +115,12 @@ Feature("linting jsx files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "react.js",
+        overrideConfigFile: "jsx.js",
         overrideConfig: {
-          parserOptions: {
+          languageOptions: {
             ecmaVersion: 2022,
             sourceType: "module",
+            parserOptions: { ecmaFeatures: { jsx: true } },
           },
           settings: {
             react: {
@@ -57,7 +129,6 @@ Feature("linting jsx files", () => {
             },
           },
         },
-        useEslintrc: false,
         ignore: false,
       });
     });

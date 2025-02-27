@@ -7,6 +7,28 @@ and the appropriate setup will be used by looking at the projects `package.json`
 
 For Node versions that support it (version 16 and above), the `es2022` environment will also be activated. Otherwise `es2021` will be used.
 
+## Table of contents
+
+- [@bonniernews/eslint-config](#bonniernewseslint-config)
+  - [Table of contents](#table-of-contents)
+  - [Usage](#usage)
+    - [Configuring all rules](#configuring-all-rules)
+    - [JavaScript configuration](#javascript-configuration)
+    - [TypeScript configuration](#typescript-configuration)
+    - [React configuration](#react-configuration)
+    - [Test configuration](#test-configuration)
+    - [Typed react configuration](#typed-react-configuration)
+    - [Global ignores](#global-ignores)
+    - [Globals](#globals)
+  - [Migrating from 1.X to 2.X](#migrating-from-1x-to-2x)
+  - [Running eslint](#running-eslint)
+  - [Usage in an existing project](#usage-in-an-existing-project)
+  - [Usage with Prettier](#usage-with-prettier)
+  - [Enable format on save](#enable-format-on-save)
+  - [Changelog](#changelog)
+  - [Publishing a new version](#publishing-a-new-version)
+  - [License](#license)
+
 ## Usage
 
 Install `eslint` and `@bonniernews/eslint-config`:
@@ -15,72 +37,130 @@ Install `eslint` and `@bonniernews/eslint-config`:
 npm install --save-dev eslint @bonniernews/eslint-config
 ```
 
-### Base configuration
+### Configuring all rules
 
-To activate the config, you need to add the following to your `.eslintrc.json`-file:
+Configures all rules, js, ts, tsx, jsx and test rules.
 
-```json
-{
-  "root": true,
-  "extends": [ "@bonniernews" ]
-}
+To activate the config, you need to add the following to your `eslint.config.js`-file:
+
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config");
+```
+
+### JavaScript configuration
+
+To activate the config, you need to add the following to your `eslint.config.js`-file:
+
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/js");
+```
+
+### TypeScript configuration
+
+To activate the config, you need to add the following to your `eslint.config.js`-file:
+
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/ts");
 ```
 
 ### React configuration
 
-To activate the config, you need to add the following to your `.eslintrc.json`-file:
+To activate the config, you need to add the following to your `eslint.config.js`-file:
 
-```json
-{
-  "root": true,
-  "extends": [ "@bonniernews/eslint-config/react" ]
-}
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/jsx");
 ```
-
-This will enable the react plugin for `*.jsx`-files.
-
-### TypeScript configuration
-
-To activate the config, you need to add the following to your `.eslintrc.json`-file:
-
-```json
-{
-  "root": true,
-  "extends": [ "@bonniernews/eslint-config/typescript" ]
-}
-```
-
-This will enable the typescript plugin for `*.ts`-files.
-
-### React with TypeScript configuration
-
-To activate the config, you need to add the following to your `.eslintrc.json`-file:
-
-```json
-{
-  "root": true,
-  "extends": [ "@bonniernews/eslint-config/typescript-react" ]
-}
-```
-
-This will enable the typescript and react plugin for `*.tsx`-files.
 
 ### Test configuration
 
-You can also choose to use the test config, which is adapted to testing using `mocha`, `mocha-cakes-2` and `chai`. To also enable this,
-either add a separate test configuration file extending from `"@bonniernews/eslint-config/test"`, or use the `"@bonniernews/eslint-config/all"`
-in your root configuration to activate everything together:
+Adds useful plugins and globals for testing with mocha-cakes-2 + chai.
 
-```json
-{
-  "root": true,
-  "extends": [ "@bonniernews/eslint-config/all" ]
-}
+To activate the config, you need to add the following to your `eslint.config.js`-file (for js):
+
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/test-js");
 ```
 
-This will activate the test configuration for all files inside directories named `test` or `tests`.
+or the following (for ts):
 
-### Running eslint
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/test-ts");
+```
+
+### Typed react configuration
+
+To activate the config, you need to add the following to your `eslint.config.js`-file:
+
+```javascript
+"use strict";
+
+module.exports = require("@bonniernews/eslint-config/tsx");
+```
+
+### Global ignores
+
+To activate this config (in addition to other config(s), using it alone makes no sense), add the following:
+
+```javascript
+"use strict";
+
+const ignores = require("@bonniernews/eslint-config/ignores");
+
+module.exports = [
+  ...allYourGoodConfigs,
+  ignores
+];
+```
+
+### Globals
+
+Globals for browsers, etc. that may be needed.
+
+```javascript
+"use strict";
+
+const globals = require("@bonniernews/eslint-config/globals");
+
+module.exports = [
+  ...allYourGoodConfigs,
+  { files: [ "assets/scripts" ], languageOptions: { globals: globals.browser } }
+];
+```
+
+## Migrating from 1.X to 2.X
+
+2.X introduces eslint 9 which has a different configuration format. It is recommended to read the [eslint migration guide](https://eslint.org/docs/latest/use/configure/migration-guide).
+
+A major change from eslint 8 is that only one `eslint.config.js` file will be used, placing a specific configuration file in a folder will not behave in the same
+way as in 8 where it would inherit the configuration from files from the root folder, and the new recommendation is to just have one `eslint.config.js` at the root
+of the repository.
+
+One major change from eslint 8 is that in order for ignores to be global they need to be added in a single config at the root level. If you just use the `@bonniernews/eslint-config`
+you will have it included, but if you construct your own set of rules you need to add it manually to your config file, otherwise eslint will run on files in terraform directories and such.
+
+The different rule sets have changed name and behaviour:
+
+* `@bonniernews/eslint-config` will import configs and apply them to the respective targets
+* `@bonniernews/eslint-config/js` config for js files
+* `@bonniernews/eslint-config/ts` config for ts files
+* `@bonniernews/eslint-config/jsx` config for jsx files
+* `@bonniernews/eslint-config/tsx` config for tsx files
+* `@bonniernews/eslint-config/test` config for test files using mocha-cakes-2 and chai
+* `@bonniernews/eslint-config/ignores` global ignores
+
+## Running eslint
 
 Run with:
 
@@ -130,6 +210,15 @@ This will format the entire code base according to the rules of _Prettier_ and t
 ## Changelog
 
 Can be found [here](CHANGELOG.md).
+
+## Publishing a new version
+
+1. Prepare the new version
+2. Fill out the [CHANGELOG](CHANGELOG.md)
+3. Ensure that package-lock, et al are up-to-date
+4. Commit
+5. Tag
+6. Publish, when publishing ensure that you have a token in ~/.npmrc with auth for npm.pkg.github.com as we publish both to our own registry and to the npm registry
 
 ## License
 
