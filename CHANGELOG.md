@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- Switched to released 1.0.0 of `@bonniernews/eslint-plugin-typescript-rules`.
+
 ## 2.0.0
 
 - Breaking change: switch from eslint 8 to eslint 9 and adapt to the new flat file config format.

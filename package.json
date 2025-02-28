@@ -1,6 +1,6 @@
 {
   "name": "@bonniernews/eslint-config",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "ESLint config",
   "main": "index.js",
   "scripts": {
@@ -42,7 +42,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@bonniernews/eslint-plugin-typescript-rules": "^1.0.0-alpha.0",
+    "@bonniernews/eslint-plugin-typescript-rules": "^1.0.0",
     "@stylistic/eslint-plugin": "^3.1.0",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
