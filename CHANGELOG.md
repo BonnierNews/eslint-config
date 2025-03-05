@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- Fixed bad docs.
+
 ## 2.0.1
 
 - Switched to released 1.0.0 of `@bonniernews/eslint-plugin-typescript-rules`.

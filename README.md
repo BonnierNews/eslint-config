@@ -157,7 +157,8 @@ The different rule sets have changed name and behaviour:
 * `@bonniernews/eslint-config/ts` config for ts files
 * `@bonniernews/eslint-config/jsx` config for jsx files
 * `@bonniernews/eslint-config/tsx` config for tsx files
-* `@bonniernews/eslint-config/test` config for test files using mocha-cakes-2 and chai
+* `@bonniernews/eslint-config/test-js` config for test js files using mocha-cakes-2 and chai
+* `@bonniernews/eslint-config/test-ts` config for test ts files using mocha-cakes-2 and chai
 * `@bonniernews/eslint-config/ignores` global ignores
 
 ## Running eslint
