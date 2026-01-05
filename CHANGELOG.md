@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.0.0
+
+- Updated all dependencies to latest versions:
+  - `@bonniernews/eslint-plugin-typescript-rules` to ^1.0.2
+  - `@stylistic/eslint-plugin` to ^5.6.1
+  - `@typescript-eslint/eslint-plugin` to ^8.51.0
+  - `@typescript-eslint/parser` to ^8.51.0
+  - `eslint-plugin-chai-friendly` to ^1.1.0
+  - `eslint-plugin-import` to ^2.32.0
+  - `eslint-plugin-n` to ^17.23.1
+  - `eslint-plugin-react` to ^7.37.5
+  - `globals` to ^17.0.0
+  - `chai` to ^6.2.2 (dev)
+  - `eslint` to ^9.39.2 (dev)
+  - `mocha` to ^11.7.5 (dev)
+  - `typescript` to ^5.9.3 (dev)
+- Fixed ES module compatibility issues with dependencies:
+  - Converted `ts.js`, `tsx.js`, `test-ts.js`, and `index.js` to use async exports for `@stylistic/eslint-plugin` (ES module)
+  - Converted test setup to ES modules (`test/helpers/setup.mjs`) for compatibility with `chai` v6
+  - Updated `.mocharc.json` to reference the new ES module setup file
+  - Added `test/helpers/` to ESLint ignore patterns
+
+**Breaking change:** The TypeScript-related configs (`ts`, `tsx`, `test-ts`, and the main `index`) now export Promises due to ES module dependencies. ESLint handles this automatically when you use the standard `module.exports = require('@bonniernews/eslint-config/ts')` pattern. However, if you were manually spreading these configs (e.g., `...require('@bonniernews/eslint-config/ts')`), you'll need to await them first or restructure to avoid spreading.
+
+**Dependency updates impact:**
+- **@stylistic/eslint-plugin (v3 → v5)**: The major version updates were for packaging changes (removing sub-packages), not rule behavior. This package only uses the `@stylistic/no-extra-semi` rule, which has not changed behavior.
+- **@typescript-eslint (8.22 → 8.51)**: Minor version bump with bug fixes and new optional rules. No changes to currently configured rules.
+- **globals (v15 → v17)**: Minor version bump adding more global variable definitions. Existing globals unchanged.
+- **Other plugins**: Bug fixes and minor improvements with no user-facing impact.
+
 ## 2.0.2
 
 - Fixed bad docs.
