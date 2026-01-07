@@ -20,6 +20,7 @@ For Node versions that support it (version 16 and above), the `es2022` environme
     - [Typed react configuration](#typed-react-configuration)
     - [Global ignores](#global-ignores)
     - [Globals](#globals)
+  - [Migrating from 2.X to 3.X](#migrating-from-2x-to-3x)
   - [Migrating from 1.X to 2.X](#migrating-from-1x-to-2x)
   - [Running eslint](#running-eslint)
   - [Usage in an existing project](#usage-in-an-existing-project)
@@ -116,7 +117,7 @@ To activate this config (in addition to other config(s), using it alone makes no
 ```javascript
 "use strict";
 
-const ignores = require("@bonniernews/eslint-config/ignores");
+const ignores = await require("@bonniernews/eslint-config/ignores");
 
 module.exports = [
   ...allYourGoodConfigs,
@@ -131,12 +132,40 @@ Globals for browsers, etc. that may be needed.
 ```javascript
 "use strict";
 
-const globals = require("@bonniernews/eslint-config/globals");
+const config = await require("@bonniernews/eslint-config");
 
 module.exports = [
   ...allYourGoodConfigs,
   { files: [ "assets/scripts" ], languageOptions: { globals: globals.browser } }
 ];
+```
+
+## Migrating from 2.X to 3.X
+
+Due to differences between ES modules and CommonJS, the TypeScript-related configs (`ts`, `tsx`, `test-ts`, and the main `index`).
+ESLint handles this automatically when you use the standard `module.exports = require('@bonniernews/eslint-config/ts')`, but if you need to extend the rules, you will need to add `await`s:
+
+
+```javascript
+"use strict";
+
+const config = await require("@bonniernews/eslint-config");
+
+module.exports = [
+  ...config,
+  { ignores: [ "dist/**" ] },
+]
+```
+
+or if using ES modules
+
+```javascript
+import config from "@bonniernews/eslint-config";
+
+export default [
+  ...(await config),
+  { ignores: [ "dist/**" ] },
+]
 ```
 
 ## Migrating from 1.X to 2.X

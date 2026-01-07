@@ -22,7 +22,7 @@
   - Updated `.mocharc.json` to reference the new ES module setup file
   - Added `test/helpers/` to ESLint ignore patterns
 
-**Breaking change:** The TypeScript-related configs (`ts`, `tsx`, `test-ts`, and the main `index`) now export Promises due to ES module dependencies. ESLint handles this automatically when you use the standard `module.exports = require('@bonniernews/eslint-config/ts')` pattern. However, if you were manually spreading these configs (e.g., `...require('@bonniernews/eslint-config/ts')`), you'll need to await them first or restructure to avoid spreading.
+**Breaking change:** The TypeScript-related configs (`ts`, `tsx`, `test-ts`, and the main `index`) now export Promises due to ES module dependencies. ESLint handles this automatically when you use the standard `module.exports = require('@bonniernews/eslint-config/ts')` pattern. However, if you were manually spreading these configs (e.g., `...require('@bonniernews/eslint-config/ts')`), you'll need to await them first or restructure to avoid spreading. See [README](./README.md#migrating-from-2x-to-3x) for details.
 
 **Dependency updates impact:**
 - **@stylistic/eslint-plugin (v3 → v5)**: The major version updates were for packaging changes (removing sub-packages), not rule behavior. This package only uses the `@stylistic/no-extra-semi` rule, which has not changed behavior.
