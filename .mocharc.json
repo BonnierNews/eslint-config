@@ -3,6 +3,6 @@
   "reporter": "spec",
   "recursive": true,
   "ui": "mocha-cakes-2",
-  "require": ["./test/helpers/setup.js"],
+  "require": ["./test/helpers/setup.mjs"],
   "exit": true
 }
