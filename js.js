@@ -1,3 +1,3 @@
-"use strict";
+import baseConfig from "./base-config.js";
 
-module.exports = require("./base-config");
+export default baseConfig;
