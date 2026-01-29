@@ -1,13 +1,15 @@
-"use strict";
+import fs from "fs";
+import { createRequire } from "module";
+import path from "path";
 
-const path = require("path");
-const fs = require("fs");
-const getRules = require("./rules");
-const globals = require("./globals");
+import eslintPluginTypescriptRules from "@bonniernews/eslint-plugin-typescript-rules";
+import eslintPluginImport from "eslint-plugin-import";
+import eslintPluginN from "eslint-plugin-n";
 
-const eslintPluginN = require("eslint-plugin-n");
-const eslintPluginImport = require("eslint-plugin-import");
-const eslintPluginTypescriptRules = require("@bonniernews/eslint-plugin-typescript-rules");
+import globals from "./globals.js";
+import getRules from "./rules.js";
+
+const require = createRequire(import.meta.url);
 
 function findPackageJson() {
   let dir = process.cwd();
@@ -63,4 +65,4 @@ const baseConfig = {
   rules: getRules(isModuleProject),
 };
 
-module.exports = baseConfig;
+export default baseConfig;

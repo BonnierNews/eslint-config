@@ -1,11 +1,6 @@
-"use strict";
+import config from "./index.js";
 
-const configPromise = require("./index.js");
-
-module.exports = (async () => {
-  const config = await configPromise;
-  return [
-    { ignores: [ "test/data/**/*", "test/helpers/**/*" ] },
-    ...config,
-  ];
-})();
+export default [
+  { ignores: [ "test/data/**/*", "test/helpers/**/*" ] },
+  ...config,
+];

@@ -1,29 +1,25 @@
-"use strict";
+import bnTypescriptRules from "@bonniernews/eslint-plugin-typescript-rules";
+import stylistic from "@stylistic/eslint-plugin";
+import typeScriptPlugin from "@typescript-eslint/eslint-plugin";
+import typeScriptParser from "@typescript-eslint/parser";
 
-const baseConfig = require("./base-config");
-const typescriptRules = require("./typescript-rules");
-const typeScriptPlugin = require("@typescript-eslint/eslint-plugin");
-const typeScriptParser = require("@typescript-eslint/parser");
-const bnTypescriptRules = require("@bonniernews/eslint-plugin-typescript-rules");
+import baseConfig from "./base-config.js";
+import typescriptRules from "./typescript-rules.js";
 
-module.exports = (async () => {
-  const stylistic = await import("@stylistic/eslint-plugin");
+const typescriptBase = {
+  plugins: {
+    ...baseConfig.plugins,
+    "@typescript-eslint": typeScriptPlugin,
+    "@stylistic": stylistic,
+    "@bonniernews/typescript-rules": bnTypescriptRules,
+  },
+  languageOptions: {
+    sourceType: "module",
+    parser: typeScriptParser,
+  },
+  files: [ "**/*.ts" ],
+  rules: { ...baseConfig.rules, ...typescriptRules },
+  settings: { "import/resolver": { node: { extensions: [ ".ts", ".js" ] } } },
+};
 
-  const typescriptBase = {
-    plugins: {
-      ...baseConfig.plugins,
-      "@typescript-eslint": typeScriptPlugin,
-      "@stylistic": stylistic.default,
-      "@bonniernews/typescript-rules": bnTypescriptRules,
-    },
-    languageOptions: {
-      sourceType: "module",
-      parser: typeScriptParser,
-    },
-    files: [ "**/*.ts" ],
-    rules: { ...baseConfig.rules, ...typescriptRules },
-    settings: { "import/resolver": { node: { extensions: [ ".ts", ".js" ] } } },
-  };
-
-  return typescriptBase;
-})();
+export default typescriptBase;
