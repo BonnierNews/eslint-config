@@ -1,5 +1,3 @@
-"use strict";
-
 const typescriptEslintRecommended = {
   "@typescript-eslint/adjacent-overload-signatures": "error",
   "@typescript-eslint/ban-ts-comment": "error",
@@ -55,7 +53,7 @@ const eslitRecommendedTs = {
 
 const importRules = { "import/named": "off" };
 
-module.exports = {
+export default {
   ...typescriptEslintRecommended,
   ...eslitRecommendedTs,
   ...importRules,

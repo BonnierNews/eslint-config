@@ -2,6 +2,7 @@
   "name": "@bonniernews/eslint-config",
   "version": "3.0.0",
   "description": "ESLint config",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "mocha && eslint ."

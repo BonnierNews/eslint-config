@@ -1,6 +1,4 @@
-"use strict";
-
-const { ESLint } = require("eslint");
+import { ESLint } from "eslint";
 
 Feature("linting js files", () => {
   Scenario("js file passing lint rules", () => {

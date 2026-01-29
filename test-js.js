@@ -1,9 +1,7 @@
-"use strict";
+import baseConfig from "./base-config.js";
+import testBase from "./test-base.js";
 
-const baseConfig = require("./base-config");
-const testBase = require("./test-base");
-
-module.exports = {
+export default {
   ...baseConfig,
   ...testBase,
   rules: {
