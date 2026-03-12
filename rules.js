@@ -54,7 +54,7 @@ const eslintRecommendedRules = {
   "no-unsafe-negation": "error",
   "no-unsafe-optional-chaining": "error",
   "no-unused-labels": "error",
-  "no-unused-vars": "error",
+  "no-unused-vars": [ "error", { args: "all", argsIgnorePattern: "^_" } ],
   "no-useless-backreference": "error",
   "no-useless-catch": "error",
   "no-useless-escape": "error",
