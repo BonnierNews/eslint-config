@@ -2,8 +2,8 @@
   "timeout": 10000,
   "reporter": "spec",
   "recursive": true,
-  "ignore": ["test/commonjs/**"],
+  "spec": "feature/**/*.mjs",
   "ui": "mocha-cakes-2",
-  "require": ["./test/helpers/setup.mjs"],
+  "require": ["../helpers/setup.mjs"],
   "exit": true
 }
