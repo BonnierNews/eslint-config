@@ -1,6 +1,8 @@
 import bnTypescriptRules from "@bonniernews/eslint-plugin-typescript-rules";
 import stylistic from "@stylistic/eslint-plugin";
+// eslint-disable-next-line import/no-unresolved
 import typeScriptPlugin from "@typescript-eslint/eslint-plugin";
+// eslint-disable-next-line import/no-unresolved
 import typeScriptParser from "@typescript-eslint/parser";
 
 import baseConfig from "./base-config.js";

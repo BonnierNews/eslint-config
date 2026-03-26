@@ -1,10 +1,9 @@
-import fs from "fs";
-import { createRequire } from "module";
-import path from "path";
-
 import eslintPluginTypescriptRules from "@bonniernews/eslint-plugin-typescript-rules";
 import eslintPluginImport from "eslint-plugin-import";
 import eslintPluginN from "eslint-plugin-n";
+import fs from "fs";
+import { createRequire } from "module";
+import path from "path";
 
 import globals from "./globals.js";
 import getRules from "./rules.js";
@@ -26,6 +25,7 @@ function findPackageJson(startDir) {
   return null;
 }
 
+// eslint-disable-next-line import/no-dynamic-require
 const isModuleProject = require(findPackageJson(fs.realpathSync(process.cwd()))).type === "module";
 const hasES2022Support = parseInt(process.versions.node.split(".").shift(), 10) >= 16;
 
