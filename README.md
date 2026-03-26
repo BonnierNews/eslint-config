@@ -7,6 +7,8 @@ and the appropriate setup will be used by looking at the projects `package.json`
 
 For Node versions that support it (version 16 and above), the `es2022` environment will also be activated. Otherwise `es2021` will be used.
 
+> **Note:** As of version 3.X, this package is published as an ES Module. See the [usage examples](#usage) for how to use it in both ESM and CommonJS projects.
+
 ## Table of contents
 
 - [@bonniernews/eslint-config](#bonniernewseslint-config)
@@ -42,72 +44,80 @@ npm install --save-dev eslint @bonniernews/eslint-config
 
 Configures all rules, js, ts, tsx, jsx and test rules.
 
-To activate the config, you need to add the following to your `eslint.config.js`-file:
+**ESM** - for projects with `"type": "module"` in `package.json`:
 
 ```javascript
-"use strict";
+// eslint.config.js
+import config from "@bonniernews/eslint-config";
 
-module.exports = require("@bonniernews/eslint-config");
+export default config;
+```
+
+**CommonJS** - for projects without `"type": "module"`:
+
+```javascript
+// eslint.config.js
+const { default: config } = await import("@bonniernews/eslint-config");
+
+module.exports = config;
 ```
 
 ### JavaScript configuration
 
-To activate the config, you need to add the following to your `eslint.config.js`-file:
-
 ```javascript
-"use strict";
+// eslint.config.js
+import config from "@bonniernews/eslint-config/js";
 
-module.exports = require("@bonniernews/eslint-config/js");
+export default [ config ];
 ```
 
 ### TypeScript configuration
 
-To activate the config, you need to add the following to your `eslint.config.js`-file:
-
 ```javascript
-"use strict";
+// eslint.config.js
+import config from "@bonniernews/eslint-config/ts";
 
-module.exports = require("@bonniernews/eslint-config/ts");
+export default [ config ];
 ```
 
 ### React configuration
 
-To activate the config, you need to add the following to your `eslint.config.js`-file:
-
 ```javascript
-"use strict";
+// eslint.config.js
+import config from "@bonniernews/eslint-config/jsx";
 
-module.exports = require("@bonniernews/eslint-config/jsx");
+export default [ config ];
 ```
 
 ### Test configuration
 
 Adds useful plugins and globals for testing with mocha-cakes-2 + chai.
 
-To activate the config, you need to add the following to your `eslint.config.js`-file (for js):
+For JavaScript tests:
 
 ```javascript
-"use strict";
+// eslint.config.js
+import config from "@bonniernews/eslint-config/test-js";
 
-module.exports = require("@bonniernews/eslint-config/test-js");
+export default [ config ];
 ```
 
-or the following (for ts):
+For TypeScript tests:
 
 ```javascript
-"use strict";
+// eslint.config.js
+import config from "@bonniernews/eslint-config/test-ts";
 
-module.exports = require("@bonniernews/eslint-config/test-ts");
+export default [ config ];
 ```
 
 ### Typed react configuration
 
-To activate the config, you need to add the following to your `eslint.config.js`-file:
-
 ```javascript
-"use strict";
+// eslint.config.js
+import config from "@bonniernews/eslint-config/tsx";
 
-module.exports = require("@bonniernews/eslint-config/tsx");
+export default [ config ];
 ```
 
 ### Global ignores
@@ -115,13 +125,13 @@ module.exports = require("@bonniernews/eslint-config/tsx");
 To activate this config (in addition to other config(s), using it alone makes no sense), add the following:
 
 ```javascript
-"use strict";
+// eslint.config.js
+import ignores from "@bonniernews/eslint-config/ignores";
 
-const ignores = await require("@bonniernews/eslint-config/ignores");
-
-module.exports = [
+export default [
   ...allYourGoodConfigs,
-  ignores
+  ignores,
+  // your additional config
 ];
 ```
 
@@ -130,26 +140,33 @@ module.exports = [
 Globals for browsers, etc. that may be needed.
 
 ```javascript
-"use strict";
+// eslint.config.js
+import globals from "@bonniernews/eslint-config/globals";
 
-const config = await require("@bonniernews/eslint-config");
-
-module.exports = [
+export default [
   ...allYourGoodConfigs,
-  { files: [ "assets/scripts" ], languageOptions: { globals: globals.browser } }
+  { files: [ "assets/scripts/**/*.js" ], languageOptions: { globals: globals.browser } },
 ];
 ```
 
 ## Migrating from 2.X to 3.X
 
-Due to differences between ES modules and CommonJS, the TypeScript-related configs (`ts`, `tsx`, `test-ts`, and the main `index`).
-ESLint handles this automatically when you use the standard `module.exports = require('@bonniernews/eslint-config/ts')`, but if you need to extend the rules, you will need to add `await`s:
+Version 3.X is published as an ES Module (ESM).
 
+### For ESM projects using `import`
+
+If your project has `"type": "module"` in `package.json`, and you're already using `import`, then you don't have to make any changes.
+
+### For CommonJS projects using `require`
+
+If your project does not have `"type": "module"`, you need to use dynamic `import()` to import an ESM module, which is an asynchronous function:
+
+**Before (2.X):**
 
 ```javascript
 "use strict";
 
-const config = await require("@bonniernews/eslint-config");
+const config = require("@bonniernews/eslint-config");
 
 module.exports = [
   ...config,
@@ -157,13 +174,13 @@ module.exports = [
 ]
 ```
 
-or if using ES modules
+**After (3.X):**
 
 ```javascript
-import config from "@bonniernews/eslint-config";
+const { default: config } = await import("@bonniernews/eslint-config");
 
-export default [
-  ...(await config),
+module.exports = [
+  ...config,
   { ignores: [ "dist/**" ] },
 ]
 ```
@@ -214,7 +231,7 @@ npx eslint .
 - Remove any 'eslint-disable-line no-unused-expressions' directives added because of chai assertions, they are not
   needed anymore (`eslint-plugin-chai-friendly` is used in test).
 - Remove any globals and special rules related to `mocha-cakes-2` in your test configuration, they already exist
-  in the `@bonniernews/eslint-config/test` and `@bonniernews/eslint-config/all` configs.
+  in the `@bonniernews/eslint-config/test-js` and `@bonniernews/eslint-config/test-ts` configs.
 
 Once you complete the steps above run the following:
 
@@ -227,7 +244,7 @@ npx eslint . --fix
 If you want to use _Prettier_, run it before eslint. ESLint should be the final judge, i.e. run:
 
 ```sh
-npx prettier --save .
+npx prettier --write .
 npx eslint . --fix
 ```
 

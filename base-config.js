@@ -1,13 +1,14 @@
-"use strict";
+import eslintPluginTypescriptRules from "@bonniernews/eslint-plugin-typescript-rules";
+import eslintPluginImport from "eslint-plugin-import";
+import eslintPluginN from "eslint-plugin-n";
+import fs from "fs";
+import { createRequire } from "module";
+import path from "path";
 
-const path = require("path");
-const fs = require("fs");
-const getRules = require("./rules");
-const globals = require("./globals");
+import globals from "./globals.js";
+import getRules from "./rules.js";
 
-const eslintPluginN = require("eslint-plugin-n");
-const eslintPluginImport = require("eslint-plugin-import");
-const eslintPluginTypescriptRules = require("@bonniernews/eslint-plugin-typescript-rules");
+const require = createRequire(import.meta.url);
 
 function findPackageJson(startDir) {
   let dir = path.resolve(startDir || process.cwd());
@@ -24,6 +25,7 @@ function findPackageJson(startDir) {
   return null;
 }
 
+// eslint-disable-next-line import/no-dynamic-require
 const isModuleProject = require(findPackageJson(fs.realpathSync(process.cwd()))).type === "module";
 const hasES2022Support = parseInt(process.versions.node.split(".").shift(), 10) >= 16;
 
@@ -57,4 +59,4 @@ const baseConfig = {
   rules: getRules(isModuleProject),
 };
 
-module.exports = baseConfig;
+export default baseConfig;

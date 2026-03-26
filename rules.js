@@ -1,5 +1,3 @@
-"use strict";
-
 const eslintRecommendedRules = {
   "constructor-super": "error",
   "for-direction": "error",
@@ -229,7 +227,7 @@ const importRules = {
   "import/newline-after-import": "error",
 };
 
-module.exports = function getRules(isModuleProject) {
+export default function getRules(isModuleProject) {
   return {
     ...eslintRecommendedRules,
     ...nodeRecommendedRules,
@@ -284,4 +282,4 @@ module.exports = function getRules(isModuleProject) {
     "object-curly-newline": [ "error", { multiline: true } ],
     "object-property-newline": [ "error", { allowAllPropertiesOnSameLine: true } ],
   };
-};
+}

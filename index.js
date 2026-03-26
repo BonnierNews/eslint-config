@@ -1,25 +1,17 @@
-"use strict";
+import baseConfig from "./base-config.js";
+import ignoresConfig from "./ignores.js";
+import jsxConfig from "./jsx.js";
+import testJsConfig from "./test-js.js";
+import testTsConfig from "./test-ts.js";
+import tsConfig from "./ts.js";
+import tsxConfig from "./tsx.js";
 
-const baseConfig = require("./base-config");
-const jsxConfig = require("./jsx");
-const tsConfigPromise = require("./ts");
-const tsxConfigPromise = require("./tsx");
-const testJsConfig = require("./test-js");
-const testTsConfigPromise = require("./test-ts");
-const ignoresConfig = require("./ignores");
-
-module.exports = (async () => {
-  const tsConfig = await tsConfigPromise;
-  const tsxConfig = await tsxConfigPromise;
-  const testTsConfig = await testTsConfigPromise;
-
-  return [
-    baseConfig,
-    jsxConfig,
-    tsConfig,
-    tsxConfig,
-    testJsConfig,
-    testTsConfig,
-    ignoresConfig,
-  ];
-})();
+export default [
+  baseConfig,
+  jsxConfig,
+  tsConfig,
+  tsxConfig,
+  testJsConfig,
+  testTsConfig,
+  ignoresConfig,
+];

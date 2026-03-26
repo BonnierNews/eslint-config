@@ -2,9 +2,12 @@
   "name": "@bonniernews/eslint-config",
   "version": "3.0.0",
   "description": "ESLint config",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "mocha && eslint ."
+    "test-esm": "mocha",
+    "test-cjs": "cd test/commonjs && mocha",
+    "test": "npm run test-esm && npm run test-cjs && eslint ."
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,7 @@
     "eslint": "^9.39.2",
     "mocha": "^11.7.5",
     "mocha-cakes-2": "^3.3.0",
+    "preact": "^10.29.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
