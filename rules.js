@@ -282,4 +282,4 @@ export default function getRules(isModuleProject) {
     "object-curly-newline": [ "error", { multiline: true } ],
     "object-property-newline": [ "error", { allowAllPropertiesOnSameLine: true } ],
   };
-};
+}
