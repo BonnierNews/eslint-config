@@ -1,3 +1,8 @@
 "use strict";
 
-module.exports = require("./base-config");
+const baseConfig = require("./base-config");
+
+module.exports = {
+  ...baseConfig,
+  files: [ "**/*.js" ],
+};

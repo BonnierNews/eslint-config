@@ -1,6 +1,6 @@
 "use strict";
 
-const baseConfig = require("./base-config");
+const jsConfig = require("./js");
 const jsxConfig = require("./jsx");
 const tsConfig = require("./ts");
 const tsxConfig = require("./tsx");
@@ -9,7 +9,7 @@ const testTsConfig = require("./test-ts");
 const ignoresConfig = require("./ignores");
 
 module.exports = [
-  baseConfig,
+  jsConfig,
   jsxConfig,
   tsConfig,
   tsxConfig,
