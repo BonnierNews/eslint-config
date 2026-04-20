@@ -9,22 +9,28 @@ const eslintPluginN = require("eslint-plugin-n");
 const eslintPluginImport = require("eslint-plugin-import");
 const eslintPluginTypescriptRules = require("@bonniernews/eslint-plugin-typescript-rules");
 
-function findPackageJson(startDir) {
-  let dir = path.resolve(startDir || process.cwd());
+function findPackageJson() {
+  let dir = process.cwd();
+  const root = path.parse(dir).root;
 
-  do {
+  while (dir !== root) {
     const pkgfile = path.join(dir, "package.json");
 
-    if (!fs.existsSync(pkgfile)) {
-      dir = path.join(dir, "..");
-      continue;
+    if (fs.existsSync(pkgfile)) {
+      return pkgfile;
     }
-    return pkgfile;
-  } while (dir !== path.resolve(dir, "..") && !fs.existsSync(path.resolve(dir, ".git")));
+
+    if (fs.existsSync(path.join(dir, ".git"))) {
+      break;
+    }
+
+    dir = path.join(dir, "..");
+  }
+
   return null;
 }
 
-const isModuleProject = require(findPackageJson(fs.realpathSync(process.cwd()))).type === "module";
+const isModuleProject = require(findPackageJson()).type === "module";
 const hasES2022Support = parseInt(process.versions.node.split(".").shift(), 10) >= 16;
 
 const moduleConfig = {
