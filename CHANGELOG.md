@@ -16,13 +16,10 @@
   - `eslint` to ^9.39.2 (dev)
   - `mocha` to ^11.7.5 (dev)
   - `typescript` to ^5.9.3 (dev)
-- Fixed ES module compatibility issues with dependencies:
-  - Converted `ts.js`, `tsx.js`, `test-ts.js`, and `index.js` to use async exports for `@stylistic/eslint-plugin` (ES module)
-  - Converted test setup to ES modules (`test/helpers/setup.mjs`) for compatibility with `chai` v6
-  - Updated `.mocharc.json` to reference the new ES module setup file
-  - Added `test/helpers/` to ESLint ignore patterns
+- Converted package to ESM (`"type": "module"`); all configs use `import`/`export default`.
+- Converted test setup to ESM (`test/helpers/setup.mjs`) for `chai` v6 compatibility; updated `.mocharc.json` accordingly.
 
-**Breaking change:** The TypeScript-related configs (`ts`, `tsx`, `test-ts`, and the main `index`) now export Promises due to ES module dependencies. ESLint handles this automatically when you use the standard `module.exports = require('@bonniernews/eslint-config/ts')` pattern. However, if you were manually spreading these configs (e.g., `...require('@bonniernews/eslint-config/ts')`), you'll need to await them first or restructure to avoid spreading. See [README](./README.md#migrating-from-2x-to-3x) for details.
+**Breaking change:** This package is now published as an ES Module. CommonJS projects must switch from `require` to `await import`. See [README](./README.md#migrating-from-2x-to-3x).
 
 **Dependency updates impact:**
 - **@stylistic/eslint-plugin (v3 → v5)**: The major version updates were for packaging changes (removing sub-packages), not rule behavior. This package only uses the `@stylistic/no-extra-semi` rule, which has not changed behavior.
