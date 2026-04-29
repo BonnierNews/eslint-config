@@ -1,10 +1,9 @@
-"use strict";
+import reactPlugin from "eslint-plugin-react";
 
-const reactPlugin = require("eslint-plugin-react");
-const reactRules = require("./react-rules");
-const baseConfig = require("./base-config");
+import baseConfig from "./base-config.js";
+import reactRules from "./react-rules.js";
 
-module.exports = {
+export default {
   ...baseConfig,
   files: [ "**/*.jsx" ],
   languageOptions: {

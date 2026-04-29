@@ -1,11 +1,7 @@
-"use strict";
+import "mocha-cakes-2";
+import * as chai from "chai";
 
 // Make sure dates are displayed in the correct timezone
-// Setup common test libraries
-require("mocha-cakes-2");
-
-const chai = require("chai");
-
 process.env.TZ = "Europe/Stockholm";
 
 // Tests should always run in test environment to prevent accidental deletion of

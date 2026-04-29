@@ -1,5 +1,3 @@
-"use strict";
-
 const eslintReactRecommendedRules = {
   "react/display-name": 2,
   "react/jsx-key": 2,
@@ -24,7 +22,7 @@ const eslintReactRecommendedRules = {
   "react/require-render-return": 2,
 };
 
-module.exports = {
+export default {
   ...eslintReactRecommendedRules,
   "react/prop-types": 0,
   "react/jsx-first-prop-new-line": [ 2, "multiline" ],

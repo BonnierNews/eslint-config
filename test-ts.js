@@ -1,9 +1,7 @@
-"use strict";
+import testBase from "./test-base.js";
+import tsConfig from "./ts.js";
 
-const tsConfig = require("./ts");
-const testBase = require("./test-base");
-
-module.exports = {
+export default {
   ...tsConfig,
   ...testBase,
   languageOptions: {

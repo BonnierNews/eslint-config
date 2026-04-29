@@ -1,18 +1,18 @@
 import { ESLint } from "eslint";
 
-Feature("linting js files", () => {
+Feature("linting js files (commonjs)", () => {
   Scenario("js file passing lint rules", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "js.js",
+        overrideConfigFile: "../../js.js",
         ignore: false,
       });
     });
 
     let results;
     When("we lint a folder", async () => {
-      results = await eslint.lintFiles([ "test/data/js/noerrors.js" ]);
+      results = await eslint.lintFiles([ "data/js/noerrors.js" ]);
     });
 
     Then("we should have linted the correct number of files", () => {
@@ -28,14 +28,14 @@ Feature("linting js files", () => {
     let eslint;
     Given("we have an eslint instance with the base config", () => {
       eslint = new ESLint({
-        overrideConfigFile: "js.js",
+        overrideConfigFile: "../../js.js",
         ignore: false,
       });
     });
 
     let results;
     When("we lint a file which extends a class", async () => {
-      results = await eslint.lintFiles([ "test/data/js/extends.js" ]);
+      results = await eslint.lintFiles([ "data/js/extends.js" ]);
     });
 
     Then("we should have linted the correct number of files", () => {

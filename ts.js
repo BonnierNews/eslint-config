@@ -1,11 +1,12 @@
-"use strict";
+import bnTypescriptRules from "@bonniernews/eslint-plugin-typescript-rules";
+import stylistic from "@stylistic/eslint-plugin";
+// eslint-disable-next-line import/no-unresolved
+import typeScriptPlugin from "@typescript-eslint/eslint-plugin";
+// eslint-disable-next-line import/no-unresolved
+import typeScriptParser from "@typescript-eslint/parser";
 
-const baseConfig = require("./base-config");
-const typescriptRules = require("./typescript-rules");
-const typeScriptPlugin = require("@typescript-eslint/eslint-plugin");
-const typeScriptParser = require("@typescript-eslint/parser");
-const stylistic = require("@stylistic/eslint-plugin");
-const bnTypescriptRules = require("@bonniernews/eslint-plugin-typescript-rules");
+import baseConfig from "./base-config.js";
+import typescriptRules from "./typescript-rules.js";
 
 const typescriptBase = {
   plugins: {
@@ -23,4 +24,4 @@ const typescriptBase = {
   settings: { "import/resolver": { node: { extensions: [ ".ts", ".js" ] } } },
 };
 
-module.exports = typescriptBase;
+export default typescriptBase;

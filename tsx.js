@@ -1,10 +1,9 @@
-"use strict";
+import reactPlugin from "eslint-plugin-react";
 
-const typescriptBase = require("./ts");
-const reactPlugin = require("eslint-plugin-react");
-const reactRules = require("./react-rules");
+import reactRules from "./react-rules.js";
+import typescriptBase from "./ts.js";
 
-module.exports = {
+export default {
   ...typescriptBase,
   plugins: { ...typescriptBase.plugins, react: reactPlugin },
   files: [ "**/*.tsx" ],

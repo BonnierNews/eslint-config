@@ -1,3 +1,3 @@
-"use strict";
+import globals from "globals";
 
-module.exports = require("globals");
+export default globals;

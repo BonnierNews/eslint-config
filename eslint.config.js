@@ -1,6 +1,6 @@
-"use strict";
+import config from "./index.js";
 
-module.exports = [
-  { ignores: [ "test/data/**/*" ] },
-  ...require("./index.js"),
+export default [
+  { ignores: [ "test/data/**/*", "test/helpers/**/*", "test/commonjs/**/*" ] },
+  ...config,
 ];

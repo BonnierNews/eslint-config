@@ -1,14 +1,12 @@
-"use strict";
+import baseConfig from "./base-config.js";
+import ignoresConfig from "./ignores.js";
+import jsxConfig from "./jsx.js";
+import testJsConfig from "./test-js.js";
+import testTsConfig from "./test-ts.js";
+import tsConfig from "./ts.js";
+import tsxConfig from "./tsx.js";
 
-const baseConfig = require("./base-config");
-const jsxConfig = require("./jsx");
-const tsConfig = require("./ts");
-const tsxConfig = require("./tsx");
-const testJsConfig = require("./test-js");
-const testTsConfig = require("./test-ts");
-const ignoresConfig = require("./ignores");
-
-module.exports = [
+export default [
   baseConfig,
   jsxConfig,
   tsConfig,
