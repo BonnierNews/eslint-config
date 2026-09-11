@@ -250,25 +250,27 @@ Feature("detecting missing test guards in a project", () => {
   });
 
   Scenario("a project with more than one test file", () => {
-    let first, second;
-    When("we lint two test files in the same unguarded project", async () => {
-      [ first, second ] = await lintProject(
+    let reported;
+    When("we lint three test files in the same unguarded project", async () => {
+      const perFile = await lintProject(
         {
           "package.json": withDatabase,
           ".gitignore": ignoresEnv,
           "test/one.js": probe,
           "test/two.js": probe,
+          "test/three.js": probe,
         },
-        [ "test/one.js", "test/two.js" ]
+        [ "test/one.js", "test/two.js", "test/three.js" ]
       );
+
+      reported = perFile.flat();
     });
 
-    Then("the project level facts are reported once", () => {
-      expect(first).to.eql([ "noMochaConfig" ]);
-    });
-
-    And("not again on every other test file", () => {
-      expect(second).to.eql([]);
+    // Which file carries the warning is whichever one the linter reached first, and that is not
+    // guaranteed. What matters is that a project level fact is stated once for the project, rather
+    // than repeated on every test file in it.
+    Then("the project level fact is reported exactly once for the whole project", () => {
+      expect(reported).to.eql([ "noMochaConfig" ]);
     });
   });
 });
