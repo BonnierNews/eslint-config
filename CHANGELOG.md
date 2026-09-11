@@ -1,5 +1,31 @@
 # Changelog
 
+## 3.1.0
+
+- Added the `bn-safety` rules, which report when a project is missing the controls that keep tests
+  away from production data. They are all warnings, and the two project level rules only speak up in
+  repos that depend on a database, cache or message broker client:
+  - `bn-safety/require-test-guards` - the mocha config loads no network guard, or nothing in its
+    require list pins `NODE_CONFIG_ENV`.
+  - `bn-safety/gitignore-env` - `.gitignore` does not exclude `.env`.
+  - `bn-safety/env-pin-must-not-import` - the file that pins the test environment also imports a
+    module, which runs before the pin.
+  - `bn-safety/no-env-pin-tampering` - code sets a stayput escape hatch or turns on
+    `ALLOW_TEST_ENV_OVERRIDE`.
+  - `bn-safety/no-remote-db-target` - a test names a database host outside this machine, or turns
+    off TLS certificate verification.
+  - `bn-safety/no-credentials-in-source` - a credential or private key is written into a source file.
+  - `bn-safety/no-widened-nock` - `enableNetConnect()` is called without an allow list.
+  - `bn-safety/no-dotenv-override` - dotenv is loaded with `override: true`.
+
+  See [Safety rules](./README.md#safety-rules) for what they need from a project and, just as
+  importantly, what they cannot see. They are warnings on purpose so that a Dependabot bump cannot
+  turn a fleet of repos red; the intention is to make them errors in the next major version.
+- The test configs now also apply to `tests/`, `spec/` and `__tests__/` directories and to
+  `*.test.js` / `*.spec.js` files, not only to `test/`. Without this the safety rules above would
+  miss whole repos, and the mocha globals and chai-friendly rules now reach those files too.
+- Mocha no longer loads the lint fixtures under `test/data` as test files.
+
 ## 3.0.0
 
 - Updated all dependencies to latest versions:

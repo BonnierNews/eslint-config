@@ -1,5 +1,5 @@
 import baseConfig from "./base-config.js";
-import testBase from "./test-base.js";
+import testBase, { testFilePatterns } from "./test-base.js";
 
 export default {
   ...baseConfig,
@@ -12,5 +12,5 @@ export default {
     ...baseConfig.plugins,
     ...testBase.plugins,
   },
-  files: [ "**/test/**/*.js" ],
+  files: testFilePatterns("js"),
 };

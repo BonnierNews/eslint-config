@@ -2,7 +2,7 @@
   "timeout": 10000,
   "reporter": "spec",
   "recursive": true,
-  "ignore": ["test/commonjs/**"],
+  "ignore": ["test/commonjs/**", "test/data/**"],
   "ui": "mocha-cakes-2",
   "require": ["./test/helpers/setup.mjs"],
   "exit": true

@@ -22,6 +22,10 @@ For Node versions that support it (version 16 and above), the `es2022` environme
     - [Typed react configuration](#typed-react-configuration)
     - [Global ignores](#global-ignores)
     - [Globals](#globals)
+  - [Safety rules](#safety-rules)
+    - [What the rules need from your project](#what-the-rules-need-from-your-project)
+    - [What these rules cannot see](#what-these-rules-cannot-see)
+    - [If a rule reports something wrong](#if-a-rule-reports-something-wrong)
   - [Migrating from 2.X to 3.X](#migrating-from-2x-to-3x)
   - [Migrating from 1.X to 2.X](#migrating-from-1x-to-2x)
   - [Running eslint](#running-eslint)
@@ -148,6 +152,94 @@ export default [
   { files: [ "assets/scripts/**/*.js" ], languageOptions: { globals: globals.browser } },
 ];
 ```
+
+## Safety rules
+
+A test suite that resolves its configuration to a real environment can reach that environment's
+data, and a reset helper pointed at it will do what it was asked to. The controls that prevent that
+live outside this package: the network guard is
+[`@bonniernews/stayput`](https://github.com/BonnierNews/stayput), the environment pin is the
+import-free file your test runner loads first, and the last line of defence is database roles that
+cannot drop anything.
+
+This package ships the layer that notices when one of those is missing. The rules are part of the
+configs you already use and they are all warnings. Treat them as a smoke alarm rather than a lock:
+they read one file's syntax at a time, so they catch the ordinary mistake and not a determined
+workaround.
+
+| Rule | What it reports |
+| --- | --- |
+| `bn-safety/require-test-guards` | The project's mocha config, and the files it loads, neither load `@bonniernews/stayput/register` nor pin `NODE_CONFIG_ENV` to `"test"`. |
+| `bn-safety/gitignore-env` | No `.gitignore` between the file and the repository root excludes `.env`, so a file of local credentials can be committed. |
+| `bn-safety/env-pin-must-not-import` | A file pins the test environment and also imports or requires a module. Those run first, so the module reads the environment before the pin applies. |
+| `bn-safety/no-env-pin-tampering` | Code sets `STAYPUT_ALLOW`, `STAYPUT_DENY` or `STAYPUT_DISABLE`, passes `allow` or `deny` to `stayput.enable()`, or turns on `ALLOW_TEST_ENV_OVERRIDE`. |
+| `bn-safety/no-remote-db-target` | A test spells out a database host outside this machine, or turns off TLS certificate verification. |
+| `bn-safety/no-credentials-in-source` | A connection string carries its own password, a private key is pasted into a file, or a `password`-style property or class field holds a real-looking value. |
+| `bn-safety/no-widened-nock` | `enableNetConnect()` is called with no argument, or with one that allows every host, which re-enables every outbound http request. |
+| `bn-safety/no-dotenv-override` | dotenv is loaded with `override: true`, which replaces variables a test runner already pinned. |
+
+The first two look at the project rather than at the file being linted. They stay silent unless
+`package.json` depends on a database, cache or message broker client, and they report once per
+project rather than once per test file. A library has nothing to guard, so it is not asked to install
+a guard.
+
+The rules that look at tests apply to files under `test/`, `tests/`, `spec/` and `__tests__/`, and to
+files named `*.test.js` or `*.spec.js`, in JavaScript and TypeScript alike.
+
+### What the rules need from your project
+
+All of it is in the [node-starterapp](https://github.com/BonnierNews/node-starterapp) template, and
+merging that template is the easiest way to satisfy these rules:
+
+- `@bonniernews/stayput/register` in the `require` list in `.mocharc.json`, or imported by a file in
+  that list.
+- An import-free file, also in that list, containing `process.env.NODE_CONFIG_ENV = "test";`. It has
+  to be that variable: `exp-config` prefers it over `NODE_ENV`, so pinning only `NODE_ENV` still
+  loads production configuration when `NODE_CONFIG_ENV` leaks in from a shell.
+- `.env` in `.gitignore` (`.env`, `.env*`, `*.env` and `**/.env` all count), and no production hosts
+  or credentials in that file.
+- Test databases that run on this machine. Publish container ports to `127.0.0.1` rather than
+  reaching a container by its own address.
+
+### What these rules cannot see
+
+Worth knowing, so nobody mistakes a green lint run for a guarantee:
+
+- **They can be turned off.** Any repo can set them to `"off"` in its own `eslint.config.js`. These
+  rules steer, they do not enforce. The controls that enforce are stayput at connect time and
+  database roles at the server.
+- **A host that comes from configuration is invisible**, which is the case that matters most. A
+  literal `postgres://orders-db.prod.example.com/orders` in a test is reported;
+  `` `postgres://${config.dbHost}/orders` `` cannot be judged here and is deliberately left alone.
+  Only stayput sees the host that is actually dialled.
+- **Only the plain shapes of a variable assignment are recognised.** `process.env.X = …`,
+  `process.env["X"] = …` and `globalThis.process.env.X = …` are; `const { env } = process` and
+  `Object.assign(process.env, …)` are not.
+- **`eslint --cache` hides the project checks.** A cached file is never handed to a rule, so removing
+  the guard from a mocha config goes unreported until a test file changes. Run lint in CI without
+  `--cache` if you rely on `require-test-guards`.
+- **A guard loaded some other way looks missing.** `require-test-guards` reads the mocha config and
+  the files it loads. A guard injected through `NODE_OPTIONS` in CI, or a mocha config that builds
+  its require list in code, is not visible, so the rule can report a project that is in fact guarded.
+- **Only JavaScript and TypeScript are linted.** A secret in `.env`, in `config/production.json`, in
+  a Terraform variables file or in a committed service-account key is invisible to any lint rule.
+  That needs a file scanner in CI, plus GitHub secret scanning and push protection, which is also the
+  only layer that stops a secret before it reaches the remote.
+- **A tunnel to production on `localhost` looks local** to every one of these rules, as it does to
+  stayput. Database roles are what remains.
+
+### If a rule reports something wrong
+
+Open an issue or a pull request here. If you need to move on in the meantime, disable the rule for
+that line with a reason, so the next reader knows why:
+
+```javascript
+// eslint-disable-next-line bn-safety/no-remote-db-target -- mocked by nock, see BN-1234
+```
+
+One request: when a test fails because stayput refused a connection, or one of these rules reports a
+host outside this machine, the target is usually the problem and not the guard. Fix the target rather
+than widening the guard, and let a human decide about any exception.
 
 ## Migrating from 2.X to 3.X
 
