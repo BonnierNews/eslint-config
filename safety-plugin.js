@@ -27,15 +27,72 @@ import path from "path";
 // consumer's config, or in a later config block here, silently deletes every check that shares that
 // rule name. Named rules cannot be clobbered that way.
 
-// Mocha's own config file names, in its own order of preference. Kept in sync with
-// mocha/lib/cli/config.js. Note that `.mocharc.mjs` is not among them: mocha does not read it.
-const MOCHA_CONFIG_FILES = [
-  ".mocharc.cjs",
-  ".mocharc.js",
-  ".mocharc.yaml",
-  ".mocharc.yml",
-  ".mocharc.jsonc",
-  ".mocharc.json",
+// The test runners we know how to inspect, and where each keeps the list of files it loads before
+// the tests. A project that uses none of them is left alone rather than guessed at, so adding a
+// runner here is how coverage grows; leaving one out costs silence, never a false report.
+const TEST_RUNNERS = [
+  {
+    name: "mocha",
+    package: "mocha",
+    // Mocha's own order of preference, kept in sync with mocha/lib/cli/config.js. Note that
+    // `.mocharc.mjs` is not among them: mocha does not read it.
+    configFiles: [ ".mocharc.cjs", ".mocharc.js", ".mocharc.yaml", ".mocharc.yml", ".mocharc.jsonc", ".mocharc.json" ],
+    manifestKey: "mocha",
+    setupHint: "the require list in .mocharc.json",
+  },
+  {
+    name: "jest",
+    package: "jest",
+    configFiles: [
+      "jest.config.js",
+      "jest.config.cjs",
+      "jest.config.mjs",
+      "jest.config.ts",
+      "jest.config.mts",
+      "jest.config.cts",
+      "jest.config.json",
+    ],
+    manifestKey: "jest",
+    setupHint: "setupFiles in the jest config",
+  },
+  {
+    name: "vitest",
+    package: "vitest",
+    configFiles: [
+      "vitest.config.js",
+      "vitest.config.cjs",
+      "vitest.config.mjs",
+      "vitest.config.ts",
+      "vitest.config.mts",
+      "vite.config.js",
+      "vite.config.mjs",
+      "vite.config.ts",
+      "vite.config.mts",
+    ],
+    setupHint: "test.setupFiles in the vitest config",
+  },
+  {
+    name: "ava",
+    package: "ava",
+    configFiles: [ "ava.config.js", "ava.config.cjs", "ava.config.mjs" ],
+    manifestKey: "ava",
+    setupHint: "the require list in the ava config",
+  },
+  {
+    name: "tap",
+    package: "tap",
+    configFiles: [ ".taprc", ".taprc.yaml", ".taprc.yml" ],
+    manifestKey: "tap",
+    setupHint: "the before option in .taprc",
+  },
+  {
+    name: "node --test",
+    // Node's own runner has no config file: whatever it preloads sits on the command line, so the
+    // npm test script is the only place to look.
+    testScriptPattern: /\bnode\b[^&|;]*\s--test\b/,
+    configFiles: [],
+    setupHint: "--import @bonniernews/stayput/register on the node --test command",
+  },
 ];
 
 // Packages that mean this project talks to a data store and therefore has something to lose. The
@@ -95,6 +152,11 @@ const PRIVATE_KEY_HEADER = /-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----/;
 // to anything but "test" is not a pin. `=(?!=)` keeps a comparison such as `=== "test"` from
 // counting as an assignment.
 const ENV_PIN = /process\.env\.NODE_CONFIG_ENV\s*=(?!=)\s*["']test["']/;
+
+// The same pin written as a shell assignment in front of the runner, as in
+// `NODE_CONFIG_ENV=test mocha`. NODE_ENV=test on its own does not count: exp-config prefers
+// NODE_CONFIG_ENV, so that is the variable that has to be nailed down.
+const ENV_PIN_IN_SCRIPT = /\bNODE_CONFIG_ENV=(["']?)test\1(?:\s|$)/;
 
 // Property names whose value is a secret if it is a real one.
 const SECRET_PROPERTIES = new Set([
@@ -201,49 +263,78 @@ function usesDataStore({ manifest }) {
   return DATA_STORE_PACKAGES.some((name) => name in dependencies);
 }
 
-// The mocha configuration that applies to a file, as text. Mocha takes the first config file it
-// finds walking up from where it runs and merges the "mocha" key in package.json into it, so both
-// are collected here. The project files are read fresh on every linted file rather than cached: a
-// handful of existsSync calls costs almost nothing next to parsing a file, and a cache that survives
-// between runs goes stale in an editor's long lived eslint server, which is the harder bug to find.
-function readMochaConfig(filename, project) {
-  const parts = [];
-  let dir = null;
+// Everything a project loads before its tests, as one blob of text plus the directories that
+// relative paths in it resolve against. Which runners to ask is decided by the dependencies, and
+// each runner's config is looked for by walking up to the repository root, the way the runners
+// themselves do. The npm test script is always included: a guard preloaded with --import or
+// NODE_OPTIONS lives there rather than in any runner's config, whatever the runner.
+//
+// Returns null when the project uses no runner we know how to inspect, which is the signal to say
+// nothing at all.
+//
+// The project files are read fresh on every linted file rather than cached: a handful of existsSync
+// calls costs almost nothing next to parsing a file, and a cache that survives between runs goes
+// stale in an editor's long lived eslint server, which is the harder bug to find.
+function testSetup(filename, project) {
+  const { manifest } = project;
+  const dependencies = { ...manifest.dependencies, ...manifest.devDependencies };
+  const testScript = String(manifest.scripts?.test ?? "");
 
-  for (const candidate of directoriesUpToRepoRoot(path.dirname(filename))) {
-    const name = MOCHA_CONFIG_FILES.find((file) => fs.existsSync(path.join(candidate, file)));
+  const runners = TEST_RUNNERS.filter((runner) =>
+    (runner.package !== undefined && runner.package in dependencies)
+    || (runner.testScriptPattern !== undefined && runner.testScriptPattern.test(testScript))
+  );
 
-    if (name) {
-      dir = candidate;
-      parts.push({ name, text: fs.readFileSync(path.join(candidate, name), "utf8") });
-      break;
+  if (runners.length === 0) return null;
+
+  const sources = [];
+  const parts = [ testScript ];
+  const dirs = new Set([ project.dir ]);
+
+  for (const runner of runners) {
+    for (const candidate of directoriesUpToRepoRoot(path.dirname(filename))) {
+      const name = runner.configFiles.find((file) => fs.existsSync(path.join(candidate, file)));
+
+      if (name) {
+        dirs.add(candidate);
+        sources.push(name);
+        parts.push(fs.readFileSync(path.join(candidate, name), "utf8"));
+        break;
+      }
+    }
+
+    // Jest, mocha, ava and tap can all keep their config in package.json instead of a file, and
+    // mocha merges the two rather than picking one, so both are read.
+    if (runner.manifestKey !== undefined && manifest[runner.manifestKey]) {
+      sources.push(`the ${runner.manifestKey} key in package.json`);
+      parts.push(JSON.stringify(manifest[runner.manifestKey]));
     }
   }
 
-  if (project.manifest.mocha) {
-    parts.push({ name: "package.json", text: JSON.stringify(project.manifest.mocha) });
-  }
-
-  if (parts.length === 0) return null;
+  sources.push("the npm test script");
 
   return {
-    name: parts.map(({ name }) => name).join(" and "),
-    text: parts.map(({ text }) => text).join("\n"),
-    dir: dir ?? project.dir,
+    runners: runners.map(({ name }) => name).join(" and "),
+    setupHint: runners.map(({ setupHint }) => setupHint).join(", or "),
+    sources: sources.join(", "),
+    text: parts.join("\n"),
+    dirs: [ ...dirs ],
   };
 }
 
-// The files a mocha config loads before the tests, as absolute paths. Only files that exist are
-// returned, which is also how bare paths such as "test/helpers/env.js" are told apart from package
-// names: mocha resolves both, and so does this.
-function requiredFiles(mochaConfig) {
+// The files a project loads before its tests, as absolute paths. Only files that exist are returned,
+// which is also how a bare path such as "test/helpers/env.js" is told apart from a package name: the
+// runners resolve both, and so does this.
+function requiredFiles(setup) {
   const files = new Set();
 
-  for (const [ candidate ] of mochaConfig.text.matchAll(MODULE_PATH)) {
-    const file = path.resolve(mochaConfig.dir, candidate);
+  for (const [ candidate ] of setup.text.matchAll(MODULE_PATH)) {
+    for (const dir of setup.dirs) {
+      const file = path.resolve(dir, candidate);
 
-    if (fs.existsSync(file) && fs.statSync(file).isFile()) {
-      files.add(file);
+      if (fs.existsSync(file) && fs.statSync(file).isFile()) {
+        files.add(file);
+      }
     }
   }
 
@@ -258,16 +349,17 @@ function contentsOf(files) {
 // of the files it requires. stayput documents both, and its other entry points are not equivalent:
 // the package root never calls enable(), and the /mocha entry only asserts that the guard is already
 // active. Loading it through NODE_OPTIONS, which the CI templates do, is invisible from here.
-function loadsNetworkGuard(mochaConfig, setupFiles) {
-  return withoutComments(mochaConfig.text).includes(GUARD_ENTRY_POINT)
+function loadsNetworkGuard(setup, setupFiles) {
+  return withoutComments(setup.text).includes(GUARD_ENTRY_POINT)
     || contentsOf(setupFiles).some((text) => text.includes(GUARD_ENTRY_POINT));
 }
 
 // True when one of the files the mocha config loads pins the environment for exp-config. It has to
 // be NODE_CONFIG_ENV: exp-config prefers that variable over NODE_ENV, so a setup file that only sets
 // NODE_ENV still loads production config when NODE_CONFIG_ENV leaks in from the shell.
-function pinsEnvironment(setupFiles) {
-  return contentsOf(setupFiles).some((text) => ENV_PIN.test(text));
+function pinsEnvironment(setup, setupFiles) {
+  return ENV_PIN_IN_SCRIPT.test(setup.text)
+    || contentsOf(setupFiles).some((text) => ENV_PIN.test(text));
 }
 
 function isLoopbackOrService(host) {
@@ -374,15 +466,13 @@ const requireTestGuards = {
     docs: { description: "require the mocha config to load a network guard and an environment pin" },
     schema: [],
     messages: {
-      noMochaConfig:
-        "No mocha config found in this project, so nothing loads a network guard or an environment pin before the tests. "
-        + "Add a .mocharc.json with a require list, see the node-starterapp template.",
       missingGuard:
-        "{{configName}} does not load \"{{guardEntryPoint}}\", so these tests can open connections to any host this "
-        + "machine can reach. Add it to the require list.",
+        "Nothing this project loads before its {{runners}} tests brings in \"{{guardEntryPoint}}\", so these tests can "
+        + "open connections to any host this machine can reach. Add it to {{setupHint}}. Looked in: {{sources}}.",
       missingPin:
-        "Nothing {{configName}} loads sets process.env.NODE_CONFIG_ENV, so a value leaking in from the shell decides "
-        + "which config the tests load. Pin it in an import-free file loaded first, see the node-starterapp template.",
+        "Nothing this project loads before its {{runners}} tests sets process.env.NODE_CONFIG_ENV to \"test\", so a "
+        + "value leaking in from the shell decides which config the tests load. Pin it in an import-free file loaded from "
+        + "{{setupHint}}. Looked in: {{sources}}.",
     },
   },
   create(context) {
@@ -393,25 +483,25 @@ const requireTestGuards = {
         if (!project || !usesDataStore(project)) return;
         if (!ownsProjectReport("require-test-guards", project.dir, context.filename)) return;
 
-        const mochaConfig = readMochaConfig(context.filename, project);
+        const setup = testSetup(context.filename, project);
 
-        if (!mochaConfig) {
-          context.report({ node, messageId: "noMochaConfig" });
-          return;
+        // No runner we know how to inspect. Saying nothing beats guessing at a setup we cannot read.
+        if (!setup) return;
+
+        const setupFiles = requiredFiles(setup);
+        const data = {
+          runners: setup.runners,
+          setupHint: setup.setupHint,
+          sources: setup.sources,
+          guardEntryPoint: GUARD_ENTRY_POINT,
+        };
+
+        if (!loadsNetworkGuard(setup, setupFiles)) {
+          context.report({ node, messageId: "missingGuard", data });
         }
 
-        const setupFiles = requiredFiles(mochaConfig);
-
-        if (!loadsNetworkGuard(mochaConfig, setupFiles)) {
-          context.report({
-            node,
-            messageId: "missingGuard",
-            data: { configName: mochaConfig.name, guardEntryPoint: GUARD_ENTRY_POINT },
-          });
-        }
-
-        if (!pinsEnvironment(setupFiles)) {
-          context.report({ node, messageId: "missingPin", data: { configName: mochaConfig.name } });
+        if (!pinsEnvironment(setup, setupFiles)) {
+          context.report({ node, messageId: "missingPin", data });
         }
       },
     };

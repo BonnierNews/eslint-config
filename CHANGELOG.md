@@ -5,8 +5,9 @@
 - Added the `bn-safety` rules, which report when a project is missing the controls that keep tests
   away from production data. They are all warnings, and the two project level rules only speak up in
   repos that depend on a database, cache or message broker client:
-  - `bn-safety/require-test-guards` - the mocha config loads no network guard, or nothing in its
-    require list pins `NODE_CONFIG_ENV`.
+  - `bn-safety/require-test-guards` - nothing the project loads before its tests brings in the
+    network guard, or pins `NODE_CONFIG_ENV`. Understands mocha, jest, vitest, ava, tap and
+    `node --test`, and stays silent for a runner it cannot read.
   - `bn-safety/gitignore-env` - `.gitignore` does not exclude `.env`.
   - `bn-safety/env-pin-must-not-import` - the file that pins the test environment also imports a
     module, which runs before the pin.
@@ -24,7 +25,6 @@
 - The test configs now also apply to `tests/`, `spec/` and `__tests__/` directories and to
   `*.test.js` / `*.spec.js` files, not only to `test/`. Without this the safety rules above would
   miss whole repos, and the mocha globals and chai-friendly rules now reach those files too.
-- Mocha no longer loads the lint fixtures under `test/data` as test files.
 
 ## 3.0.0
 

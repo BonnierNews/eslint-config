@@ -169,7 +169,7 @@ workaround.
 
 | Rule | What it reports |
 | --- | --- |
-| `bn-safety/require-test-guards` | The project's mocha config, and the files it loads, neither load `@bonniernews/stayput/register` nor pin `NODE_CONFIG_ENV` to `"test"`. |
+| `bn-safety/require-test-guards` | Nothing the project loads before its tests brings in `@bonniernews/stayput/register`, or pins `NODE_CONFIG_ENV` to `"test"`. |
 | `bn-safety/gitignore-env` | No `.gitignore` between the file and the repository root excludes `.env`, so a file of local credentials can be committed. |
 | `bn-safety/env-pin-must-not-import` | A file pins the test environment and also imports or requires a module. Those run first, so the module reads the environment before the pin applies. |
 | `bn-safety/no-env-pin-tampering` | Code sets `STAYPUT_ALLOW`, `STAYPUT_DENY` or `STAYPUT_DISABLE`, passes `allow` or `deny` to `stayput.enable()`, or turns on `ALLOW_TEST_ENV_OVERRIDE`. |
@@ -182,6 +182,28 @@ The first two look at the project rather than at the file being linted. They sta
 `package.json` depends on a database, cache or message broker client, and they report once per
 project rather than once per test file. A library has nothing to guard, so it is not asked to install
 a guard.
+
+`require-test-guards` is not tied to mocha. It works out which runner a project uses from its
+dependencies and its npm test script, then reads that runner's setup:
+
+| Runner | Where it looks |
+| --- | --- |
+| mocha | `.mocharc.*`, the `mocha` key in `package.json` |
+| jest | `jest.config.*`, the `jest` key in `package.json` |
+| vitest | `vitest.config.*`, `vite.config.*` |
+| ava | `ava.config.*`, the `ava` key in `package.json` |
+| tap | `.taprc*`, the `tap` key in `package.json` |
+| `node --test` | the npm test script, which is the only place its preloads can live |
+
+The npm test script is read whatever the runner, so a guard preloaded with `--import` or
+`NODE_OPTIONS` counts, and so does `NODE_CONFIG_ENV=test` written in front of the runner. Relative
+paths in a runner's setup list are followed, so a guard imported by your own setup file counts too.
+
+**A runner that is not in that table means silence, not a warning.** If your repo uses something
+else, the rule says nothing rather than guessing, and adding a runner is a few lines in
+`safety-plugin.js`. What does not depend on the table at all is stayput's own `assertActive()`: a
+one-line test asserting the guard is loaded works in any runner, and it fails the suite rather than
+warning about it. That is the stronger check, and it belongs in your test suite rather than here.
 
 The rules that look at tests apply to files under `test/`, `tests/`, `spec/` and `__tests__/`, and to
 files named `*.test.js` or `*.spec.js`, in JavaScript and TypeScript alike.
