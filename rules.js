@@ -227,12 +227,23 @@ const importRules = {
   "import/newline-after-import": "error",
 };
 
+// Checks that apply to every file. These detect a missing safety control rather than being one;
+// see safety-plugin.js for what they cover and what they cannot see. They are warnings for now so
+// that a Dependabot bump cannot turn a fleet of repos red, and are meant to become errors in the
+// next major version.
+const safetyRules = {
+  "bn-safety/no-credentials-in-source": "warn",
+  "bn-safety/no-env-pin-tampering": "warn",
+  "bn-safety/no-dotenv-override": "warn",
+};
+
 export default function getRules(isModuleProject) {
   return {
     ...eslintRecommendedRules,
     ...nodeRecommendedRules,
     ...starterAppRules,
     ...(isModuleProject ? importRules : {}),
+    ...safetyRules,
     // good stuff..
     "@bonniernews/typescript-rules/disallow-class-extends": "error",
     "no-multiple-empty-lines": [ "error", {
