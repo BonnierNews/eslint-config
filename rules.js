@@ -227,10 +227,16 @@ const importRules = {
   "import/newline-after-import": "error",
 };
 
-// Checks that apply to every file. These detect a missing safety control rather than being one;
-// see safety-plugin.js for what they cover and what they cannot see. They are warnings for now so
-// that a Dependabot bump cannot turn a fleet of repos red, and are meant to become errors in the
-// next major version.
+// The bn-safety rules that apply to every file rather than only to tests, because a credential or a
+// stray STAYPUT_ALLOW is just as wrong in application code:
+//
+//   no-credentials-in-source   a credential, private key or secret written into a source file
+//   no-env-pin-tampering       a guard exception or config override switched on from code
+//   no-dotenv-override         dotenv's override option, which replaces an environment pin
+//
+// The five test-only rules are wired up in test-base.js. safety-plugin.js documents all eight, with
+// examples and with what they cannot see. Warnings for now so that a Dependabot bump cannot turn a
+// fleet of repos red; meant to become errors in the next major version.
 const safetyRules = {
   "bn-safety/no-credentials-in-source": "warn",
   "bn-safety/no-env-pin-tampering": "warn",

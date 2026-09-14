@@ -70,8 +70,16 @@ export default {
     // chai friendly
     "no-unused-expressions": 0,
     "chai-friendly/no-unused-expressions": 2,
-    // keep tests away from production data, see safety-plugin.js. Warnings for now, errors in the
-    // next major version.
+    // The bn-safety rules that only make sense for tests. The first two check the project rather
+    // than the file and stay silent unless it depends on a data store. safety-plugin.js documents
+    // all of them, with examples. Warnings for now, errors in the next major version.
+    //
+    //   require-test-guards        no network guard, or no environment pin, is loaded before the
+    //                              tests run
+    //   gitignore-env              no .gitignore up to the repository root excludes .env
+    //   env-pin-must-not-import    the file that pins the environment also imports something
+    //   no-remote-db-target        a database host off this machine, or TLS verification turned off
+    //   no-widened-nock            nock told to allow every outbound http request
     "bn-safety/require-test-guards": "warn",
     "bn-safety/gitignore-env": "warn",
     "bn-safety/env-pin-must-not-import": "warn",

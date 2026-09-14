@@ -1,31 +1,46 @@
 import fs from "fs";
 import path from "path";
 
-// Lint rules that detect a missing safety control. They never implement one.
+// The bn-safety rules, exported at the bottom of this file as one ESLint plugin.
 //
-// The network guard is `@bonniernews/stayput`, the environment pin is the import-free file the mocha
-// config loads first, and the only control that survives a tunnel to production on localhost is
-// database roles. None of that belongs in a linter. What lint adds is reach: this package is a
-// devDependency in every repo, Dependabot keeps it current, and its output shows up in CI and in the
-// editor while the code is being written. That makes it a good place to notice that a control is
-// missing, and a bad place to be the control.
+// Every rule here reports that a safety control is MISSING. None of them is the control. The
+// network guard is @bonniernews/stayput, the environment pin is the import-free file a test runner
+// loads first, and what still holds when someone has a tunnel to production open on localhost is
+// database roles. What lint adds is reach: this package is a devDependency in every repo,
+// Dependabot keeps it current, and its output shows up in CI and in the editor while the code is
+// being written. That makes it a good place to notice a missing control, and a bad place to be one.
 //
-// Three limits are worth knowing before relying on these rules:
+// The rules, in the order they are defined below. Each one has a comment above it saying what it
+// flags, with examples of what does and does not trip it.
 //
-//   * A consumer can switch any of them off in its own `eslint.config.js`. These rules steer, they
-//     do not enforce.
-//   * `eslint --cache` never hands an unchanged file to a rule, so the rules that read project files
-//     from disk (`require-test-guards`, `gitignore-env`) go quiet once a run is cached. Removing the
-//     guard from a mocha config is then unreported until a test file changes. Run CI without
-//     `--cache` if you rely on them.
-//   * Everything here is pattern matching over one file's syntax tree. A host kept in a variable, a
-//     connection string assembled at runtime, or an environment variable written through an alias
-//     all pass unseen. The README lists the classes we know about.
+//   require-test-guards        the project loads no network guard, or no environment pin, before
+//                              its tests run
+//   gitignore-env              no .gitignore up to the repository root excludes .env
+//   env-pin-must-not-import    the file that pins the environment also imports something, which
+//                              then runs before the pin
+//   no-env-pin-tampering       a network guard exception, or a config override, switched on from
+//                              code instead of from the workflow file
+//   no-remote-db-target        a test names a database host off this machine, or turns off TLS
+//                              certificate verification
+//   no-credentials-in-source   a credential, a private key or a secret written into a source file
+//   no-widened-nock            nock told to allow every outbound http request
+//   no-dotenv-override         dotenv's override option, which replaces a pin already applied
 //
-// Every check is its own named rule rather than an entry in `no-restricted-syntax`. That is
-// deliberate. Rule options replace rather than merge, so one `no-restricted-syntax` entry in a
-// consumer's config, or in a later config block here, silently deletes every check that shares that
-// rule name. Named rules cannot be clobbered that way.
+// What these rules cannot do, worth knowing before relying on them:
+//
+//   * Enforce anything. A consumer can set any of them to "off" in its own eslint.config.js. They
+//     steer; stayput at connect time and database roles at the server are what enforce.
+//   * Survive `eslint --cache`. A cached file is never handed to a rule, so the two rules that read
+//     project files from disk (require-test-guards and gitignore-env) go quiet once a run is
+//     cached. Run lint in CI without --cache if you rely on them.
+//   * See past one file's syntax. A host kept in a variable, a connection string assembled at
+//     runtime, or an environment variable written through an alias all pass unseen. The README
+//     lists the blind spots we know about.
+//
+// Why each check is its own named rule rather than an entry in no-restricted-syntax: rule options
+// replace rather than merge, so a single no-restricted-syntax entry in a consumer's config, or in a
+// later config block here, would silently delete every check sharing that rule name, with nothing
+// to show that anything had been dropped. Named rules cannot be clobbered that way.
 
 // The test runners we know how to inspect, and where each keeps the list of files it loads before
 // the tests. A project that uses none of them is left alone rather than guessed at, so adding a
@@ -460,10 +475,24 @@ function insideTemplateLiteral(node) {
   return false;
 }
 
+// Rule: require-test-guards
+//
+// Looks at the project rather than at the file being linted: does anything load the network guard,
+// and does anything pin the environment, before the tests run? Those are the two things that keep a
+// test suite from resolving its config to a real environment and then reaching it.
+//
+//   flagged      a project depending on pg whose .mocharc.json requires only a setup file that
+//                sets NODE_ENV, since exp-config prefers NODE_CONFIG_ENV and would ignore it
+//   not flagged  the same project once its require list has "@bonniernews/stayput/register" and a
+//                file containing process.env.NODE_CONFIG_ENV = "test"
+//
+// Scoping, so this does not shout at repos with nothing to protect: silent unless package.json
+// depends on a data store, silent for a test runner it does not know how to read, and reported once
+// per project rather than once per test file.
 const requireTestGuards = {
   meta: {
     type: "problem",
-    docs: { description: "require the mocha config to load a network guard and an environment pin" },
+    docs: { description: "require the project to load a network guard and an environment pin before its tests" },
     schema: [],
     messages: {
       missingGuard:
@@ -508,10 +537,20 @@ const requireTestGuards = {
   },
 };
 
+// Rule: gitignore-env
+//
+// Also a project level check: does any .gitignore between the linted file and the repository root
+// exclude .env? A .env holds local credentials, and an unignored one is a single `git add .` away
+// from the remote.
+//
+//   flagged      a .gitignore listing only node_modules
+//   not flagged  .env, /.env, .env*, *.env or **/.env, in any .gitignore up to the root
+//
+// Scoped like require-test-guards: data store only, once per project.
 const gitignoreEnv = {
   meta: {
     type: "problem",
-    docs: { description: "require .gitignore to exclude .env" },
+    docs: { description: "require .gitignore to exclude .env, so local credentials cannot be committed" },
     schema: [],
     messages: {
       notIgnored:
@@ -548,6 +587,18 @@ const gitignoreEnv = {
   },
 };
 
+// Rule: env-pin-must-not-import
+//
+// A file that pins the test environment must not import or require anything. Imports are evaluated
+// before the rest of the file, so an imported module reads the environment first and can resolve
+// its config from whatever leaked in from the shell, while the pin applies a moment too late.
+//
+//   flagged      import nock from "nock";
+//                process.env.NODE_CONFIG_ENV = "test";
+//   not flagged  the same two lines split across two files, with the import-free pin loaded first
+//
+// The pin file identifies itself by what it does, not by its name, so this works whatever a repo
+// calls the file.
 const envPinMustNotImport = {
   meta: {
     type: "problem",
@@ -593,10 +644,24 @@ const envPinMustNotImport = {
   },
 };
 
+// Rule: no-env-pin-tampering
+//
+// The switches that widen the network guard, or that let real environment variables override the
+// test config, belong in the workflow file where a reviewer sees them and a fleet-wide grep finds
+// them. Set from code they are invisible to both.
+//
+//   flagged      process.env.STAYPUT_ALLOW = "db.prod.example.com";
+//                process.env.ALLOW_TEST_ENV_OVERRIDE = "1";
+//                stayput.enable({ allow: [ "db.prod.example.com" ] });
+//   not flagged  process.env.ALLOW_TEST_ENV_OVERRIDE = "";   the pin file turning it off
+//
+// Setting NODE_ENV or NODE_CONFIG_ENV is deliberately not flagged: that is the pin doing its job.
+// env-pin-must-not-import covers the case where the pin sits in a file that cannot be trusted to
+// run first.
 const noEnvPinTampering = {
   meta: {
     type: "problem",
-    docs: { description: "disallow enabling config overrides or network-guard exceptions from code" },
+    docs: { description: "disallow switching on config overrides or network guard exceptions from code" },
     schema: [],
     messages: {
       guardVariable:
@@ -666,10 +731,26 @@ const noEnvPinTampering = {
   },
 };
 
+// Rule: no-remote-db-target
+//
+// Tests may only reach this machine. Flags a database, cache or broker host spelled out in a test
+// file, and both ways of turning off TLS certificate verification, which is the usual step someone
+// takes when a test is being pointed at real infrastructure.
+//
+//   flagged      "postgres://orders-db.prod.example.com:5432/orders"
+//                process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+//                { rejectUnauthorized: false }
+//   not flagged  "postgres://localhost:5432/orders_test"        this machine
+//                "postgres://postgres:5432/app_test"            a compose or CI service
+//                `postgres://${config.dbHost}/orders`           value not knowable here
+//                process.env.NODE_TLS_REJECT_UNAUTHORIZED = "1";  the safe direction
+//
+// http and https schemes are left out on purpose: feature tests name remote http hosts constantly
+// and mock them with nock, so including them would bury the signal in noise.
 const noRemoteDbTarget = {
   meta: {
     type: "problem",
-    docs: { description: "disallow connection targets outside this machine, and disabled TLS verification, in tests" },
+    docs: { description: "disallow database hosts outside this machine, and disabled TLS verification, in tests" },
     schema: [],
     messages: {
       remoteHost:
@@ -723,10 +804,23 @@ const noRemoteDbTarget = {
   },
 };
 
+// Rule: no-credentials-in-source
+//
+// Credentials belong in config or a secret manager. Written into a source file they are in the
+// repository's history from then on, whatever happens to the file afterwards.
+//
+//   flagged      "postgres://svc_orders:s3cret-value@db.prod.example.com:5432/orders"
+//                `mongodb+srv://${user}:${password}@cluster0.mongodb.net/app`
+//                a PEM private key header
+//                { password: "a-real-looking-password" }, including as a class field
+//   not flagged  "postgres://orders:orders@localhost:5432/orders_test"   local credentials
+//                "postgres://username:password@db.example.com/orders"    documentation placeholders
+//                { secret: "The shared secret is set per environment" }  prose, not a secret
+//                { password: "test" }                                    too short to be real
 const noCredentialsInSource = {
   meta: {
     type: "problem",
-    docs: { description: "disallow credentials and private keys written into source files" },
+    docs: { description: "disallow credentials, private keys and secrets written into source files" },
     schema: [],
     messages: {
       credentialInUri:
@@ -783,6 +877,18 @@ const noCredentialsInSource = {
   },
 };
 
+// Rule: no-widened-nock
+//
+// In a suite that mocks http with nock, nock is what keeps requests on this machine. Calling
+// enableNetConnect without a real allow list hands that back and lets every outbound request
+// through again.
+//
+//   flagged      nock.enableNetConnect()      nothing is restricted
+//                nock.enableNetConnect("")    matches every host
+//                nock.enableNetConnect(/.*/)  same, written as a pattern
+//   not flagged  nock.enableNetConnect(/(localhost|127\.0\.0\.1):\d+/)
+//
+// A predicate function cannot be judged from its syntax, so it is left alone.
 const noWidenedNock = {
   meta: {
     type: "problem",
@@ -809,10 +915,21 @@ const noWidenedNock = {
   },
 };
 
+// Rule: no-dotenv-override
+//
+// dotenv's override option replaces variables that are already set, which includes the environment
+// pin a test runner has just applied. Without the option dotenv leaves existing variables alone and
+// the pin survives, which is why loading .env is safe in every other respect.
+//
+//   flagged      dotenv.config({ override: true });
+//                require("dotenv").config({ override: 1 });   truthy counts
+//   not flagged  dotenv.config();
+//                dotenv.config({ override: false });
+//                telemetry.config({ override: true });        not dotenv, none of our business
 const noDotenvOverride = {
   meta: {
     type: "problem",
-    docs: { description: "disallow dotenv's override option" },
+    docs: { description: "disallow dotenv's override option, which replaces an environment pin already applied" },
     schema: [],
     messages: {
       overrideUsed:

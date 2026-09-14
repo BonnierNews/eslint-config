@@ -2,26 +2,37 @@
 
 ## 3.1.0
 
-- Added the `bn-safety` rules, which report when a project is missing the controls that keep tests
-  away from production data. They are all warnings, and the two project level rules only speak up in
-  repos that depend on a database, cache or message broker client:
+- Added the `bn-safety` rules: eight lint rules that report when a project is missing the controls
+  that keep its tests away from real data. They detect, they do not protect - the network guard is
+  `@bonniernews/stayput`, the environment pin is the import-free file your test runner loads first,
+  and database roles are what ultimately hold. No new dependency.
+
   - `bn-safety/require-test-guards` - nothing the project loads before its tests brings in the
-    network guard, or pins `NODE_CONFIG_ENV`. Understands mocha, jest, vitest, ava, tap and
-    `node --test`, and stays silent for a runner it cannot read.
-  - `bn-safety/gitignore-env` - `.gitignore` does not exclude `.env`.
-  - `bn-safety/env-pin-must-not-import` - the file that pins the test environment also imports a
-    module, which runs before the pin.
-  - `bn-safety/no-env-pin-tampering` - code sets a stayput escape hatch or turns on
-    `ALLOW_TEST_ENV_OVERRIDE`.
+    network guard, or pins `NODE_CONFIG_ENV` to `"test"`. Works out the runner from the dependencies
+    and the npm test script, and reads mocha, jest, vitest, ava, tap or `node --test`. A runner it
+    cannot read means silence, never a warning.
+  - `bn-safety/gitignore-env` - no `.gitignore` up to the repository root excludes `.env`.
+  - `bn-safety/env-pin-must-not-import` - the file that pins the test environment also imports
+    something, which then runs before the pin.
+  - `bn-safety/no-env-pin-tampering` - a stayput escape hatch, or `ALLOW_TEST_ENV_OVERRIDE`,
+    switched on from code instead of from the workflow file.
   - `bn-safety/no-remote-db-target` - a test names a database host outside this machine, or turns
     off TLS certificate verification.
-  - `bn-safety/no-credentials-in-source` - a credential or private key is written into a source file.
-  - `bn-safety/no-widened-nock` - `enableNetConnect()` is called without an allow list.
-  - `bn-safety/no-dotenv-override` - dotenv is loaded with `override: true`.
+  - `bn-safety/no-credentials-in-source` - a credential, private key or secret written into a
+    source file.
+  - `bn-safety/no-widened-nock` - `enableNetConnect()` called with no allow list, or with one that
+    allows every host.
+  - `bn-safety/no-dotenv-override` - dotenv loaded with `override: true`, which replaces a pin that
+    has already been applied.
 
-  See [Safety rules](./README.md#safety-rules) for what they need from a project and, just as
-  importantly, what they cannot see. They are warnings on purpose so that a Dependabot bump cannot
-  turn a fleet of repos red; the intention is to make them errors in the next major version.
+  The first two look at the project rather than at the file being linted. They stay silent unless
+  `package.json` depends on a database, cache or message broker client, and they report once per
+  project rather than once per test file.
+
+  All eight are warnings on purpose, so that a Dependabot bump cannot turn a fleet of repos red. The
+  intention is to make them errors in the next major version. See
+  [Safety rules](./README.md#safety-rules) for what each rule flags, with examples, and for what
+  they cannot see.
 - The test configs now also apply to `tests/`, `spec/` and `__tests__/` directories and to
   `*.test.js` / `*.spec.js` files, not only to `test/`. Without this the safety rules above would
   miss whole repos, and the mocha globals and chai-friendly rules now reach those files too.
