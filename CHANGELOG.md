@@ -13,13 +13,15 @@
     cannot read means silence, never a warning.
   - `bn-safety/gitignore-env` - no `.gitignore` up to the repository root excludes `.env`.
   - `bn-safety/env-pin-must-not-import` - the file that pins the test environment also imports
-    something, which then runs before the pin.
+    something, which then runs before the pin. Node's own modules are exempt, and only a top-level
+    assignment counts as the pin, so a test toggling `NODE_ENV` inside a hook is left alone.
   - `bn-safety/no-env-pin-tampering` - a stayput escape hatch, or `ALLOW_TEST_ENV_OVERRIDE`,
     switched on from code instead of from the workflow file.
   - `bn-safety/no-remote-db-target` - a test names a database host outside this machine, or turns
     off TLS certificate verification.
   - `bn-safety/no-credentials-in-source` - a credential, private key or secret written into a
-    source file.
+    source file. A placeholder word anywhere in the value (`fake-access-token`, `REPLACED_BY_ENV`)
+    marks a fixture, and the warning says how to mark one.
   - `bn-safety/no-widened-nock` - `enableNetConnect()` called with no allow list, or with one that
     allows every host.
   - `bn-safety/no-dotenv-override` - dotenv loaded with `override: true`, which replaces a pin that

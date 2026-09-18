@@ -1,4 +1,5 @@
 import fs from "fs";
+import { builtinModules } from "module";
 import path from "path";
 
 // The bn-safety rules, exported at the bottom of this file as one ESLint plugin.
@@ -191,6 +192,13 @@ const SECRET_PROPERTIES = new Set([
 // like a placeholder but it puts a real credential into the string at runtime, which is the most
 // common way a production connection string ends up in a source file.
 const PLACEHOLDER_VALUE = /^(?:user(?:name)?|pass(?:word|wd)?|secret|token|key|changeme|change[-_]me|example|examples|dummy|fake|placeholder|redacted|test|x+|\*+|<[^>]*>|your[-_]?\w*)$/i;
+
+// A placeholder word anywhere in the value, as its own hyphen, underscore, dot or bang separated
+// segment: "fake-access-token", "REPLACED_BY_ENV", "kayak-secret". Fixtures are named like this and
+// real credentials are not, since a generated secret has no words in it. This is also the documented
+// way to keep a fixture from being reported, so the list is spelled out in the rule's message.
+const PLACEHOLDER_WORDS = [ "fake", "dummy", "mock", "stub", "sample", "example", "placeholder", "redacted", "replaced", "some", "test", "secret", "token", "key" ];
+const PLACEHOLDER_WORD = new RegExp(`(?:^|[-_!.])(?:${PLACEHOLDER_WORDS.join("|")})(?=[-_!.]|$)`, "i");
 
 // A real credential is long and has no spaces in it. Shorter values in a password field are almost
 // always fixtures, and values containing whitespace are prose: message catalogs, translations and
@@ -390,7 +398,12 @@ function isLoopbackOrService(host) {
 }
 
 function isPlaceholder(value) {
-  return PLACEHOLDER_VALUE.test(value);
+  return PLACEHOLDER_VALUE.test(value) || PLACEHOLDER_WORD.test(value);
+}
+
+// Node's own modules cannot read exp-config, so a pin file may import them before the pin applies.
+function isBuiltinModule(name) {
+  return name.startsWith("node:") || builtinModules.includes(name);
 }
 
 // True for a member expression naming the process environment, whether reached as `process.env` or
@@ -596,9 +609,13 @@ const gitignoreEnv = {
 //   flagged      import nock from "nock";
 //                process.env.NODE_CONFIG_ENV = "test";
 //   not flagged  the same two lines split across two files, with the import-free pin loaded first
+//                import crypto from "node:crypto";   Node's own modules cannot read exp-config
+//                beforeEach(() => { process.env.NODE_ENV = "production"; });   a test toggling the
+//                environment to exercise a branch, not a pin
 //
 // The pin file identifies itself by what it does, not by its name, so this works whatever a repo
-// calls the file.
+// calls the file. Only an assignment at the top level of the module counts: one inside a function
+// runs when that function is called, which is not before the imports whatever the file.
 const envPinMustNotImport = {
   meta: {
     type: "problem",
@@ -614,20 +631,31 @@ const envPinMustNotImport = {
   create(context) {
     const modules = [];
     let pin = null;
+    let functionDepth = 0;
+
+    function addModule(name) {
+      if (!isBuiltinModule(name)) modules.push(name);
+    }
 
     return {
+      ":function"() {
+        functionDepth++;
+      },
+      ":function:exit"() {
+        functionDepth--;
+      },
       ImportDeclaration(node) {
-        modules.push(node.source.value);
+        addModule(node.source.value);
       },
       CallExpression(node) {
         const moduleName = requiredModuleName(node);
 
         if (moduleName) {
-          modules.push(moduleName);
+          addModule(moduleName);
         }
       },
       AssignmentExpression(node) {
-        if (!pin && PIN_VARIABLES.includes(assignedEnvVariable(node))) {
+        if (!pin && functionDepth === 0 && PIN_VARIABLES.includes(assignedEnvVariable(node))) {
           pin = node;
         }
       },
@@ -828,7 +856,9 @@ const noCredentialsInSource = {
       privateKey: "This file contains private key material. Read it from config or a secret manager.",
       hardcodedSecret:
         "The \"{{name}}\" property has a hardcoded value that looks like a real credential. Read it from config or a "
-        + "secret manager.",
+        + "secret manager. If it is a test fixture, make that visible in the value: use a word such as "
+        + "\"fake\", \"dummy\", \"test\" or \"example\" as its own segment (\"fake-access-token\", \"test_key\"), or keep it "
+        + "shorter than {{minLength}} characters.",
     },
   },
   create(context) {
@@ -871,7 +901,7 @@ const noCredentialsInSource = {
 
         if (value.length < MIN_SECRET_LENGTH || WHITESPACE.test(value) || isPlaceholder(value)) return;
 
-        context.report({ node, messageId: "hardcodedSecret", data: { name } });
+        context.report({ node, messageId: "hardcodedSecret", data: { name, minLength: MIN_SECRET_LENGTH } });
       },
     };
   },

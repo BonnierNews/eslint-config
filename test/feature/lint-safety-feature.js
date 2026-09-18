@@ -501,6 +501,38 @@ Feature("protecting the environment pin", () => {
     });
   });
 
+  Scenario("a pin file that imports only Node's own modules", () => {
+    let reported;
+    When("we lint it", async () => {
+      reported = await lintTestFile([
+        'import { createHash } from "node:crypto";',
+        'const { execSync } = require("child_process");',
+        'process.env.NODE_CONFIG_ENV = "test";',
+        'process.env.SCHEMA_PREFIX = createHash("sha1").update(execSync("git rev-parse --abbrev-ref HEAD")).digest("hex");',
+      ].join("\n"));
+    });
+
+    Then("nothing is reported, since a builtin cannot read the config", () => {
+      expect(reported).to.eql([]);
+    });
+  });
+
+  Scenario("a test that toggles the environment inside a hook", () => {
+    let reported;
+    When("we lint it", async () => {
+      reported = await lintTestFile([
+        'import { settings } from "../lib/settings.js";',
+        'beforeEach(() => (process.env.NODE_ENV = "development"));',
+        'after(() => { process.env.NODE_ENV = "test"; });',
+        'it("uses the development settings", () => { process.env.NODE_ENV = "production"; settings(); });',
+      ].join("\n"));
+    });
+
+    Then("nothing is reported, since an assignment inside a function is not the pin", () => {
+      expect(reported).to.eql([]);
+    });
+  });
+
   Scenario("an import free pin file", () => {
     let reported;
     When("we lint it", async () => {
@@ -577,6 +609,20 @@ Feature("catching secrets written into source files", () => {
     });
   });
 
+  Scenario("a hardcoded secret, read by someone who wants to keep their fixture", () => {
+    let message;
+    When("we lint it", async () => {
+      const eslint = new ESLint({ overrideConfigFile: sourceConfig, ignore: false });
+      const [ result ] = await eslint.lintText('export default { password: "a-real-looking-password" };', { filePath: "inline-source.js" });
+      [ message ] = safetyMessages(result);
+    });
+
+    Then("the warning says how to mark the value as a fixture", () => {
+      expect(message.message).to.include("\"fake\"");
+      expect(message.message).to.include("shorter than 12 characters");
+    });
+  });
+
   Scenario("a file with local credentials, documentation examples, prose and short fixtures", () => {
     let reported;
     When("we lint it", async () => {
@@ -591,7 +637,15 @@ Feature("catching secrets written into source files", () => {
         'const fixture = { host: "localhost", password: "test" };',
         'const short = { password: "abc123" };',
         'const template = { password: "<your-password>" };',
-        "export default { local, service, documented, copy, fixture, short, template };",
+        "// A placeholder word as its own segment marks a fixture, however long the rest of the value is.",
+        "const fixtures = {",
+        '  accessToken: "fake-access-token",',
+        '  secret: "kayak-secret",',
+        '  apiKey: "expressen-key",',
+        '  password: "REPLACED_BY_ENV",',
+        '  refreshToken: "123456789012345!some-long-access-token-that-is-used-for-authentication",',
+        "};",
+        "export default { local, service, documented, copy, fixture, short, template, fixtures };",
       ].join("\n"));
     });
 

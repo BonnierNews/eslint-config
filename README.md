@@ -202,7 +202,11 @@ import nock from "nock";
 process.env.NODE_CONFIG_ENV = "test";
 
 // not flagged: the same two lines in two files, with the import-free pin loaded first
+import { createHash } from "node:crypto";      // Node's own modules cannot read the config
+beforeEach(() => (process.env.NODE_ENV = "development"));  // a test toggling a branch, not a pin
 ```
+
+Only an assignment at the top level of the module counts as the pin.
 
 **`bn-safety/no-env-pin-tampering`** — the switches that widen the network guard, or that let real
 environment variables override the test config, belong in the workflow file where a reviewer sees
@@ -252,7 +256,13 @@ a PEM "BEGIN ... PRIVATE KEY" header
 "postgres://username:password@db.example.com/orders"    // documentation placeholders
 { secret: "The shared secret is set per environment" }  // prose, not a secret
 { password: "test" }                                    // too short to be real
+{ accessToken: "fake-access-token" }                    // a placeholder word marks a fixture
 ```
+
+A fixture that is flagged is one that looks like a real credential. To keep it, make the fixture
+visible in the value: put a placeholder word such as `fake`, `dummy`, `test`, `example` or
+`replaced` in it as its own segment (`fake-access-token`, `REPLACED_BY_ENV`, `test_key`), or keep
+it shorter than 12 characters. Real secrets have no words in them, so this loses nothing.
 
 **`bn-safety/no-widened-nock`** — in a suite that mocks http with nock, nock is what keeps requests
 on this machine. Calling `enableNetConnect` without a real allow list hands that back.
