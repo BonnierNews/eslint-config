@@ -7,6 +7,7 @@ import path from "path";
 
 import globals from "./globals.js";
 import getRules from "./rules.js";
+import safetyPlugin from "./safety-plugin.js";
 
 const require = createRequire(import.meta.url);
 
@@ -45,6 +46,7 @@ const moduleConfig = {
     n: eslintPluginN,
     import: eslintPluginImport,
     "@bonniernews/typescript-rules": eslintPluginTypescriptRules,
+    "bn-safety": safetyPlugin,
   },
 };
 
@@ -57,6 +59,7 @@ const commonjsConfig = {
   plugins: {
     n: eslintPluginN,
     "@bonniernews/typescript-rules": eslintPluginTypescriptRules,
+    "bn-safety": safetyPlugin,
   },
 };
 

@@ -1,4 +1,4 @@
-import testBase from "./test-base.js";
+import testBase, { testFilePatterns } from "./test-base.js";
 import tsConfig from "./ts.js";
 
 export default {
@@ -16,5 +16,5 @@ export default {
     ...tsConfig.plugins,
     ...testBase.plugins,
   },
-  files: [ "**/test/**/*.ts" ],
+  files: testFilePatterns("ts"),
 };

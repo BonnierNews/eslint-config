@@ -1,6 +1,6 @@
 {
   "name": "@bonniernews/eslint-config",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "ESLint config",
   "type": "module",
   "main": "index.js",
@@ -65,6 +65,7 @@
     "tsx.js",
     "globals.js",
     "rules.js",
+    "safety-plugin.js",
     "ignores.js",
     "test-base.js",
     "test-js.js",
