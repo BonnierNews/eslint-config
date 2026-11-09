@@ -23,10 +23,10 @@
   ],
   "contributors": [],
   "devDependencies": {
+    "@bonniernews/mocha-cakes-2": "^1.0.0",
     "chai": "^6.2.2",
     "eslint": "^9.39.2",
-    "mocha": "^11.7.5",
-    "mocha-cakes-2": "^3.3.0",
+    "mocha": "^12.0.3",
     "preact": "^10.29.0",
     "typescript": "^5.9.3"
   },
