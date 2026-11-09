@@ -1,4 +1,4 @@
-import "mocha-cakes-2";
+import "@bonniernews/mocha-cakes-2";
 import * as chai from "chai";
 
 // Make sure dates are displayed in the correct timezone

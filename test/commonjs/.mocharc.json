@@ -3,7 +3,7 @@
   "reporter": "spec",
   "recursive": true,
   "spec": "feature/**/*.mjs",
-  "ui": "mocha-cakes-2",
+  "ui": "@bonniernews/mocha-cakes-2",
   "require": ["../helpers/setup.mjs"],
   "exit": true
 }
